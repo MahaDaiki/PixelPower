@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -60,7 +61,9 @@ public class Configuration {
     @NotNull(message = "Operating System is mandatory")
     private OperatingSystem os;
 
-    private Boolean primary = false;
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "You can only have one Primary Configuration!!")
+    private ConfigStatus status;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, updatable = false)
