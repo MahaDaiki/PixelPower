@@ -19,7 +19,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(secretKey)
                 .compact();
     }
@@ -35,20 +35,25 @@ public class JwtUtil {
 
     public boolean validateToken(String token, String userEmail) {
         String extractedEmail = extractEmail(token);
+        System.out.println(extractedEmail + " hh " +userEmail);
         return extractedEmail != null && extractedEmail.equals(userEmail) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
         try {
-            return Jwts.parserBuilder()
+            Date expirationDate = Jwts.parserBuilder()
                     .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token)
                     .getBody()
-                    .getExpiration()
-                    .before(new Date());
+                    .getExpiration();
+
+            System.out.println("Token Expiration Date: " + expirationDate);
+            return expirationDate.before(new Date());
         } catch (JwtException e) {
+            System.out.println("Error parsing token: " + e.getMessage());
             return true;
         }
+        }
     }
-}
+
