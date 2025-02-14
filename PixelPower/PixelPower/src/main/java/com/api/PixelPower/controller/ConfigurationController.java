@@ -1,7 +1,7 @@
 package com.api.PixelPower.controller;
 
 import com.api.PixelPower.dto.ConfigurationDTO;
-import com.api.PixelPower.dto.ConfigurationResponseDTO;
+import com.api.PixelPower.dto.response.ConfigurationResponseDTO;
 import com.api.PixelPower.service.serviceInt.ConfigurationServiceInt;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

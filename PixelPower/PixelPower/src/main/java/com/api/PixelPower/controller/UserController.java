@@ -1,7 +1,7 @@
 package com.api.PixelPower.controller;
 
 import com.api.PixelPower.dto.UserDTO;
-import com.api.PixelPower.dto.UserResponseDTO;
+import com.api.PixelPower.dto.response.UserResponseDTO;
 import com.api.PixelPower.service.serviceInt.UserServiceInt;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

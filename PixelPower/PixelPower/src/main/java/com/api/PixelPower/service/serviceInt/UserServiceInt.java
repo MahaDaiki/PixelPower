@@ -1,9 +1,9 @@
 package com.api.PixelPower.service.serviceInt;
 
-import com.api.PixelPower.dto.AuthTokenResponseDTO;
-import com.api.PixelPower.dto.LoginRequestDTO;
+import com.api.PixelPower.dto.response.AuthTokenResponseDTO;
+import com.api.PixelPower.dto.request.LoginRequestDTO;
 import com.api.PixelPower.dto.UserDTO;
-import com.api.PixelPower.dto.UserResponseDTO;
+import com.api.PixelPower.dto.response.UserResponseDTO;
 
 import java.util.*;
 

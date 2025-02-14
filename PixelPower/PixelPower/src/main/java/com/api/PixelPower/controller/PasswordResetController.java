@@ -1,7 +1,7 @@
 package com.api.PixelPower.controller;
 
 
-import com.api.PixelPower.dto.PasswordResetRequestDTO;
+import com.api.PixelPower.dto.request.PasswordResetRequestDTO;
 import com.api.PixelPower.dto.ResetPasswordDTO;
 import com.api.PixelPower.service.serviceInt.PasswordResetServiceInt;
 import jakarta.validation.Valid;

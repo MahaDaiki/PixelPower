@@ -1,7 +1,7 @@
 package com.api.PixelPower.service.serviceInt;
 
 import com.api.PixelPower.dto.ConfigurationDTO;
-import com.api.PixelPower.dto.ConfigurationResponseDTO;
+import com.api.PixelPower.dto.response.ConfigurationResponseDTO;
 
 import java.util.List;
 

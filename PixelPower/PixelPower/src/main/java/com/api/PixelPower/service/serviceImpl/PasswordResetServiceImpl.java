@@ -1,6 +1,6 @@
 package com.api.PixelPower.service.serviceImpl;
 
-import com.api.PixelPower.dto.PasswordResetRequestDTO;
+import com.api.PixelPower.dto.request.PasswordResetRequestDTO;
 import com.api.PixelPower.dto.ResetPasswordDTO;
 import com.api.PixelPower.entity.PasswordResetToken;
 import com.api.PixelPower.entity.User;
@@ -16,7 +16,6 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

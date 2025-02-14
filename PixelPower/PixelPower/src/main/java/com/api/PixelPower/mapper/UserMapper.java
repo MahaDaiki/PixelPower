@@ -1,7 +1,7 @@
 package com.api.PixelPower.mapper;
 
 import com.api.PixelPower.dto.UserDTO;
-import com.api.PixelPower.dto.UserResponseDTO;
+import com.api.PixelPower.dto.response.UserResponseDTO;
 import com.api.PixelPower.entity.User;
 import org.mapstruct.Mapper;
 

@@ -1,9 +1,9 @@
 package com.api.PixelPower.service.serviceImpl;
 
-import com.api.PixelPower.dto.AuthTokenResponseDTO;
-import com.api.PixelPower.dto.LoginRequestDTO;
+import com.api.PixelPower.dto.response.AuthTokenResponseDTO;
+import com.api.PixelPower.dto.request.LoginRequestDTO;
 import com.api.PixelPower.dto.UserDTO;
-import com.api.PixelPower.dto.UserResponseDTO;
+import com.api.PixelPower.dto.response.UserResponseDTO;
 import com.api.PixelPower.entity.Role;
 import com.api.PixelPower.entity.User;
 import com.api.PixelPower.exception.EmailAlreadyExistsException;
@@ -19,7 +19,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;

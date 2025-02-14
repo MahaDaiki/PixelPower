@@ -2,7 +2,7 @@ package com.api.PixelPower.mapper;
 
 
 import com.api.PixelPower.dto.ConfigurationDTO;
-import com.api.PixelPower.dto.ConfigurationResponseDTO;
+import com.api.PixelPower.dto.response.ConfigurationResponseDTO;
 import com.api.PixelPower.entity.Configuration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

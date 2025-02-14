@@ -1,4 +1,4 @@
-package com.api.PixelPower.dto;
+package com.api.PixelPower.dto.response;
 
 import com.api.PixelPower.entity.Role;
 import lombok.Data;

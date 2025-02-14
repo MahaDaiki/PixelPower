@@ -1,4 +1,4 @@
-package com.api.PixelPower.dto;
+package com.api.PixelPower.dto.response;
 
 
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.api.PixelPower.service.serviceImpl;
 
 import com.api.PixelPower.dto.ConfigurationDTO;
-import com.api.PixelPower.dto.ConfigurationResponseDTO;
+import com.api.PixelPower.dto.response.ConfigurationResponseDTO;
 import com.api.PixelPower.entity.Configuration;
 import com.api.PixelPower.entity.User;
 import com.api.PixelPower.exception.EmptyException;
@@ -12,7 +12,6 @@ import com.api.PixelPower.repository.UserRepository;
 import com.api.PixelPower.service.serviceInt.ConfigurationServiceInt;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.engine.config.spi.ConfigurationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
