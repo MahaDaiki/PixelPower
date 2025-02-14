@@ -13,5 +13,5 @@ public class UserResponseDTO {
     private Role role;
     private String profilePicture;
     private LocalDateTime createdAt;
-    private String token;
+//    private String token;
 }

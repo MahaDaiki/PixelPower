@@ -28,7 +28,7 @@ public class AuthenticationController {
     public ResponseEntity<Object> register(@RequestBody @Valid UserDTO userDTO) {
         UserResponseDTO userResponse = userService.register(userDTO);
 
-        // Create a response object with a success message and user data
+
         Map<String, Object> response = new HashMap<>();
         response.put("message", "User created successfully");
         response.put("user", userResponse);
