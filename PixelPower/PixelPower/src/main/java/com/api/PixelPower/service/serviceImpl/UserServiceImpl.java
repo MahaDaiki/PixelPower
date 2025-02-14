@@ -21,6 +21,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserServiceInt {
@@ -64,6 +67,56 @@ public class UserServiceImpl implements UserServiceInt {
         String token = jwtUtil.generateToken(loginRequest.getEmail());
 
         return new AuthTokenResponseDTO(token);
+    }
+
+    @Override
+    public List<UserResponseDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(userMapper::toResponseDTO).toList();
+    }
+
+    @Override
+    public Optional<UserResponseDTO> getUserById(Long id) {
+        return userRepository.findById(id).map(userMapper::toResponseDTO);
+    }
+
+    @Override
+    public UserResponseDTO updateUser(Long id, UserDTO userDTO) {
+        Optional<User> existingUser = userRepository.findById(id);
+        if (existingUser.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+
+        User user = existingUser.get();
+        if (userDTO.getUsername() != null) user.setUsername(userDTO.getUsername());
+        if (userDTO.getEmail() != null) user.setEmail(userDTO.getEmail());
+        if (userDTO.getProfilePicture() != null) user.setProfilePicture(userDTO.getProfilePicture());
+
+        user = userRepository.save(user);
+
+        return userMapper.toResponseDTO(user);
+    }
+
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+
+    }
+
+    @Override
+    public UserResponseDTO updatePassword(Long id, String newPassword) {
+        Optional<User> existingUser = userRepository.findById(id);
+        if (existingUser.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+
+        User user = existingUser.get();
+        user.setPassword(passwordEncoder.encode(newPassword));
+
+        user = userRepository.save(user);
+
+        return userMapper.toResponseDTO(user);
     }
 
 
