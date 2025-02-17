@@ -4,12 +4,10 @@ import com.api.PixelPower.dto.GameDTO;
 import com.api.PixelPower.service.serviceInt.SteamServiceInt;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/games")
@@ -28,4 +26,10 @@ public class SteamController {
 
     }
 
+    @GetMapping("/{appId}")
+    public ResponseEntity<Map<String, Object>> getGameDetails(@PathVariable int appId) {
+        System.out.println(appId);
+        Map<String, Object> gameDetails = steamService.getGameDetails(appId);
+        return ResponseEntity.ok(gameDetails);
+    }
 }

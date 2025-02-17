@@ -5,12 +5,14 @@ import com.api.PixelPower.dto.response.SteamApiResponse;
 import com.api.PixelPower.mapper.GameMapper;
 import com.api.PixelPower.service.serviceInt.SteamServiceInt;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,4 +49,17 @@ public class SteamServiceImpl implements SteamServiceInt {
         }
         return List.of();
     }
+
+    @Override
+    public Map<String, Object> getGameDetails(int appId) {
+        String url = "https://store.steampowered.com/api/appdetails?appids=" + appId;
+        System.out.println("Requesting URL: " + url);
+        try {
+            ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
+            return response.getBody();
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            System.out.println("Error response from Steam API: " + e.getMessage());
+            throw new RuntimeException("Failed to fetch game details: " + e.getStatusCode());
+        }
     }
+}
