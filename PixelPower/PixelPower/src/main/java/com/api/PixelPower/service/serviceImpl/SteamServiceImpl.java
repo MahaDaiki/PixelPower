@@ -5,6 +5,7 @@ import com.api.PixelPower.dto.response.SteamApiResponse;
 import com.api.PixelPower.mapper.GameMapper;
 import com.api.PixelPower.service.serviceInt.SteamServiceInt;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -24,7 +25,10 @@ public class SteamServiceImpl implements SteamServiceInt {
     private final GameMapper gameMapper;
 
     @Override
+
+    @Cacheable(value = "allGames")
     public List<GameDTO> getGamesWithNames(int page, int size) {
+        System.out.println("getGamesWithNames");
         try {
             SteamApiResponse response = restTemplate.getForObject(STEAM_GAME_LIST_URL, SteamApiResponse.class);
 
@@ -51,6 +55,7 @@ public class SteamServiceImpl implements SteamServiceInt {
     }
 
     @Override
+    @Cacheable(value = "gameDetails", key = "#appId")
     public Map<String, Object> getGameDetails(int appId) {
         String url = "https://store.steampowered.com/api/appdetails?appids=" + appId;
         System.out.println("Requesting URL: " + url);
