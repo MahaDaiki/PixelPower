@@ -1,11 +1,14 @@
 package com.api.PixelPower.controller;
 
 import com.api.PixelPower.dto.GameDTO;
+import com.api.PixelPower.dto.response.GameRequirementsResponseDTO;
+import com.api.PixelPower.service.serviceInt.GameRequirementServiceInt;
 import com.api.PixelPower.service.serviceInt.SteamServiceInt;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +17,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class SteamController {
     private final SteamServiceInt steamService;
+    private final GameRequirementServiceInt gameRequirementService;
 
     @GetMapping("")
     public ResponseEntity<List<GameDTO>> getGamesWithNames(
@@ -31,5 +35,14 @@ public class SteamController {
         System.out.println(appId);
         Map<String, Object> gameDetails = steamService.getGameDetails(appId);
         return ResponseEntity.ok(gameDetails);
+    }
+
+    @GetMapping("/requirements/{appId}/{userId}")
+    public ResponseEntity<GameRequirementsResponseDTO> getGameRequirements(
+            @PathVariable int appId,
+            @PathVariable Long userId) {
+
+        GameRequirementsResponseDTO responseDTO = gameRequirementService.parseRequirements(appId, userId);
+        return ResponseEntity.ok(responseDTO);
     }
 }

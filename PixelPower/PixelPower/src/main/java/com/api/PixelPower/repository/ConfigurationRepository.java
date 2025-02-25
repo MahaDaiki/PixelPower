@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConfigurationRepository extends JpaRepository<Configuration, Long> {
-
+    Configuration findByUserId(Long userId);
 }
