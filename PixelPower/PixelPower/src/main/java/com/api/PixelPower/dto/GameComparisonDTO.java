@@ -1,5 +1,6 @@
 package com.api.PixelPower.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,10 @@ import java.time.LocalDateTime;
 public class GameComparisonDTO {
     private Long id;
     private String gameName;
+    private Boolean gpuCompatible;
+    private Boolean cpuCompatible;
+    private Boolean ramCompatible;
+    private Boolean storageCompatible;
     private Boolean compatible;
     private String estimatedFpsLow;
     private String estimatedFpsMedium;

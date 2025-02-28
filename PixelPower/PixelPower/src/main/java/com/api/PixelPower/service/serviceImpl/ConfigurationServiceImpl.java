@@ -2,7 +2,9 @@ package com.api.PixelPower.service.serviceImpl;
 
 import com.api.PixelPower.dto.ConfigurationDTO;
 import com.api.PixelPower.dto.response.ConfigurationResponseDTO;
+import com.api.PixelPower.entity.ConfigStatus;
 import com.api.PixelPower.entity.Configuration;
+import com.api.PixelPower.entity.OperatingSystem;
 import com.api.PixelPower.entity.User;
 import com.api.PixelPower.exception.EmptyException;
 import com.api.PixelPower.exception.ResourceNotFoundException;
@@ -93,4 +95,20 @@ public class ConfigurationServiceImpl implements ConfigurationServiceInt {
                 .map(configurationMapper::mapToResponseDTO)
                 .toList();
     }
-}
+
+
+    @Override
+    public OperatingSystem getPrimaryUserOs(Long userId) {
+        return getUserPrimaryConfiguration(userId).getOs();
+    }
+
+    @Override
+    public Configuration getUserPrimaryConfiguration(Long userId) {
+        List<Configuration> configurations = configurationRepository.findByUserId(userId);
+
+        return configurations.stream()
+                .filter(config -> config.getStatus() == ConfigStatus.PRIMARY)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No primary configuration found for user!"));
+    }}
+
