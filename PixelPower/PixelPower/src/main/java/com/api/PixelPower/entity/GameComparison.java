@@ -25,19 +25,16 @@ public class GameComparison {
     private String gameName;
 
     @NotNull(message = "CPU Compatibility status is mandatory")
-    private Boolean cpuGompatible;
+    private Boolean cpuCompatible;
 
     @NotNull(message = "GPU Compatibility status is mandatory")
-    private Boolean cpuCompatible;
+    private Boolean gpuCompatible;
 
     @NotNull(message = "RAM Compatibility status is mandatory")
     private Boolean ramCompatible;
 
     @NotNull(message = "Storage Compatibility status is mandatory")
     private Boolean storageCompatible;
-
-    @NotNull(message = "OS Compatibility status is mandatory")
-    private Boolean osCompatible;
 
     @NotNull(message = "Compatibility status is mandatory")
     private Boolean compatible;

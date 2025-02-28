@@ -2,6 +2,7 @@ package com.api.PixelPower.service.serviceImpl;
 
 import com.api.PixelPower.dto.ConfigurationDTO;
 import com.api.PixelPower.dto.response.ConfigurationResponseDTO;
+import com.api.PixelPower.entity.ConfigStatus;
 import com.api.PixelPower.entity.Configuration;
 import com.api.PixelPower.entity.OperatingSystem;
 import com.api.PixelPower.entity.User;
@@ -98,7 +99,16 @@ public class ConfigurationServiceImpl implements ConfigurationServiceInt {
 
     @Override
     public OperatingSystem getPrimaryUserOs(Long userId) {
-        Configuration primaryConfig = configurationRepository.findByUserId(userId);
-        return (primaryConfig != null) ? primaryConfig.getOs() : null;
+        return getUserPrimaryConfiguration(userId).getOs();
     }
-}
+
+    @Override
+    public Configuration getUserPrimaryConfiguration(Long userId) {
+        List<Configuration> configurations = configurationRepository.findByUserId(userId);
+
+        return configurations.stream()
+                .filter(config -> config.getStatus() == ConfigStatus.PRIMARY)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No primary configuration found for user!"));
+    }}
+

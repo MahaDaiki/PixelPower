@@ -9,11 +9,10 @@ import java.time.LocalDateTime;
 public class GameComparisonDTO {
     private Long id;
     private String gameName;
-    private Boolean cpuGompatible;
+    private Boolean gpuCompatible;
     private Boolean cpuCompatible;
     private Boolean ramCompatible;
     private Boolean storageCompatible;
-    private Boolean osCompatible;
     private Boolean compatible;
     private String estimatedFpsLow;
     private String estimatedFpsMedium;
