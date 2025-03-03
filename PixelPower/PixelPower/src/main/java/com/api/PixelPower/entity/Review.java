@@ -19,11 +19,14 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Game name is mandatory")
+    private String gameName;
+
     @Min(value = 1, message = "Rating must be at least 1")
     @Max(value = 5, message = "Rating must not exceed 5")
     private int rating;
 
-    @NotBlank(message = "Comment is mandatory")
+
     private String comment;
 
     private LocalDateTime createdAt;
@@ -32,9 +35,7 @@ public class Review {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "game_comparison_id", nullable = false)
-    private GameComparison gameComparison;
+
 
     @PrePersist
     private void onCreate() {
