@@ -7,5 +7,5 @@ public class UpgradeSuggestionDTO {
     private Long id;
     private String limitingComponent;
     private String suggestedUpgrade;
-    private Long configurationId;
+    private Long gameComparisonId;
 }

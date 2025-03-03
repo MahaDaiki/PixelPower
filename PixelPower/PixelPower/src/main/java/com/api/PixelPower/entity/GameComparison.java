@@ -8,7 +8,9 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "game_comparisons")
@@ -64,6 +66,9 @@ public class GameComparison {
     @ManyToOne
     @JoinColumn(name = "configuration_id", nullable = false)
     private Configuration configuration;
+
+    @OneToMany(mappedBy = "gameComparison", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UpgradeSuggestion> upgradeSuggestions = new ArrayList<>();
 
     @PrePersist
     private void onCreate() {

@@ -22,6 +22,6 @@ public class UpgradeSuggestion {
     private String suggestedUpgrade;
 
     @ManyToOne
-    @JoinColumn(name = "configuration_id", nullable = false)
-    private Configuration configuration;
+    @JoinColumn(name = "comparison_id", nullable = false)
+    private GameComparison gameComparison;
 }
