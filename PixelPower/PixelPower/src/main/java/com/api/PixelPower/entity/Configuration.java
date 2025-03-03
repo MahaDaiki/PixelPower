@@ -6,11 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -76,8 +74,7 @@ public class Configuration {
     @OneToMany(mappedBy = "configuration", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GameComparison> gameComparisons = new ArrayList<>();
 
-    @OneToMany(mappedBy = "configuration", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UpgradeSuggestion> upgradeSuggestions = new ArrayList<>();
+
 
 
     @PrePersist

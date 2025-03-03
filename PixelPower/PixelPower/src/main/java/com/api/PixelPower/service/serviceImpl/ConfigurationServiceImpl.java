@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
+
 @Service
 @AllArgsConstructor
 public class ConfigurationServiceImpl implements ConfigurationServiceInt {

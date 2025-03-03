@@ -51,11 +51,10 @@ public class GameComparisonServiceImpl implements GameComparisonServiceInt {
         int recGpuScore = gameRequirements.getMaxGpu().equals("N/A") ? minGpuScore * 2 : benchmarkCalculator.calculateGpuScore(gameRequirements.getMaxGpu());
 
         // IMPORTANT CHANGE: For compatibility, we only care if user hardware meets minimum requirements
-        // We don't want to fail if hardware is BETTER than recommended
         boolean cpuCompatible = userCpuScore >= minCpuScore;
         boolean gpuCompatible = userGpuScore >= minGpuScore;
 
-        // Check RAM, Storage, and OS compatibility
+
         boolean ramCompatible = extractNumber(userConfig.getRam()) >= extractNumber(gameRequirements.getRam());
         boolean storageCompatible = extractNumber(userConfig.getStorage()) >= extractNumber(gameRequirements.getStorage());
 

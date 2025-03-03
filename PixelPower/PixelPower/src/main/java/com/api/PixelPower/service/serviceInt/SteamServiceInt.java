@@ -8,4 +8,6 @@ import java.util.Map;
 public interface SteamServiceInt {
     List<GameDTO> getGamesWithNames(int page, int size);
     Map<String, Object> getGameDetails(int appId);
+    Integer getAppIdByGameName(String gameName);
+    List<GameDTO> searchGamesByName(String query, int page, int size);
 }
