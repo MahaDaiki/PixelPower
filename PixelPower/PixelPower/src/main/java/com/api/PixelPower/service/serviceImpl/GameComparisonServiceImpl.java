@@ -1,20 +1,23 @@
 package com.api.PixelPower.service.serviceImpl;
 
-import com.api.PixelPower.dto.GameComparisonDTO;
+import com.api.PixelPower.dto.response.GameComparisonResponseDTO;
 import com.api.PixelPower.dto.response.ConfigurationResponseDTO;
 import com.api.PixelPower.dto.response.GameRequirementsResponseDTO;
 import com.api.PixelPower.entity.GameComparison;
 import com.api.PixelPower.mapper.GameComparisonMapper;
 import com.api.PixelPower.repository.GameComparisonRepository;
+import com.api.PixelPower.repository.UserRepository;
 import com.api.PixelPower.service.serviceInt.BenchmarkCalculatorServiceInt;
 import com.api.PixelPower.service.serviceInt.ConfigurationServiceInt;
 import com.api.PixelPower.service.serviceInt.GameComparisonServiceInt;
 import com.api.PixelPower.service.serviceInt.GameRequirementServiceInt;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +27,7 @@ public class GameComparisonServiceImpl implements GameComparisonServiceInt {
     private final ConfigurationServiceInt configurationService;
     private final GameComparisonRepository gameComparisonRepository;
     private final GameComparisonMapper gameComparisonMapper;
+    private final UserRepository userRepository;
 
 
     private int extractNumber(String value) {
@@ -32,7 +36,7 @@ public class GameComparisonServiceImpl implements GameComparisonServiceInt {
 
 
     @Override
-    public GameComparisonDTO compareGameWithUserConfig(int appId, Long userId) {
+    public GameComparisonResponseDTO compareGameWithUserConfig(int appId, Long userId) {
         List<ConfigurationResponseDTO> userConfigs = configurationService.getConfigurationsByAuthenticatedUser();
         if (userConfigs.isEmpty()) throw new RuntimeException("Aucune configuration utilisateur trouvée !");
         ConfigurationResponseDTO userConfig = userConfigs.get(0);
@@ -89,27 +93,50 @@ public class GameComparisonServiceImpl implements GameComparisonServiceInt {
     @Override
 
     public String calculateEstimatedFps(int gpuScore, int cpuScore, String quality) {
-        // Base difficulty scaling adjusted dynamically using GPU score
+
         double gameDifficultyFactor = Math.max(180, gpuScore / 80.0);
 
-        // Weighted Performance Score
+
         double weightedPerformance = (gpuScore * 0.7 + cpuScore * 0.3) / gameDifficultyFactor;
 
-        // Quality multipliers
+
         double qualityMultiplier = switch (quality.toLowerCase()) {
             case "low" -> 1.8;
             case "medium" -> 1.2;
             case "high" -> 0.8;
-            default -> 1.0; // Default case (if input is invalid)
+            default -> 1.0;
         };
 
-        // Final FPS Calculation
+
         int estimatedFps = (int) Math.round(weightedPerformance * qualityMultiplier);
 
-        // Ensure FPS stays within a reasonable range
+
         estimatedFps = Math.max(15, Math.min(estimatedFps, 240));
 
         return estimatedFps + " FPS";
+    }
+
+    @Override
+    public List<GameComparisonResponseDTO> getAllGameComparisons() {
+        return gameComparisonRepository.findAll()
+                .stream()
+                .map(gameComparisonMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GameComparisonResponseDTO> getGameComparisonsByAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Long userId = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"))
+                .getId();
+
+        return gameComparisonRepository.findByConfiguration_UserId(userId)
+                .stream()
+                .map(gameComparisonMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
 }
