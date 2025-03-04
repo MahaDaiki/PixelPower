@@ -1,6 +1,5 @@
 package com.api.PixelPower.dto.response;
 
-import com.api.PixelPower.dto.GameComparisonDTO;
 import com.api.PixelPower.dto.UpgradeSuggestionDTO;
 import com.api.PixelPower.entity.ConfigStatus;
 import com.api.PixelPower.entity.OperatingSystem;
@@ -23,6 +22,6 @@ public class ConfigurationResponseDTO {
     private OperatingSystem os;
     private ConfigStatus status;
     private Long userId;
-    private List<GameComparisonDTO> gameComparisons;
+    private List<GameComparisonResponseDTO> gameComparisons;
     private List<UpgradeSuggestionDTO> upgradeSuggestions;
 }

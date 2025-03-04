@@ -1,12 +1,11 @@
-package com.api.PixelPower.dto;
+package com.api.PixelPower.dto.response;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class GameComparisonDTO {
+public class GameComparisonResponseDTO {
     private Long id;
     private String gameName;
     private Boolean gpuCompatible;

@@ -1,9 +1,13 @@
 package com.api.PixelPower.service.serviceInt;
 
-import com.api.PixelPower.dto.GameComparisonDTO;
+import com.api.PixelPower.dto.response.GameComparisonResponseDTO;
+
+import java.util.List;
 
 public interface GameComparisonServiceInt {
-    GameComparisonDTO compareGameWithUserConfig(int appId, Long userId);
+    GameComparisonResponseDTO compareGameWithUserConfig(int appId, Long userId);
     String calculateEstimatedFps(int gpuScore, int cpuScore, String quality);
+    List<GameComparisonResponseDTO> getAllGameComparisons();
+    List<GameComparisonResponseDTO> getGameComparisonsByAuthenticatedUser();
 
 }
