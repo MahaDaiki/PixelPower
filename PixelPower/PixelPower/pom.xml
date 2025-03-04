@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.api</groupId>
-	<artifactId>PixelPower</artifactId>
+	<artifactId>PixelPowerAPI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>PixelPower</name>
 	<description>PixelPower Api</description>
