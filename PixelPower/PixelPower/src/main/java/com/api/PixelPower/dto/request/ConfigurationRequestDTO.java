@@ -1,4 +1,4 @@
-package com.api.PixelPower.dto;
+package com.api.PixelPower.dto.request;
 
 
 import com.api.PixelPower.entity.ConfigStatus;
@@ -8,7 +8,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ConfigurationDTO {
+public class ConfigurationRequestDTO {
     private Long id;
     private String name;
     private String cpu;

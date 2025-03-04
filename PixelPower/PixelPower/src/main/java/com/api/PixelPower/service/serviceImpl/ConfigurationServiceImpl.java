@@ -1,6 +1,6 @@
 package com.api.PixelPower.service.serviceImpl;
 
-import com.api.PixelPower.dto.ConfigurationDTO;
+import com.api.PixelPower.dto.request.ConfigurationRequestDTO;
 import com.api.PixelPower.dto.response.ConfigurationResponseDTO;
 import com.api.PixelPower.entity.ConfigStatus;
 import com.api.PixelPower.entity.Configuration;
@@ -13,7 +13,6 @@ import com.api.PixelPower.repository.ConfigurationRepository;
 import com.api.PixelPower.repository.UserRepository;
 import com.api.PixelPower.service.serviceInt.ConfigurationServiceInt;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class ConfigurationServiceImpl implements ConfigurationServiceInt {
     private final UserRepository userRepository;
     private final ConfigurationMapper configurationMapper;
     @Override
-    public ConfigurationResponseDTO createConfiguration(ConfigurationDTO dto) {
+    public ConfigurationResponseDTO createConfiguration(ConfigurationRequestDTO dto) {
         if (dto.getName() == null || dto.getCpu() == null || dto.getGpu() == null) {
             throw new EmptyException("Required fields cannot be empty.");
         }
@@ -57,7 +56,7 @@ public class ConfigurationServiceImpl implements ConfigurationServiceInt {
     }
 
     @Override
-    public ConfigurationResponseDTO updateConfiguration(Long id, ConfigurationDTO dto) {
+    public ConfigurationResponseDTO updateConfiguration(Long id, ConfigurationRequestDTO dto) {
         Configuration config = configurationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Configuration not found"));
 

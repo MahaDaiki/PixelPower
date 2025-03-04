@@ -1,6 +1,6 @@
 package com.api.PixelPower.controller;
 
-import com.api.PixelPower.dto.ConfigurationDTO;
+import com.api.PixelPower.dto.request.ConfigurationRequestDTO;
 import com.api.PixelPower.dto.response.ConfigurationResponseDTO;
 import com.api.PixelPower.service.serviceInt.ConfigurationServiceInt;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 public class ConfigurationController {
     private final ConfigurationServiceInt configurationService;
     @PostMapping
-    public ResponseEntity<ConfigurationResponseDTO> createConfiguration(@RequestBody ConfigurationDTO dto) {
+    public ResponseEntity<ConfigurationResponseDTO> createConfiguration(@RequestBody ConfigurationRequestDTO dto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             System.out.println("Authenticated user: " + authentication.getName());
@@ -46,7 +46,7 @@ public class ConfigurationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConfigurationResponseDTO> updateConfiguration(@PathVariable Long id, @RequestBody ConfigurationDTO dto) {
+    public ResponseEntity<ConfigurationResponseDTO> updateConfiguration(@PathVariable Long id, @RequestBody ConfigurationRequestDTO dto) {
         return ResponseEntity.ok(configurationService.updateConfiguration(id, dto));
     }
 
