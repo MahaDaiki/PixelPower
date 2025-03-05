@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+
+body {
+  background-image: url("../public/hoome.gif");
+  background-size: cover;
+  /*background-position: center;*/
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
