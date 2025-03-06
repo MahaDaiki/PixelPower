@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+nav {
+  font-family: 'Pixelify Sans', cursive;
+  letter-spacing: 1px;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
+  background-color: #101748;
+  border-bottom: 4px solid rgba(255, 64, 129, 0.22);
+}
+
+.yellow{
+  color: #FFC107;
+}
+
+/* Links style */
+nav a {
+  font-size: 25px;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-in-out;
+  color: #FFC107;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+
+
+}
+nav img {
+  transition: transform 0.3s ease-in-out;
+}
+
+nav img:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+nav a:hover {
+  color: #FF4081B2 ;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
+}
+
+
