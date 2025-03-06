@@ -1,0 +1,29 @@
+<nav class="navbar px-4 py-2 fixed top-0 left-0 right-0 z-10  shadow-lg">
+  <div class="flex justify-between items-center">
+    <div class="flex items-center ">
+      <img src="logopixelp.png" alt="PixelPower Logo" class="w-15 h-15 " />
+    <div class="text-3xl  yellow">
+      <span class="text-[#FF4081]">Pixel</span>Power
+    </div>
+    </div>
+
+    <!-- Links Section -->
+    <div class="hidden lg:flex items-center space-x-6">
+      <a href="#" class="text-white transition-all">Games</a>
+      <a href="#" class="text-white transition-all">Login</a>
+    </div>
+
+    <!-- Mobile Hamburger Icon (for responsive design) -->
+    <div class="lg:hidden">
+      <button (click)="toggleMenu()" class="text-white">
+        <img src="book2.gif" alt="Menu" class="w-10 h-10" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu (toggle visibility) -->
+  <div class="lg:hidden mt-4" *ngIf="isMenuOpen">
+    <a href="#" class="block text-white py-2">Games</a>
+    <a href="#" class="block text-white py-2">Login</a>
+  </div>
+</nav>

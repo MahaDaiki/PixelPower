@@ -1,0 +1,21 @@
+<!-- home.component.html -->
+<div class="wrapper" #container [@zoomAnimation]="isAnimating ? 'void' : null" [ngStyle]="getZoomStyle(targetElement)">
+  <!-- Full screen image container -->
+  <div class="image-container">
+    <img src="hoome.gif" alt="Pixel Power Gaming Room" class="fullscreen-image">
+
+    <!-- Interactive areas directly on the image -->
+    <div id="switch" class="interactive-area switch-area" (click)="navigateTo('switch', '/games')">
+      <div class="hover-effect">
+        <span class="tooltip">Games</span>
+      </div>
+    </div>
+
+    <div id="computer" class="interactive-area computer-area" (click)="navigateTo('computer', '/login')">
+      <div class="hover-effect">
+        <span class="tooltip">Login</span>
+      </div>
+    </div>
+  </div>
+</div>
+

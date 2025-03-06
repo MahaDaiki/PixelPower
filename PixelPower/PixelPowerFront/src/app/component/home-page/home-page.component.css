@@ -1,0 +1,110 @@
+.wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: fixed; /* Fix image so interactive areas stay in place */
+  top: 0;
+  left: 0;
+}
+
+.fullscreen-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.interactive-area {
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Modified: Only the border appears on hover, tooltip is always visible */
+.interactive-area:hover .hover-effect {
+  border: 2px solid rgb(255, 193, 7);
+}
+
+/* Nintendo Switch interactive area */
+.switch-area {
+  bottom: 14.9%;
+  right: 25%;
+  width: 7%;
+  height: 6%;
+  z-index: 10;
+}
+
+/* Computer screen interactive area */
+.computer-area {
+  top: 63%;
+  left: 34%;
+  width: 4%;
+  height: 4%;
+  z-index: 10;
+}
+
+.hover-effect {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.84);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tooltip:hover{
+  color: #FF4081;
+}
+
+.tooltip {
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: "Pixelify Sans", cursive;
+  font-size: 12px;
+  text-shadow: 1px 1px 2px #000;
+  white-space: nowrap;
+}
+
+/* Added media queries for better responsiveness */
+@media (max-width: 768px) {
+  .tooltip {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tooltip {
+    font-size: 8px;
+    padding: 2px 4px;
+  }
+  .switch-area {
+    bottom: 25%;
+    right: 30%;
+    width: 7%;
+    height: 6%;
+    z-index: 10;
+  }
+
+  /* Computer screen interactive area */
+  .computer-area {
+    top: 63%;
+    left: 30%;
+    width: 10%;
+    height: 10%;
+    z-index: 10;
+  }
+
+}
+
