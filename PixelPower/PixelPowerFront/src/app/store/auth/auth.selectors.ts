@@ -9,6 +9,12 @@ export const selectAuthToken = createSelector(
   (state: AuthState) => state.token
 );
 
+export const selectAuthMessage = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.message
+);
+
+
 export const selectAuthError = createSelector(
   selectAuthState,
   (state: AuthState) => state.error
