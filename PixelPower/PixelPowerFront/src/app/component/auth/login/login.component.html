@@ -1,0 +1,58 @@
+<div class="min-h-screen flex items-center justify-center relative">
+  <!-- Background Image -->
+  <div class="pixelated-bg absolute inset-0 w-full h-full z-[-1]">
+    <img src="logintest.gif" alt="Background Image" class="pixelated absolute inset-0 w-full h-full object-cover z-[-1]" />
+  </div>
+
+  <!-- Login Form -->
+  <div class="login-container">
+    <div class="w-full max-w-md p-8 pixelated-form form-animate rounded-lg shadow-lg">
+      <h2 class=" font-bold text-center pixel-title mb-6">LOGIN</h2>
+
+      <!-- Reactive form for login -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Error Message -->
+        <div *ngIf="error$ | async" class="error text-center mt-4 ">
+          {{ error$ | async }}
+        </div>
+        <!-- Email Field -->
+        <div class="mb-4">
+          <label for="email" class="block font-medium pixel-text">Email</label>
+          <input id="email" type="email" formControlName="email"
+                 class="mt-2 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 pixelated-input" />
+
+          <!-- Email error messages -->
+          <div *ngIf="hasError('email', 'required')" class="error text-xs mt-1 ">
+            Email is required.
+          </div>
+          <div *ngIf="hasError('email', 'email')" class="text-red-300 text-xs mt-1 ">
+            Please enter a valid email.
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="mb-6">
+          <label for="password" class="block text-sm font-medium pixel-text">Password</label>
+          <input id="password" type="password" formControlName="password"
+                 class="mt-2 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 pixelated-input" />
+
+          <!-- Password error messages -->
+          <div *ngIf="hasError('password', 'required')" class=" error text-red-300 text-xs mt-1 ">
+            Password is required.
+          </div>
+          <div *ngIf="hasError('password', 'minlength')" class="error text-xs mt-1 ">
+            Password must be at least 6 characters long.
+          </div>
+        </div>
+
+
+        <button type="submit" [disabled]="loginForm.invalid"
+                class="w-full py-2 px-4 font-bold rounded-lg pixelated-button">
+          LOGIN
+        </button>
+
+
+      </form>
+    </div>
+  </div>
+</div>
