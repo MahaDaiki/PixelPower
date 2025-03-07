@@ -45,25 +45,16 @@ export class RegisterComponent {
 
   registerUser() {
     if (this.registerForm.valid) {
-      const { username, email, password } = this.registerForm.value;
+      const { username, email, password, confirmPassword } = this.registerForm.value;
       const profilePicture = this.selectedFile;
-
 
       console.log('Form Values:', { username, email, password });
       console.log('Selected File:', profilePicture);
 
-
-      this.authService.register(username, email, password, profilePicture).subscribe(
-        (response) => {
-          console.log('Registration successful:', response);
-        },
-        (error) => {
-          console.error('Registration failed:', error);
-        }
-      );
+      this.authService.registerUser(username, email, password, confirmPassword, profilePicture);
     } else {
       console.error('Form is not valid');
     }
+  }
 
-}
 }
