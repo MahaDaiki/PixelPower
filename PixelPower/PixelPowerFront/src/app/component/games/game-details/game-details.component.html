@@ -1,0 +1,216 @@
+<div class="min-h-screen flex items-center justify-center relative">
+  <!-- Fixed Background Image -->
+  <div class="pixelated-bg absolute inset-0 w-full h-full z-[-1]">
+    <img src="giphy.gif" alt="Background Image" class="pixelated absolute inset-0 w-full h-full object-cover z-[-1]" />
+  </div>
+
+  <div class="game-detail-container">
+    <!-- Browser-like container -->
+    <div class="browser-container pixelated-form form-animate rounded-lg shadow-lg">
+      <!-- Browser navigation bar -->
+      <div class="browser-nav">
+        <div class="browser-controls flex items-center gap-2 mb-2">
+          <div class="browser-dot bg-red-500"></div>
+          <div class="browser-dot bg-yellow-500"></div>
+          <div class="browser-dot bg-green-500"></div>
+          <div class="browser-address-bar flex-1 ml-2 px-2 py-1 rounded bg-black bg-opacity-50 text-xs text-cyan-300 font-mono">
+            https://PixelPower/gamedetail/{{ (game$ | async)?.steam_appid }}
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="browser-content">
+        <!-- Loading indicator -->
+        <div *ngIf="loading$ | async" class="loading-container">
+          <div class="loading-text pixel-text">Loading game details...</div>
+          <div class="loading-bar">
+            <div class="loading-progress"></div>
+          </div>
+        </div>
+
+        <!-- Error message -->
+        <div *ngIf="error$ | async as error" class="error-container">
+          <div class="error-icon">!</div>
+          <div class="error-message">{{ error }}</div>
+        </div>
+
+        <!-- Game details -->
+        <div *ngIf="game$ | async as game" class="game-details">
+          <!-- Header section -->
+          <div class="game-header">
+            <div class="header-image-container">
+              <img [src]="game.header_image" alt="{{ game.name }}" class="header-image">
+              <div class="header-overlay"></div>
+            </div>
+            <div class="game-title-container">
+              <h1 class="game-title pixel-title">{{ game.name }}</h1>
+              <div class="game-meta">
+                <span *ngIf="game.required_age > 0" class="age-rating">{{ game.required_age }}+</span>
+                <span *ngFor="let genre of game.genres" class="genre-tag">{{ genre.description }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main content -->
+          <div class="game-content">
+            <!-- Left column -->
+            <div class="game-info-column">
+              <!-- Description -->
+              <div class="info-section">
+                <h2 class="section-title pixel-text">About the Game</h2>
+                <div class="section-content description-text" [innerHTML]="game.detailed_description"></div>
+              </div>
+
+              <!-- Screenshots -->
+              <div class="info-section">
+                <h2 class="section-title pixel-text">Screenshots</h2>
+                <div class="screenshots-grid">
+                  <div *ngFor="let screenshot of game.screenshots" class="screenshot-item">
+                    <img [src]="screenshot.path_thumbnail" [alt]="game.name + ' screenshot'" class="screenshot-image" (click)="openScreenshot(screenshot.path_full)">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Videos -->
+              <div *ngIf="game.movies && game.movies.length > 0" class="info-section">
+                <h2 class="section-title pixel-text">Videos</h2>
+                <div class="videos-grid">
+                  <div *ngFor="let movie of game.movies" class="video-item">
+                    <div class="video-thumbnail" (click)="playVideo(movie.mp4.max)">
+                      <img [src]="movie.thumbnail" [alt]="movie.name" class="video-thumb-image">
+                      <div class="play-button">
+                        <svg viewBox="0 0 24 24" class="play-icon">
+                          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="video-name pixel-text">{{ movie.name }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right column -->
+            <div class="game-details-column">
+              <!-- Purchase info -->
+              <div class="info-card">
+                <div class="card-header">
+                  <h3 class="card-title pixel-text">Release Info</h3>
+                </div>
+                <div class="card-content">
+                  <div class="info-row">
+                    <span class="info-label">Release Date:</span>
+                    <span class="info-value">{{ game.release_date.date }}</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="info-label">Status:</span>
+                    <span class="info-value">{{ game.release_date.coming_soon ? 'Coming Soon' : 'Released' }}</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="info-label">Price:</span>
+                    <span class="info-value">{{ game.is_free ? 'Free to Play' : 'Paid' }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Developer info -->
+              <div class="info-card">
+                <div class="card-header">
+                  <h3 class="card-title pixel-text">Developers</h3>
+                </div>
+                <div class="card-content">
+                  <div *ngFor="let developer of game.developers" class="developer-item">{{ developer }}</div>
+                </div>
+              </div>
+
+              <!-- Publisher info -->
+              <div class="info-card">
+                <div class="card-header">
+                  <h3 class="card-title pixel-text">Publishers</h3>
+                </div>
+                <div class="card-content">
+                  <div *ngFor="let publisher of game.publishers" class="publisher-item">{{ publisher }}</div>
+                </div>
+              </div>
+
+              <!-- Platform info -->
+              <div class="info-card">
+                <div class="card-header">
+                  <h3 class="card-title pixel-text">Platforms</h3>
+                </div>
+                <div class="card-content platform-icons">
+                  <div *ngIf="game.platforms.windows" class="platform-icon windows-icon" title="Windows">
+                    <svg viewBox="0 0 24 24" class="platform-svg">
+                      <path d="M3 5.1L10.5 4v6.5H3V5.1zM10.5 13.5v6.5L3 18.9v-5.4h7.5zM11.5 3.9L21 2.5v8h-9.5V3.9zM21 13.5v8l-9.5-1.4v-6.6H21z"></path>
+                    </svg>
+                  </div>
+                  <div *ngIf="game.platforms.mac" class="platform-icon mac-icon" title="Mac">
+                    <svg viewBox="0 0 24 24" class="platform-svg">
+                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"></path>
+                    </svg>
+                  </div>
+                  <div *ngIf="game.platforms.linux" class="platform-icon linux-icon" title="Linux">
+                    <svg viewBox="0 0 24 24" class="platform-svg">
+                      <path d="M12.5 2c-.29 0-.5.21-.5.5v.5h-.5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1H13v-.5c0-.29-.21-.5-.5-.5zm-5 2c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zm9 0c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zM9 6c-.55 0-1 .45-1 1v2c0 .55.45 1 1 1s1-.45 1-1V7c0-.55-.45-1-1-1zm6 0c-.55 0-1 .45-1 1v2c0 .55.45 1 1 1s1-.45 1-1V7c0-.55-.45-1-1-1zM7.5 10c-.8 0-1.5.7-1.5 1.5S6.7 13 7.5 13 9 12.3 9 11.5 8.3 10 7.5 10zm9 0c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5zm-9.99 4C5.67 14 5 14.67 5 15.5v4c0 .83.67 1.5 1.5 1.5h11c.83 0 1.5-.67 1.5-1.5v-4c0-.83-.67-1.5-1.5-1.5h-11z"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- System Requirements -->
+              <div class="info-card">
+                <div class="card-header">
+                  <h3 class="card-title pixel-text">System Requirements</h3>
+                </div>
+                <div class="card-content">
+                  <div class="requirements-tabs">
+                    <button class="tab-button active" onclick="showTab('minimum')">Minimum</button>
+                    <button class="tab-button" onclick="showTab('recommended')">Recommended</button>
+                  </div>
+
+                  <div id="minimum" class="tab-content active">
+                    <div class="requirements-content" [innerHTML]="game.pc_requirements.minimum"></div>
+                  </div>
+
+                  <div id="recommended" class="tab-content">
+                    <div class="requirements-content" [innerHTML]="game.pc_requirements.recommended"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Categories -->
+              <div class="info-card">
+                <div class="card-header">
+                  <h3 class="card-title pixel-text">Categories</h3>
+                </div>
+                <div class="card-content">
+                  <div class="categories-list">
+                    <span *ngFor="let category of game.categories" class="category-tag">{{ category.description }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshot modal -->
+  <div *ngIf="activeScreenshot" class="screenshot-modal" (click)="closeScreenshot()">
+    <div class="modal-content">
+      <img [src]="activeScreenshot" alt="Screenshot" class="modal-image">
+      <button class="close-modal">×</button>
+    </div>
+  </div>
+
+  <!-- Video modal -->
+  <div *ngIf="activeVideo" class="video-modal" (click)="closeVideo()">
+    <div class="modal-content">
+      <video [src]="activeVideo" controls autoplay class="modal-video"></video>
+      <button class="close-modal">×</button>
+    </div>
+  </div>
+</div>

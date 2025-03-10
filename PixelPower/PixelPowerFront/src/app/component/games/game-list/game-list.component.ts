@@ -29,7 +29,9 @@ export class GameListComponent {
 
   loadGames(): void {
     console.log('Loading games...');
-    this.gamesService.getGames(this.page, this.size);
+    this.gamesService.getGames(this.page, this.size).subscribe({
+      error: (error) => console.error('Error loading games in component:', error)
+    });
   }
 
   nextPage(): void {

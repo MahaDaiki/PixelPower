@@ -14,7 +14,7 @@
           <div class="browser-dot bg-yellow-500"></div>
           <div class="browser-dot bg-green-500"></div>
           <div class="browser-address-bar flex-1 ml-2 px-2 py-1 rounded bg-black bg-opacity-50 text-xs text-cyan-300 font-mono">
-            https://cyber-arcade.net/games
+            https://PixelPower/games
           </div>
         </div>
       </div>
@@ -69,6 +69,10 @@
             <div class="game-title-container">
               <span class="game-index">{{ i + 1 }}</span>
               <h3 class="game-title pixel-text">{{ game.name }}</h3>
+
+              <a [href]="'/games/' + game.appid" class="view-details-button">
+                VIEW DETAILS
+              </a>
             </div>
 
           </div>

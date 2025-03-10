@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, Observable, of, tap, throwError} from 'rxjs';
-import {loadGames, loadGamesFailure, loadGamesSuccess} from '../store/games/games.actions';
-import {selectGameError, selectGameLoading, selectGames} from '../store/games/games.selectors';
+import {
+  loadGame,
+  loadGameFailure,
+  loadGames,
+  loadGamesFailure,
+  loadGamesSuccess,
+  loadGameSuccess
+} from '../store/games/games.actions';
+import {selectGameById, selectGameError, selectGameLoading, selectGames} from '../store/games/games.selectors';
 import {Store} from '@ngrx/store';
 
 @Injectable({
@@ -15,34 +22,47 @@ export class GamesService {
     private store: Store
   ) {}
 
-  // Method to get games data from the API and update the store
-  getGames(page: number, size: number): void {
-    // Dispatch loading action
-    this.store.dispatch(loadGames({ page, size }));
 
+  getGames(page: number, size: number): Observable<any[]> {
+    this.store.dispatch(loadGames({ page, size }));
     const url = `${this.apiUrl}?page=${page}&size=${size}`;
     console.log('Fetching games from:', url);
 
-    this.http.get<any>(url).pipe(
-      tap(data => console.log('Received data:', data)),
+    return this.http.get<any[]>(url).pipe(
+      tap(games => {
+        console.log('Received data:', games);
+        this.store.dispatch(loadGamesSuccess({ games }));
+      }),
       catchError(error => {
         console.error('API Error:', error);
         this.store.dispatch(loadGamesFailure({ error: error.message || 'Unknown error' }));
         return throwError(() => error);
       })
-    ).subscribe({
-      next: (games) => {
-        this.store.dispatch(loadGamesSuccess({ games }));
-      },
-      error: (error) => {
-        // Error already handled in catchError
-      }
-    });
+    );
   }
 
-  // Selectors as observables for the component to use
+  getGameById(id: number): Observable<any> {
+    console.log('Service getGameById called for ID:', id);
+    this.store.dispatch(loadGame({ id }));
+
+    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+      tap(game => {
+        console.log('Received game data:', game);
+        this.store.dispatch(loadGameSuccess({ game }));
+      }),
+      catchError((error) => {
+        console.error('Error fetching game by ID:', error);
+        this.store.dispatch(loadGameFailure({ error: error.message || 'Unknown error' }));
+        return throwError(() => error);
+      })
+    );
+  }
+
   getGamesSelector(): Observable<any[]> {
     return this.store.select(selectGames);
+  }
+  getGameByIdSelector(id: number): Observable<any> {
+    return this.store.select(selectGameById(id));
   }
 
   getLoadingSelector(): Observable<boolean> {
@@ -52,4 +72,7 @@ export class GamesService {
   getErrorSelector(): Observable<string | null> {
     return this.store.select(selectGameError);
   }
+
+
+
 }

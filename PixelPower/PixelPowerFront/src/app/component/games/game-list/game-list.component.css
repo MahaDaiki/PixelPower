@@ -2,8 +2,8 @@
 .game-list-container {
   position: relative;
   margin-top: 5rem;
-  width: 600px;
-  height: 600px;
+  width: 750px;
+  height: 650px;
   box-shadow:
     0 0 20px rgba(147, 51, 234, 0.7),
     0 0 40px rgba(147, 51, 234, 0.35),
@@ -354,6 +354,40 @@
 
 .pixelated-bg img {
   animation: backgroundPulse 8s infinite;
+}
+
+.view-details-button {
+  background-color: #3F51B5;
+  color: #000000;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 2px solid #9333ea;
+  box-shadow: 0 0 10px rgba(147, 51, 234, 0.7);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateX(10px);
+  margin-left: auto;
+  white-space: nowrap;
+  letter-spacing: 1px;
+}
+
+.game-item:hover .view-details-button {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.view-details-button:hover {
+  background-color: #5C6BC0;
+  box-shadow: 0 0 15px rgba(147, 51, 234, 1);
+  transform: scale(1.05);
+}
+
+.view-details-button:active {
+  transform: scale(0.95);
 }
 
 /* Form animation */
