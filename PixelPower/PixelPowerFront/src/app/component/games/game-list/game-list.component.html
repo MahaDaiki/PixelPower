@@ -1,0 +1,94 @@
+<div class="min-h-screen flex items-center justify-center relative">
+  <!-- Fixed Background Image -->
+  <div class="pixelated-bg absolute inset-0 w-full h-full z-[-1]">
+    <img src="giphy.gif" alt="Background Image" class="pixelated absolute inset-0 w-full h-full object-cover z-[-1]" />
+  </div>
+
+  <div class="game-list-container">
+    <!-- Browser-like container -->
+    <div class="browser-container pixelated-form form-animate rounded-lg shadow-lg">
+      <!-- Browser navigation bar -->
+      <div class="browser-nav">
+        <div class="browser-controls flex items-center gap-2 mb-2">
+          <div class="browser-dot bg-red-500"></div>
+          <div class="browser-dot bg-yellow-500"></div>
+          <div class="browser-dot bg-green-500"></div>
+          <div class="browser-address-bar flex-1 ml-2 px-2 py-1 rounded bg-black bg-opacity-50 text-xs text-cyan-300 font-mono">
+            https://PixelPower/games
+          </div>
+        </div>
+      </div>
+
+      <!-- Content header -->
+      <div class="browser-content p-6">
+        <h2 class="font-bold text-center pixel-title mb-6">GAME LIBRARY</h2>
+<!--        <div class="search-container mb-6">-->
+<!--          <div class="input-with-icon">-->
+<!--            <input-->
+<!--              type="text"-->
+<!--              placeholder="Search games..."-->
+<!--              class="p-2 pl-10 w-full border rounded-lg focus:outline-none focus:ring-2 pixelated-input"-->
+<!--              [ngModel]="searchTerm"-->
+<!--              (ngModelChange)="searchGames($event)"-->
+<!--            />-->
+<!--            <div class="input-icon">-->
+<!--              <svg viewBox="0 0 24 24" class="icon-svg">-->
+<!--                <circle cx="11" cy="11" r="8"></circle>-->
+<!--                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>-->
+<!--              </svg>-->
+<!--            </div>-->
+<!--            <button *ngIf="searchTerm" class="clear-search-button" (click)="clearSearch()">×</button>-->
+<!--          </div>-->
+<!--        </div>-->
+        <!-- Loading indicator -->
+        <div *ngIf="loading$ | async" class="loading-container">
+          <div class="loading-text pixel-text">Loading games...</div>
+          <div class="loading-bar">
+            <div class="loading-progress"></div>
+          </div>
+        </div>
+
+        <!-- Error message -->
+        <div *ngIf="error$ | async as error" class="error-container">
+          <div class="error-icon">!</div>
+          <div class="error-message">{{ error }}</div>
+        </div>
+
+        <!-- Game list -->
+        <div *ngIf="games$ | async as games" class="game-list">
+          <!-- Empty state -->
+          <div *ngIf="games.length === 0 && !(loading$ | async)" class="empty-state">
+            <p class="pixel-text text-center">No games found</p>
+          </div>
+
+          <!-- Game items -->
+          <div *ngFor="let game of games; let i = index"
+               class="game-item"
+               [style.animation-delay]="i * 0.05 + 's'">
+
+            <div class="game-title-container">
+              <span class="game-index">{{ i + 1 }}</span>
+              <h3 class="game-title pixel-text">{{ game.name }}</h3>
+
+              <a [href]="'/games/' + game.appid" class="view-details-button">
+                VIEW DETAILS
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container mt-6 flex justify-center">
+          <button class="pagination-button" [disabled]="page <= 1" (click)="previousPage()">
+            &lt;
+          </button>
+          <span class="pagination-info pixel-text">Page {{ page }}</span>
+          <button class="pagination-button" (click)="nextPage()">
+            &gt;
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

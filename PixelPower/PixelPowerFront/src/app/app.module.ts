@@ -9,10 +9,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthModule} from './component/auth/auth.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './core/interceptor/auth.interceptor';
 import {authReducer} from './store/auth/auth.reducer';
+import {gameReducer} from './store/games/games.reducer';
+import {GamesModule} from './component/games/games.module';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,11 @@ import {authReducer} from './store/auth/auth.reducer';
     BrowserAnimationsModule,
     HttpClientModule,
     AuthModule,
+    GamesModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    StoreModule.forRoot({ auth: authReducer }),
+    StoreModule.forRoot({ auth: authReducer,
+      game: gameReducer })
+
 
   ],
   providers: [
