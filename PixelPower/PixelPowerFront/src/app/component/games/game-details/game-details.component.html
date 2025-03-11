@@ -136,22 +136,34 @@
               </div>
 
               <!-- Platform info -->
-              <div class="info-card">
+              <div class="info-card mb-4">
                 <div class="card-header">
                   <h3 class="card-title pixel-text">Platforms</h3>
                 </div>
                 <div class="card-content platform-icons">
-                  <div *ngIf="game.platforms.windows" class="platform-icon windows-icon" title="Windows">
+                  <div *ngIf="game.platforms?.windows"
+                       [class.active]="selectedPlatform === 'pc'"
+                       class="platform-icon windows-icon"
+                       title="Windows"
+                       (click)="selectPlatform('pc')">
                     <svg viewBox="0 0 24 24" class="platform-svg">
                       <path d="M3 5.1L10.5 4v6.5H3V5.1zM10.5 13.5v6.5L3 18.9v-5.4h7.5zM11.5 3.9L21 2.5v8h-9.5V3.9zM21 13.5v8l-9.5-1.4v-6.6H21z"></path>
                     </svg>
                   </div>
-                  <div *ngIf="game.platforms.mac" class="platform-icon mac-icon" title="Mac">
+                  <div *ngIf="game.platforms?.mac && hasPlatformRequirements(game, 'mac')"
+                       [class.active]="selectedPlatform === 'mac'"
+                       class="platform-icon mac-icon"
+                       title="Mac"
+                       (click)="selectPlatform('mac')">
                     <svg viewBox="0 0 24 24" class="platform-svg">
                       <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"></path>
                     </svg>
                   </div>
-                  <div *ngIf="game.platforms.linux" class="platform-icon linux-icon" title="Linux">
+                  <div *ngIf="game.platforms?.linux && hasPlatformRequirements(game, 'linux')"
+                       [class.active]="selectedPlatform === 'linux'"
+                       class="platform-icon linux-icon"
+                       title="Linux"
+                       (click)="selectPlatform('linux')">
                     <svg viewBox="0 0 24 24" class="platform-svg">
                       <path d="M12.5 2c-.29 0-.5.21-.5.5v.5h-.5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1H13v-.5c0-.29-.21-.5-.5-.5zm-5 2c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zm9 0c-.28 0-.5.22-.5.5s.22.5.5.5.5-.22.5-.5-.22-.5-.5-.5zM9 6c-.55 0-1 .45-1 1v2c0 .55.45 1 1 1s1-.45 1-1V7c0-.55-.45-1-1-1zm6 0c-.55 0-1 .45-1 1v2c0 .55.45 1 1 1s1-.45 1-1V7c0-.55-.45-1-1-1zM7.5 10c-.8 0-1.5.7-1.5 1.5S6.7 13 7.5 13 9 12.3 9 11.5 8.3 10 7.5 10zm9 0c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5zm-9.99 4C5.67 14 5 14.67 5 15.5v4c0 .83.67 1.5 1.5 1.5h11c.83 0 1.5-.67 1.5-1.5v-4c0-.83-.67-1.5-1.5-1.5h-11z"></path>
                     </svg>
@@ -160,22 +172,39 @@
               </div>
 
               <!-- System Requirements -->
-              <div class="info-card">
+              <div *ngIf="getPlatformRequirements(game)" class="info-card mb-4">
                 <div class="card-header">
-                  <h3 class="card-title pixel-text">System Requirements</h3>
+                  <h3 class="card-title pixel-text">
+                    System Requirements
+                    <span class="platform-label">
+            ({{ selectedPlatform === 'pc' ? 'Windows' : selectedPlatform === 'mac' ? 'Mac' : 'Linux' }})
+          </span>
+                  </h3>
                 </div>
                 <div class="card-content">
                   <div class="requirements-tabs">
-                    <button class="tab-button active" onclick="showTab('minimum')">Minimum</button>
-                    <button class="tab-button" onclick="showTab('recommended')">Recommended</button>
+                    <button
+                      class="tab-button"
+                      [class.active]="selectedTab === 'minimum'"
+                      (click)="showTab('minimum')"
+                      *ngIf="getPlatformRequirements(game)?.minimum">
+                      Minimum
+                    </button>
+                    <button
+                      class="tab-button"
+                      [class.active]="selectedTab === 'recommended'"
+                      (click)="showTab('recommended')"
+                      *ngIf="getPlatformRequirements(game)?.recommended">
+                      Recommended
+                    </button>
                   </div>
 
-                  <div id="minimum" class="tab-content active">
-                    <div class="requirements-content" [innerHTML]="game.pc_requirements.minimum"></div>
+                  <div *ngIf="selectedTab === 'minimum' && getPlatformRequirements(game)?.minimum" class="tab-content active">
+                    <div class="requirements-content" [innerHTML]="getPlatformRequirements(game)?.minimum"></div>
                   </div>
 
-                  <div id="recommended" class="tab-content">
-                    <div class="requirements-content" [innerHTML]="game.pc_requirements.recommended"></div>
+                  <div *ngIf="selectedTab === 'recommended' && getPlatformRequirements(game)?.recommended" class="tab-content active">
+                    <div class="requirements-content" [innerHTML]="getPlatformRequirements(game)?.recommended"></div>
                   </div>
                 </div>
               </div>

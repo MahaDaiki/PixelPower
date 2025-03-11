@@ -17,6 +17,9 @@ export class GameDetailsComponent {
   activeScreenshot: string | null = null;
   activeVideo: string | null = null;
 
+  selectedPlatform: "pc" | "mac" | "linux" = "pc"
+  selectedTab: "minimum" | "recommended" = "minimum"
+
   @Input() gameId?: number;
 
   constructor(private gamesService: GamesService, private route: ActivatedRoute) {
@@ -68,6 +71,44 @@ export class GameDetailsComponent {
 
   closeVideo(): void {
     this.activeVideo = null;
+  }
+
+  // Add this method to handle platform selection
+  selectPlatform(platform: "pc" | "mac" | "linux"): void {
+    this.selectedPlatform = platform
+    // Reset to minimum tab when switching platforms
+    this.selectedTab = "minimum"
+  }
+
+  // Update the showTab method to work with platform-specific requirements
+  showTab(tab: "minimum" | "recommended"): void {
+    this.selectedTab = tab
+  }
+
+  // Add a helper method to get the current platform requirements
+  getPlatformRequirements(game: any): any {
+    if (!game) return null
+
+    switch (this.selectedPlatform) {
+      case "pc":
+        return game.pc_requirements
+      case "mac":
+        return game.mac_requirements
+      case "linux":
+        return game.linux_requirements
+      default:
+        return game.pc_requirements
+    }
+  }
+
+  // Add a helper method to check if a platform has requirements
+  hasPlatformRequirements(game: any, platform: "pc" | "mac" | "linux"): boolean {
+    if (!game) return false
+
+    const requirements =
+      platform === "pc" ? game.pc_requirements : platform === "mac" ? game.mac_requirements : game.linux_requirements
+
+    return requirements && (requirements.minimum || requirements.recommended)
   }
 
 
