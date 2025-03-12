@@ -49,7 +49,7 @@ public class AuthenticationController {
                 String newFileName = UUID.randomUUID().toString() + fileExtension;
 
                 // Save file
-                Path targetPath = Paths.get("public/profile_pictures").resolve(newFileName);
+                Path targetPath = Paths.get("resources/uploads/profile_pictures").resolve(newFileName);
                 Files.copy(profilePicture.getInputStream(), targetPath);
 
                 profilePicUrl = "/profile_pictures/" + newFileName;

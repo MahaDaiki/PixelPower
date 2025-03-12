@@ -1,4 +1,8 @@
 import { createAction, props } from '@ngrx/store';
+export const loadToken = createAction(
+  '[Auth] Load Token',
+  props<{ token: string }>()
+);
 
 export const login = createAction(
   '[Auth] Login',

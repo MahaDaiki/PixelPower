@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Store} from '@ngrx/store';
+import { loadToken } from './store/auth/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +10,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'PixelPowerFront';
+
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    const token = localStorage.getItem('auth_token');
+
+    if (token) {
+      this.store.dispatch(loadToken({ token }));
+    }
+  }
 }

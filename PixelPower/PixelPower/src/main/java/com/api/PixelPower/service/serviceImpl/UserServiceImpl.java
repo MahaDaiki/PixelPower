@@ -7,6 +7,7 @@ import com.api.PixelPower.dto.response.UserResponseDTO;
 import com.api.PixelPower.entity.Role;
 import com.api.PixelPower.entity.User;
 import com.api.PixelPower.exception.EmailAlreadyExistsException;
+import com.api.PixelPower.exception.ResourceNotFoundException;
 import com.api.PixelPower.mapper.UserMapper;
 import com.api.PixelPower.repository.UserRepository;
 import com.api.PixelPower.security.CustomUserDetails;
@@ -17,11 +18,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -80,21 +89,82 @@ public class UserServiceImpl implements UserServiceInt {
     }
 
     @Override
-    public UserResponseDTO updateUser(Long id, UserDTO userDTO) {
-        Optional<User> existingUser = userRepository.findById(id);
-        if (existingUser.isEmpty()) {
-            throw new RuntimeException("User not found");
-        }
+    public UserResponseDTO getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
-        User user = existingUser.get();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        return userMapper.toResponseDTO(user);
+    }
+
+    @Override
+    public UserResponseDTO updateAuthenticatedUser(UserDTO userDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
         if (userDTO.getUsername() != null) user.setUsername(userDTO.getUsername());
         if (userDTO.getEmail() != null) user.setEmail(userDTO.getEmail());
         if (userDTO.getProfilePicture() != null) user.setProfilePicture(userDTO.getProfilePicture());
+        if (userDTO.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        }
+
 
         user = userRepository.save(user);
 
         return userMapper.toResponseDTO(user);
     }
+
+    @Override
+    public UserResponseDTO updateProfilePicture(MultipartFile file) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        try {
+
+            Path uploadDir = Paths.get("uploads/profile_pictures");
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectories(uploadDir);
+            }
+
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path targetLocation = uploadDir.resolve(fileName);
+
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+            user.setProfilePicture(fileName);
+            user = userRepository.save(user);
+
+            return userMapper.toResponseDTO(user);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file", e);
+        }
+    }
+
+
+
+    @Override
+    public UserResponseDTO updateAuthenticatedPassword(String newPassword) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user = userRepository.save(user);
+
+        return userMapper.toResponseDTO(user);
+    }
+
 
 
     @Override
@@ -103,20 +173,7 @@ public class UserServiceImpl implements UserServiceInt {
 
     }
 
-    @Override
-    public UserResponseDTO updatePassword(Long id, String newPassword) {
-        Optional<User> existingUser = userRepository.findById(id);
-        if (existingUser.isEmpty()) {
-            throw new RuntimeException("User not found");
-        }
 
-        User user = existingUser.get();
-        user.setPassword(passwordEncoder.encode(newPassword));
-
-        user = userRepository.save(user);
-
-        return userMapper.toResponseDTO(user);
-    }
 
 
 }

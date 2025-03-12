@@ -12,6 +12,11 @@ export class AuthInterceptor implements HttpInterceptor {
     return this.store.select(selectAuthToken).pipe(
       take(1),
       switchMap((token) => {
+        if (!token) {
+          token = localStorage.getItem('auth_token');
+        }
+
+        console.log('Auth Token:', token);
         if (token) {
           const clonedRequest = req.clone({
             setHeaders: {

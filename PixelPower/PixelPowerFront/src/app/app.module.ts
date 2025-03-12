@@ -14,6 +14,9 @@ import {AuthInterceptor} from './core/interceptor/auth.interceptor';
 import {authReducer} from './store/auth/auth.reducer';
 import {gameReducer} from './store/games/games.reducer';
 import {GamesModule} from './component/games/games.module';
+import {userReducer} from './store/users/users.reducer';
+import {UsersModule} from './component/users/users.module';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,11 +29,13 @@ import {GamesModule} from './component/games/games.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     AuthModule,
     GamesModule,
+    UsersModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     StoreModule.forRoot({ auth: authReducer,
-      game: gameReducer })
+      game: gameReducer, user: userReducer })
 
 
   ],
