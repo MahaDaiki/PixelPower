@@ -34,13 +34,25 @@ export class UserEffects {
     )
   );
 
-  updateAvatar$ = createEffect(() =>
+  // updateAvatar$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(UserActions.updateAvatar),
+  //     mergeMap(action =>
+  //       this.userService.updateAvatar(action.avatarPath).pipe(
+  //         map(user => UserActions.updateAvatarSuccess({ user })),
+  //         catchError(error => of(UserActions.updateAvatarFailure({ error })))
+  //       )
+  //     )
+  //   )
+  // );
+
+  updatePassword$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(UserActions.updateAvatar),
+      ofType(UserActions.updatePassword),
       mergeMap(action =>
-        this.userService.updateAvatar(action.avatarPath).pipe(
-          map(user => UserActions.updateAvatarSuccess({ user })),
-          catchError(error => of(UserActions.updateAvatarFailure({ error })))
+        this.userService.updatePassword(action.newPassword).pipe(
+          map(user => UserActions.updatePasswordSuccess({ user })),
+          catchError(error => of(UserActions.updatePasswordFailure({ error })))
         )
       )
     )

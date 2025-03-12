@@ -4,11 +4,11 @@
   margin-top: 6rem;
   margin-bottom: 2rem;
   width: 90%;
-  max-width: 900px;
+  max-width: 1000px;
   height: auto;
 }
 
-
+/* Pixelated effect for background */
 .pixelated {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
@@ -220,9 +220,11 @@
 .error-message {
   color: #f44336;
   font-family: monospace;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.9);
-  font-size: 18px;
+  background-color: rgba(244, 67, 54, 0.1);
+  border: 1px solid #f44336;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
   text-align: center;
 }
 
@@ -293,7 +295,7 @@
   bottom: 0;
   border: 4px solid transparent;
   background: linear-gradient(135deg, #3f51b5, #00bcd4) border-box;
-  /*-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);*/
+
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -665,6 +667,12 @@
   background-color: rgba(76, 175, 80, 0.2);
 }
 
+/* Make the disabled button look different */
+.save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Avatar selection modal */
 .avatars-grid {
   display: grid;
@@ -830,5 +838,284 @@
   .avatars-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* Add this to your CSS for the error text */
+.error-text {
+  color: #f44336;
+  font-family: monospace;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+/* Add these styles to your existing CSS file */
+
+/* File upload section */
+.upload-section,
+.existing-avatars-section {
+  margin-bottom: 20px;
+}
+
+.section-subtitle {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #00bcd4;
+}
+
+.file-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.preview-container {
+  width: 150px;
+  height: 150px;
+  border: 2px dashed #3f51b5;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.preview-container:hover {
+  border-color: #00bcd4;
+  box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
+}
+
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #9e9e9e;
+}
+
+.upload-icon {
+  font-size: 30px;
+}
+
+.upload-text {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.clear-btn {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid #f44336;
+  color: #f44336;
+  padding: 5px 10px;
+  font-family: monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clear-btn:hover {
+  background-color: rgba(244, 67, 54, 0.2);
+}
+
+/* Divider */
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 20px 0;
+  height: 20px;
+}
+
+.divider:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #3f51b5;
+}
+
+.divider-text {
+  position: relative;
+  display: inline-block;
+  padding: 0 10px;
+  background-color: rgb(33, 17, 51);
+  color: #9e9e9e;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* Existing avatars section */
+.existing-avatars-section {
+  margin-top: 20px;
+}
+
+/* Update avatar grid for better spacing */
+.avatars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.avatar-option {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #3f51b5;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.avatar-option:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
+}
+
+.avatar-option.selected {
+  border-color: #4caf50;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
+}
+
+.avatar-option-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .avatars-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .preview-container {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Add these styles to your existing CSS file */
+
+/* Success message styling */
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgba(76, 175, 80, 0.2);
+  border: 2px solid #4caf50;
+  border-radius: 5px;
+  padding: 12px;
+  margin: 15px;
+  animation: successPulse 2s infinite;
+  color: #4caf50;
+  font-family: monospace;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.9);
+  text-align: center;
+}
+
+.success-message::before {
+  content: "✓";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+@keyframes successPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
+  }
+}
+
+/* Modal footer styling */
+.modal-footer {
+  padding: 10px 15px;
+  border-top: 1px solid #3f51b5;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: #00bcd4;
+  font-family: monospace;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 5px;
+  transition: all 0.2s;
+}
+
+.link-btn:hover {
+  color: #4caf50;
+  text-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+}
+
+/* Improve upload container styling */
+.upload-container {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-label {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #3f51b5;
+  color: #00bcd4;
+  padding: 8px 16px;
+  font-family: monospace;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.upload-label:hover {
+  background-color: rgba(63, 81, 181, 0.2);
+  transform: scale(1.05);
+}
+
+input[type="file"] {
+  display: none;
+}
+
+/* Loading state for buttons */
+.save-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 

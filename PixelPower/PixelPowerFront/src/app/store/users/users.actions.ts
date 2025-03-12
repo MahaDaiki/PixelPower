@@ -14,3 +14,19 @@ export const updateAvatar = createAction('[User] Update Avatar', props<{ avatarP
 export const updateAvatarSuccess = createAction('[User] Update Avatar Success', props<{ user: any }>());
 export const updateAvatarFailure = createAction('[User] Update Avatar Failure', props<{ error: any }>());
 
+
+export const updatePassword = createAction(
+  '[User] Update Password',
+  props<{ newPassword: string }>()
+);
+
+export const updatePasswordSuccess = createAction(
+  '[User] Update Password Success',
+  props<{ user: any }>()
+);
+
+export const updatePasswordFailure = createAction(
+  '[User] Update Password Failure',
+  props<{ error: any }>()
+);
+

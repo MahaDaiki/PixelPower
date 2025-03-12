@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserServiceInt {
 
         try {
 
-            Path uploadDir = Paths.get("public/profile_pictures");
+            Path uploadDir = Paths.get("uploads/profile_pictures");
             if (!Files.exists(uploadDir)) {
                 Files.createDirectories(uploadDir);
             }

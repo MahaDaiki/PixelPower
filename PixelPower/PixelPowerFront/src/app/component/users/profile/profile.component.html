@@ -165,23 +165,26 @@
     </div>
   </div>
 
-  <!-- Profile Edit Modal -->
-  <!-- Profile Edit Modal -->
+
   <div *ngIf="showProfileModal" class="modal-overlay" (click)="closeProfileModal($event)">
     <div class="modal-container pixelated-form">
       <div class="modal-header">
-        <h3 class="pixel-text">EDIT PROFILE</h3>
+        <h3 class="pixel-text">{{ showPasswordForm ? 'CHANGE PASSWORD' : 'EDIT PROFILE' }}</h3>
         <button class="close-modal" (click)="closeProfileModal($event)">×</button>
       </div>
 
+      <!-- Error message -->
       <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 
+      <!-- Success messages -->
+      <p *ngIf="successMessage && !showPasswordForm" class="success-message">{{ successMessage }}</p>
+      <p *ngIf="passwordSuccessMessage && showPasswordForm" class="success-message">{{ passwordSuccessMessage }}</p>
+
       <div class="modal-content">
-        <!-- Important: [formGroup] binding was likely missing -->
-        <form [formGroup]="profileForm" (ngSubmit)="updateProfile($event)">
+        <!-- Profile Form -->
+        <form *ngIf="!showPasswordForm" [formGroup]="profileForm" (ngSubmit)="updateProfile($event)">
           <div class="form-group">
             <label class="form-label">Username</label>
-            <!-- Important: formControlName instead of direct binding -->
             <input type="text" class="form-input" formControlName="username">
             <p *ngIf="profileForm.get('username')?.invalid && profileForm.get('username')?.touched" class="error-text">
               Username is required.
@@ -189,7 +192,6 @@
           </div>
           <div class="form-group">
             <label class="form-label">Email</label>
-            <!-- Important: formControlName instead of direct binding -->
             <input type="email" class="form-input" formControlName="email">
             <p *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="error-text">
               Enter a valid email.
@@ -197,14 +199,44 @@
           </div>
           <div class="form-actions">
             <button type="button" class="cancel-btn" (click)="closeProfileModal($event)">CANCEL</button>
-            <button type="submit" class="save-btn" [disabled]="profileForm.invalid">SAVE CHANGES</button>
+            <button type="submit" class="save-btn" [disabled]="profileForm.invalid || loading">
+              {{ loading ? 'SAVING...' : 'SAVE CHANGES' }}
+            </button>
           </div>
         </form>
+
+        <!-- Password Change Form -->
+        <form *ngIf="showPasswordForm" [formGroup]="passwordForm" (ngSubmit)="updatePassword($event)">
+          <div class="form-group">
+            <label class="form-label">New Password</label>
+            <input type="password" class="form-input" formControlName="newPassword">
+            <p *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched" class="error-text">
+              Password must be at least 6 characters.
+            </p>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm New Password</label>
+            <input type="password" class="form-input" formControlName="confirmNewPassword">
+            <p *ngIf="passwordForm.hasError('mismatch')" class="error-text">
+              Passwords do not match.
+            </p>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="cancel-btn" (click)="closeProfileModal($event)">CANCEL</button>
+            <button type="submit" class="save-btn" [disabled]="passwordForm.invalid || loading">
+              {{ loading ? 'CHANGING...' : 'CHANGE PASSWORD' }}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button *ngIf="!showPasswordForm" class="link-btn" (click)="openPasswordForm()">Change Password</button>
       </div>
     </div>
   </div>
 
-  <!-- Avatar Selection Modal -->
+
   <!-- Avatar Selection Modal -->
   <div *ngIf="showAvatarModal" class="modal-overlay" (click)="closeAvatarModal($event)">
     <div class="modal-container pixelated-form">
@@ -212,6 +244,13 @@
         <h3 class="pixel-text">CHOOSE OR UPLOAD AVATAR</h3>
         <button class="close-modal" (click)="closeAvatarModal($event)">×</button>
       </div>
+
+      <!-- Error message -->
+      <p *ngIf="avatarErrorMessage" class="error-message">{{ avatarErrorMessage }}</p>
+
+      <!-- Success message -->
+      <p *ngIf="avatarSuccessMessage" class="success-message">{{ avatarSuccessMessage }}</p>
+
       <div class="modal-content">
         <!-- Avatar selection -->
         <div class="avatars-grid">
@@ -226,17 +265,17 @@
         <!-- Upload custom image -->
         <div class="upload-container">
           <label for="avatarUpload" class="upload-label">Upload an image</label>
-          <input type="file" id="avatarUpload" (change)="onFileSelected($event)" accept="image/*">
+          <input type="file" id="avatarUpload" #fileInput (change)="onFileSelected($event)" accept="image/*">
         </div>
 
         <div class="form-actions">
           <button type="button" class="cancel-btn" (click)="closeAvatarModal($event)">CANCEL</button>
-          <button type="button" class="save-btn" (click)="updateAvatar()">SAVE AVATAR</button>
+          <button type="button" class="save-btn" [disabled]="(!selectedAvatar && !uploadedFile) || loading" (click)="updateAvatar()">
+            {{ loading ? 'SAVING...' : 'SAVE AVATAR' }}
+          </button>
         </div>
       </div>
     </div>
   </div>
-
-
-
+</div>
 

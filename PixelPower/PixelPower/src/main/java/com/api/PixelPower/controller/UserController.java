@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @PutMapping("/me/password")
-    public ResponseEntity<UserResponseDTO> updateAuthenticatedPassword(@RequestParam String newPassword) {
+    public ResponseEntity<UserResponseDTO> updateAuthenticatedPassword(@RequestBody String newPassword) {
         UserResponseDTO updatedUser = userService.updateAuthenticatedPassword(newPassword);
         return ResponseEntity.ok(updatedUser);
     }

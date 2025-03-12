@@ -25,5 +25,21 @@ export const userReducer = createReducer(
 
   on(UserActions.updateAvatar, state => ({ ...state, loading: true })),
   on(UserActions.updateAvatarSuccess, (state, { user }) => ({ ...state, user, error: null, loading: false })),
-  on(UserActions.updateAvatarFailure, (state, { error }) => ({ ...state, error, loading: false }))
+  on(UserActions.updateAvatarFailure, (state, { error }) => ({ ...state, error, loading: false })),
+
+on(UserActions.updatePassword, (state) => ({
+  ...state,
+  loading: true,
+})),
+  on(UserActions.updatePasswordSuccess, (state, { user }) => ({
+    ...state,
+    user,
+    error: null,
+    loading: false,
+  })),
+  on(UserActions.updatePasswordFailure, (state, { error }) => ({
+    ...state,
+    error,
+    loading: false,
+  }))
 );

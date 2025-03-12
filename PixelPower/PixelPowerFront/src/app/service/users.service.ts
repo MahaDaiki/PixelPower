@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 export class UsersService {
   private apiProfileUrl = 'http://localhost:8080/api/users/me';
   private apiAvatarUrl = 'http://localhost:8080/api/users/me/profile-picture';
-
+  private apiPasswordUrl = 'http://localhost:8080/api/users/me/password';
 
   constructor(private http: HttpClient) {}
 
@@ -22,6 +22,10 @@ export class UsersService {
 
   updateAvatar(formData: FormData): Observable<any> {
     return this.http.put<any>(this.apiAvatarUrl, formData);
+  }
+
+  updatePassword(newPassword: string): Observable<any> {
+    return this.http.put<any>(this.apiPasswordUrl, { newPassword });
   }
 
 
