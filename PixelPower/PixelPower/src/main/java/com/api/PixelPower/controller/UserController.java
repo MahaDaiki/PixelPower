@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,27 +29,29 @@ public class UserController {
     }
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
-        Optional<UserResponseDTO> user = userService.getUserById(id);
-        return user.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDTO> getAuthenticatedUser() {
+        UserResponseDTO user = userService.getAuthenticatedUser();
+        return ResponseEntity.ok(user);
     }
 
-
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
-        UserResponseDTO updatedUser = userService.updateUser(id, userDTO);
+    @PutMapping("/me")
+    public ResponseEntity<UserResponseDTO> updateAuthenticatedUser(@Valid @RequestBody UserDTO userDTO) {
+        UserResponseDTO updatedUser = userService.updateAuthenticatedUser(userDTO);
         return ResponseEntity.ok(updatedUser);
     }
 
-
-    @PutMapping("/{id}/password")
-    public ResponseEntity<UserResponseDTO> updatePassword(@PathVariable Long id, @RequestParam String newPassword) {
-        UserResponseDTO updatedUser = userService.updatePassword(id, newPassword);
+    @PutMapping("/me/profile-picture")
+    public ResponseEntity<UserResponseDTO> updateProfilePicture(@RequestParam("profilepicture") MultipartFile file) {
+        UserResponseDTO updatedUser = userService.updateProfilePicture(file);
         return ResponseEntity.ok(updatedUser);
     }
 
+    @PutMapping("/me/password")
+    public ResponseEntity<UserResponseDTO> updateAuthenticatedPassword(@RequestParam String newPassword) {
+        UserResponseDTO updatedUser = userService.updateAuthenticatedPassword(newPassword);
+        return ResponseEntity.ok(updatedUser);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {

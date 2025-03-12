@@ -23,9 +23,9 @@ export class AuthService {
   loginUser(email: string, password: string): void {
     this.login(email, password).subscribe(
       (response) => {
+        localStorage.setItem('auth_token', response.token);
         this.store.dispatch(loginSuccess({ token: response.token }));
-
-        this.router.navigate(['/']);
+        this.router.navigate(['/profile']);
       },
       (error) => {
         this.store.dispatch(loginFailure({ error: 'Login failed' }));
