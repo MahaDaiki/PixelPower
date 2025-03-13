@@ -8,6 +8,10 @@ import {ConfigurationsService} from '../../../service/configurations.service';
   styleUrl: './display-configurations.component.css'
 })
 export class DisplayConfigurationsComponent {
+  showEditModal = false;
+  showDeleteModal = false;
+  configToEditId: string | null = null;
+  configToDeleteId: string | null = null;
   configurations: any[] = [];
 
   constructor(private configurationService: ConfigurationsService) {}
@@ -27,6 +31,35 @@ export class DisplayConfigurationsComponent {
         console.error('Error fetching configurations:', error);
       },
     });
+  }
+
+  openEditModal(configId: string) {
+    this.configToEditId = configId;
+    this.showEditModal = true;
+  }
+
+  openDeleteModal(configId: string) {
+    this.configToDeleteId = configId;
+    this.showDeleteModal = true;
+  }
+
+  closeEditModal() {
+    this.showEditModal = false;
+  }
+
+  closeDeleteModal() {
+    this.showDeleteModal = false;
+  }
+  handleDeleted(): void {
+    this.showDeleteModal = false;
+    this.configToDeleteId = null;
+    this.fetchConfigurations();
+  }
+
+  handleUpdated(updatedConfig: any): void {
+    this.showEditModal = false;
+    this.configToEditId = null;
+    this.fetchConfigurations();
   }
 
 

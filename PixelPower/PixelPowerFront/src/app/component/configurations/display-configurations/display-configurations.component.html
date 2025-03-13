@@ -26,16 +26,29 @@
           <span class="inline-flex items-center text-base  p-1 gap-1 mr-3"><span class="text-yellow-400">Storage:</span> {{ config.storage }}</span>
           <span class="inline-flex items-center text-base  p-1 gap-1"><span class="text-yellow-400">OS:</span> {{ config.os }}</span>
         </div>
-      </div>
+
       <div class="flex gap-2">
-        <button class="edit-btn bg-black/50 border border-yellow-500 text-yellow-400 px-3 py-1 rounded font-mono text-xs hover:bg-yellow-900/30 transition-all duration-300 hover:scale-105" (click)="openEditModal(config)">
-          EDIT
+        <button class="edit-btn bg-black/50 border border-yellow-500 text-yellow-400 px-3 py-1 rounded font-mono text-xs hover:bg-yellow-900/30 transition-all duration-300 hover:scale-105" (click)="openEditModal(config.id)">
+          <span class="flex items-center gap-1">
+            <svg class="pixelated-icon w-4 h-4" viewBox="0 0 24 24" fill="none">
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" fill="#ffc107" />
+              <path d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="#ffc107" />
+            </svg>
+            EDIT
+          </span>
         </button>
-        <button class="delete-btn bg-black/50 border border-red-500 text-red-400 px-3 py-1 rounded font-mono text-xs hover:bg-red-900/30 transition-all duration-300 hover:scale-105" (click)="openDeleteModal(config)">
-          DELETE
+        <button class="delete-btn bg-black/50 border border-red-500 text-red-400 px-3 py-1 rounded font-mono text-xs hover:bg-red-900/30 transition-all duration-300 hover:scale-105" (click)="openDeleteModal(config.id)">
+          <span class="flex items-center gap-1">
+            <svg class="pixelated-icon w-4 h-4" viewBox="0 0 24 24" fill="none">
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12z" fill="#f44336" />
+              <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="#f44336" />
+              <path d="M10 9h1v8h-1zm3 0h1v8h-1z" fill="#ffffff" />
+            </svg>
+            DELETE
+          </span>
         </button>
       </div>
-    </div>
+    </div></div>
   </div>
 
   <!-- No configurations message -->
@@ -141,120 +154,6 @@
     </ng-container>
   </div>
 </div>
-
-<div *ngIf="showEditModal" class="modal-overlay" (click)="closeEditModal($event)">
-  <div class="modal-container pixelated-form">
-    <div class="modal-header">
-      <h3 class="pixel-text">EDIT CONFIGURATION</h3>
-      <button class="close-modal" (click)="closeEditModal($event)">×</button>
-    </div>
-    <div class="modal-content">
-      <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="updateConfiguration()" class="space-y-4">
-        <div class="form-group">
-          <label class="form-label">Name:</label>
-          <input type="text" formControlName="name" placeholder="Enter configuration name" class="form-input" />
-          <div *ngIf="editForm.get('name')?.invalid && editForm.get('name')?.touched" class="error-text">
-            Name is required (max 100 characters).
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">CPU:</label>
-          <input type="text" formControlName="cpu" placeholder="Enter CPU model (Intel or AMD)" class="form-input" />
-          <div *ngIf="editForm.get('cpu')?.invalid && editForm.get('cpu')?.touched" class="error-text">
-            CPU must start with "Intel" or "AMD".
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">GPU:</label>
-          <input type="text" formControlName="gpu" placeholder="Enter GPU model (NVIDIA, AMD, or Intel)" class="form-input" />
-          <div *ngIf="editForm.get('gpu')?.invalid && editForm.get('gpu')?.touched" class="error-text">
-            GPU must start with "NVIDIA", "AMD", or "Intel".
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">RAM:</label>
-          <input type="text" formControlName="ram" placeholder="Enter RAM size (e.g., 16GB)" class="form-input" />
-          <div *ngIf="editForm.get('ram')?.invalid && editForm.get('ram')?.touched" class="error-text">
-            RAM must be 4GB, 8GB, 16GB, 32GB, 64GB, or 128GB.
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Storage:</label>
-          <input type="text" formControlName="storage" placeholder="Enter Storage size (e.g., 512GB)" class="form-input" />
-          <div *ngIf="editForm.get('storage')?.invalid && editForm.get('storage')?.touched" class="error-text">
-            Storage must be 128GB, 256GB, 512GB, 1TB, 2TB, 4TB, or 8TB.
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Operating System:</label>
-          <select formControlName="os" class="form-select">
-            <option *ngFor="let os of osOptions" [value]="os">{{ os }}</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Status:</label>
-          <select formControlName="status" class="form-select">
-            <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
-          </select>
-        </div>
-
-        <button type="submit" [disabled]="editForm.invalid || updateLoading" class="submit-btn">
-          <span class="btn-text">{{ updateLoading ? 'UPDATING...' : 'UPDATE CONFIGURATION' }}</span>
-          <div *ngIf="updateLoading" class="btn-loader"></div>
-        </button>
-      </form>
-
-      <div *ngIf="updateSuccess" class="success-message mt-4">
-        <div class="success-icon">✓</div>
-        <div class="success-text">Configuration updated successfully!</div>
-      </div>
-
-      <div *ngIf="updateError" class="error-message mt-4">
-        <div class="error-icon">!</div>
-        <div class="error-text">{{ updateError }}</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Delete Confirmation Modal -->
-<div *ngIf="showDeleteModal" class="modal-overlay" (click)="closeDeleteModal($event)">
-  <div class="modal-container pixelated-form" style="max-width: 450px;">
-    <div class="modal-header">
-      <h3 class="pixel-text">CONFIRM DELETE</h3>
-      <button class="close-modal" (click)="closeDeleteModal($event)">×</button>
-    </div>
-    <div class="modal-content">
-      <div class="warning-message">
-        <div class="warning-icon">!</div>
-        <div class="warning-text">
-          Are you sure you want to delete the configuration <span class="font-bold text-cyan-300">{{ configToDelete?.name }}</span>?
-          <br><br>
-          <span class="text-red-400">This action cannot be undone.</span>
-        </div>
-      </div>
-
-      <div class="flex justify-between mt-6">
-        <button class="cancel-btn bg-black/50 border border-blue-500 text-blue-400 px-4 py-2 rounded font-mono hover:bg-blue-900/30 transition-all duration-300" (click)="closeDeleteModal($event)">
-          CANCEL
-        </button>
-        <button class="confirm-delete-btn bg-black/50 border border-red-500 text-red-400 px-4 py-2 rounded font-mono hover:bg-red-900/30 transition-all duration-300" (click)="deleteConfiguration()" [disabled]="deleteLoading">
-          <span>{{ deleteLoading ? 'DELETING...' : 'DELETE' }}</span>
-          <div *ngIf="deleteLoading" class="btn-loader"></div>
-        </button>
-      </div>
-
-      <div *ngIf="deleteError" class="error-message mt-4">
-        <div class="error-icon">!</div>
-        <div class="error-text">{{ deleteError }}</div>
-      </div>
-    </div>
-  </div>
-</div>
+<app-edit-modal [showModal]="showEditModal" [configId]="configToEditId" (close)="closeEditModal()" (updated)="handleUpdated($event)"></app-edit-modal>
+<app-delete-modal [showModal]="showDeleteModal" [configId]="configToDeleteId" (close)="closeDeleteModal()" (deleted)="handleDeleted()"></app-delete-modal>
 

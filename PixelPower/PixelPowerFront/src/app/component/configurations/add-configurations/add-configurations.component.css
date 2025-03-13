@@ -127,13 +127,7 @@
   font-size: medium;
 }
 
-.pixel-title {
-  font-family: monospace;
-  letter-spacing: 5px;
-  text-shadow: 0 0 5px rgba(147, 51, 234, 0.8), 0 0 10px rgba(147, 51, 234, 0.5);
-  color: #00bcd4;
-  font-size: 2rem;
-}
+
 
 /* Form styling */
 .form-group {
