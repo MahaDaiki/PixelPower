@@ -1,0 +1,260 @@
+<!-- My Configuration Section -->
+<div class="profile-section">
+  <div class="section-header pixel-text flex justify-between items-center">
+    <span>MY CONFIGURATION</span>
+    <a href="config/add" class="add-link text-cyan-300 hover:text-cyan-400 text-sm font-mono flex items-center gap-1 transition-all duration-300 hover:scale-105">
+      <span class="inline-block w-5 h-5 bg-black/50 border border-cyan-500 rounded-full flex items-center justify-center">+</span>
+      <span>Add New</span>
+    </a>
+  </div>
+  <div class="config-grid">
+    <div class="config-item flex items-center gap-3 hover:transform hover:scale-105 transition-all duration-300" *ngFor="let config of configurations">
+      <div class="config-icon flex-shrink-0">🖥️</div>
+      <div class="config-details flex-1">
+        <div class="config-name flex items-center gap-2">
+          {{ config.name }}
+          <span class="inline-block px-2 py-0.5 text-xs rounded-full"
+                [ngClass]="{'bg-blue-500/30 border border-blue-500 text-blue-400': config.status === 'PRIMARY',
+                           'bg-purple-500/30 border border-purple-500 text-purple-400': config.status === 'SECONDARY'}">
+            {{ config.status }}
+          </span>
+        </div>
+        <div class="config-value text-cyan-300 mt-1 ">
+          <span class="inline-flex items-center text-base  p-1 gap-1 mr-3"><span class="text-yellow-400">CPU:</span> {{ config.cpu }}</span>
+          <span class="inline-flex items-center text-base  p-1 gap-1 mr-3"><span class="text-yellow-400">GPU:</span> {{ config.gpu }}</span>
+          <span class="inline-flex items-center text-base  p-1 gap-1 mr-3"><span class="text-yellow-400">RAM:</span> {{ config.ram }}</span>
+          <span class="inline-flex items-center text-base  p-1 gap-1 mr-3"><span class="text-yellow-400">Storage:</span> {{ config.storage }}</span>
+          <span class="inline-flex items-center text-base  p-1 gap-1"><span class="text-yellow-400">OS:</span> {{ config.os }}</span>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button class="edit-btn bg-black/50 border border-yellow-500 text-yellow-400 px-3 py-1 rounded font-mono text-xs hover:bg-yellow-900/30 transition-all duration-300 hover:scale-105" (click)="openEditModal(config)">
+          EDIT
+        </button>
+        <button class="delete-btn bg-black/50 border border-red-500 text-red-400 px-3 py-1 rounded font-mono text-xs hover:bg-red-900/30 transition-all duration-300 hover:scale-105" (click)="openDeleteModal(config)">
+          DELETE
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No configurations message -->
+  <div *ngIf="!configurations || configurations.length === 0" class="text-center py-4 text-cyan-300">
+    No configurations found. Create your first configuration to get started!
+  </div>
+</div>
+
+<!-- Comparison History Section -->
+<div class="profile-section">
+  <div class="section-header pixel-text">COMPARISON HISTORY</div>
+  <div class="comparison-list">
+    <ng-container *ngFor="let config of configurations">
+
+      <ng-container *ngIf="config.gameComparisons && config.gameComparisons.length > 0">
+        <!-- Configuration header -->
+        <div class="config-header mb-3 px-3 py-2 bg-blue-900/30 border-l-4 border-blue-500 rounded">
+          <span class="text-cyan-300 font-mono">Configuration: {{ config.name }}</span>
+          <span class="ml-2 px-2 py-0.5 text-xs rounded-full"
+                [ngClass]="{'bg-blue-500/30 border border-blue-500 text-blue-400': config.status === 'PRIMARY',
+                           'bg-purple-500/30 border border-purple-500 text-purple-400': config.status === 'SECONDARY'}">
+            {{ config.status }}
+          </span>
+        </div>
+
+        <div class="comparison-item mb-4" *ngFor="let comparison of config.gameComparisons">
+          <div class="flex items-center gap-4">
+            <div class="comparison-date text-gray-400 font-mono min-w-[90px]">
+              {{ comparison.checkedAt | date:'yyyy-MM-dd' }}
+            </div>
+            <div class="comparison-details flex-1">
+              <div class="comparison-title text-cyan-300 font-bold font-mono mb-1">
+                {{ comparison.gameName }}
+              </div>
+              <div class="comparison-tags flex flex-wrap gap-2">
+                <!-- Overall compatibility -->
+                <span class="comparison-tag px-2 py-1 rounded text-xs font-mono"
+                      [ngStyle]="{
+                        'background-color': comparison.compatible ? 'rgba(76, 175, 80, 0.3)' : 'rgba(244, 67, 54, 0.3)',
+                        'border': comparison.compatible ? '1px solid #4caf50' : '1px solid #f44336',
+                        'color': comparison.compatible ? '#4caf50' : '#f44336'
+                      }">
+                  {{ comparison.compatible ? 'Compatible' : 'Not Compatible' }}
+                </span>
+
+                <!-- Component compatibility -->
+                <span class="comparison-tag px-2 py-1 rounded text-xs font-mono"
+                      [ngStyle]="{
+                        'background-color': comparison.gpuCompatible ? 'rgba(76, 175, 80, 0.3)' : 'rgba(244, 67, 54, 0.3)',
+                        'border': comparison.gpuCompatible ? '1px solid #4caf50' : '1px solid #f44336',
+                        'color': comparison.gpuCompatible ? '#4caf50' : '#f44336'
+                      }">
+                  GPU
+                </span>
+                <span class="comparison-tag px-2 py-1 rounded text-xs font-mono"
+                      [ngStyle]="{
+                        'background-color': comparison.cpuCompatible ? 'rgba(76, 175, 80, 0.3)' : 'rgba(244, 67, 54, 0.3)',
+                        'border': comparison.cpuCompatible ? '1px solid #4caf50' : '1px solid #f44336',
+                        'color': comparison.cpuCompatible ? '#4caf50' : '#f44336'
+                      }">
+                  CPU
+                </span>
+                <span class="comparison-tag px-2 py-1 rounded text-xs font-mono"
+                      [ngStyle]="{
+                        'background-color': comparison.ramCompatible ? 'rgba(76, 175, 80, 0.3)' : 'rgba(244, 67, 54, 0.3)',
+                        'border': comparison.ramCompatible ? '1px solid #4caf50' : '1px solid #f44336',
+                        'color': comparison.ramCompatible ? '#4caf50' : '#f44336'
+                      }">
+                  RAM
+                </span>
+                <span class="comparison-tag px-2 py-1 rounded text-xs font-mono"
+                      [ngStyle]="{
+                        'background-color': comparison.storageCompatible ? 'rgba(76, 175, 80, 0.3)' : 'rgba(244, 67, 54, 0.3)',
+                        'border': comparison.storageCompatible ? '1px solid #4caf50' : '1px solid #f44336',
+                        'color': comparison.storageCompatible ? '#4caf50' : '#f44336'
+                      }">
+                  Storage
+                </span>
+              </div>
+
+              <!-- FPS estimates -->
+              <div class="fps-estimates mt-2 grid grid-cols-3 gap-2">
+                <div class="fps-item bg-black/30 border border-blue-500 rounded p-2 text-center">
+                  <div class="text-xs text-gray-400">Low</div>
+                  <div class="text-cyan-300 font-bold">{{ comparison.estimatedFpsLow }}</div>
+                </div>
+                <div class="fps-item bg-black/30 border border-blue-500 rounded p-2 text-center">
+                  <div class="text-xs text-gray-400">Medium</div>
+                  <div class="text-cyan-300 font-bold">{{ comparison.estimatedFpsMedium }}</div>
+                </div>
+                <div class="fps-item bg-black/30 border border-blue-500 rounded p-2 text-center">
+                  <div class="text-xs text-gray-400">High</div>
+                  <div class="text-cyan-300 font-bold">{{ comparison.estimatedFpsHigh }}</div>
+                </div>
+              </div>
+            </div>
+            <button class="view-btn bg-black/50 border border-blue-500 text-cyan-300 px-3 py-1 rounded font-mono text-xs hover:bg-blue-900/30 transition-all duration-300 hover:scale-105">
+              VIEW
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<div *ngIf="showEditModal" class="modal-overlay" (click)="closeEditModal($event)">
+  <div class="modal-container pixelated-form">
+    <div class="modal-header">
+      <h3 class="pixel-text">EDIT CONFIGURATION</h3>
+      <button class="close-modal" (click)="closeEditModal($event)">×</button>
+    </div>
+    <div class="modal-content">
+      <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="updateConfiguration()" class="space-y-4">
+        <div class="form-group">
+          <label class="form-label">Name:</label>
+          <input type="text" formControlName="name" placeholder="Enter configuration name" class="form-input" />
+          <div *ngIf="editForm.get('name')?.invalid && editForm.get('name')?.touched" class="error-text">
+            Name is required (max 100 characters).
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">CPU:</label>
+          <input type="text" formControlName="cpu" placeholder="Enter CPU model (Intel or AMD)" class="form-input" />
+          <div *ngIf="editForm.get('cpu')?.invalid && editForm.get('cpu')?.touched" class="error-text">
+            CPU must start with "Intel" or "AMD".
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">GPU:</label>
+          <input type="text" formControlName="gpu" placeholder="Enter GPU model (NVIDIA, AMD, or Intel)" class="form-input" />
+          <div *ngIf="editForm.get('gpu')?.invalid && editForm.get('gpu')?.touched" class="error-text">
+            GPU must start with "NVIDIA", "AMD", or "Intel".
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">RAM:</label>
+          <input type="text" formControlName="ram" placeholder="Enter RAM size (e.g., 16GB)" class="form-input" />
+          <div *ngIf="editForm.get('ram')?.invalid && editForm.get('ram')?.touched" class="error-text">
+            RAM must be 4GB, 8GB, 16GB, 32GB, 64GB, or 128GB.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Storage:</label>
+          <input type="text" formControlName="storage" placeholder="Enter Storage size (e.g., 512GB)" class="form-input" />
+          <div *ngIf="editForm.get('storage')?.invalid && editForm.get('storage')?.touched" class="error-text">
+            Storage must be 128GB, 256GB, 512GB, 1TB, 2TB, 4TB, or 8TB.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Operating System:</label>
+          <select formControlName="os" class="form-select">
+            <option *ngFor="let os of osOptions" [value]="os">{{ os }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Status:</label>
+          <select formControlName="status" class="form-select">
+            <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+          </select>
+        </div>
+
+        <button type="submit" [disabled]="editForm.invalid || updateLoading" class="submit-btn">
+          <span class="btn-text">{{ updateLoading ? 'UPDATING...' : 'UPDATE CONFIGURATION' }}</span>
+          <div *ngIf="updateLoading" class="btn-loader"></div>
+        </button>
+      </form>
+
+      <div *ngIf="updateSuccess" class="success-message mt-4">
+        <div class="success-icon">✓</div>
+        <div class="success-text">Configuration updated successfully!</div>
+      </div>
+
+      <div *ngIf="updateError" class="error-message mt-4">
+        <div class="error-icon">!</div>
+        <div class="error-text">{{ updateError }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div *ngIf="showDeleteModal" class="modal-overlay" (click)="closeDeleteModal($event)">
+  <div class="modal-container pixelated-form" style="max-width: 450px;">
+    <div class="modal-header">
+      <h3 class="pixel-text">CONFIRM DELETE</h3>
+      <button class="close-modal" (click)="closeDeleteModal($event)">×</button>
+    </div>
+    <div class="modal-content">
+      <div class="warning-message">
+        <div class="warning-icon">!</div>
+        <div class="warning-text">
+          Are you sure you want to delete the configuration <span class="font-bold text-cyan-300">{{ configToDelete?.name }}</span>?
+          <br><br>
+          <span class="text-red-400">This action cannot be undone.</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between mt-6">
+        <button class="cancel-btn bg-black/50 border border-blue-500 text-blue-400 px-4 py-2 rounded font-mono hover:bg-blue-900/30 transition-all duration-300" (click)="closeDeleteModal($event)">
+          CANCEL
+        </button>
+        <button class="confirm-delete-btn bg-black/50 border border-red-500 text-red-400 px-4 py-2 rounded font-mono hover:bg-red-900/30 transition-all duration-300" (click)="deleteConfiguration()" [disabled]="deleteLoading">
+          <span>{{ deleteLoading ? 'DELETING...' : 'DELETE' }}</span>
+          <div *ngIf="deleteLoading" class="btn-loader"></div>
+        </button>
+      </div>
+
+      <div *ngIf="deleteError" class="error-message mt-4">
+        <div class="error-icon">!</div>
+        <div class="error-text">{{ deleteError }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
