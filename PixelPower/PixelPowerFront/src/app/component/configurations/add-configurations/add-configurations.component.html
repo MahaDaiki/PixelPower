@@ -1,0 +1,113 @@
+<div class="min-h-screen flex items-center justify-center relative">
+  <!-- Fixed Background Image -->
+  <div class="pixelated-bg absolute inset-0 w-full h-full z-[-1]">
+    <img src="bgadd.gif" alt="Background" class="absolute inset-0 w-full h-full object-cover fixed" />
+    <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-purple-900/30 to-blue-900/30"></div>
+  </div>
+
+
+  <div class="configuration-container w-full max-w-2xl mx-auto my-8">
+    <!-- Browser-like container -->
+    <div class="browser-container pixelated-form form-animate rounded-lg shadow-lg">
+      <!-- Browser navigation bar -->
+      <div class="browser-nav">
+        <div class="browser-controls flex items-center gap-2 mb-2">
+          <div class="browser-dot bg-red-500"></div>
+          <div class="browser-dot bg-yellow-500"></div>
+          <div class="browser-dot bg-green-500"></div>
+          <div class="browser-address-bar flex-1 ml-2 px-2 py-1 rounded bg-black bg-opacity-50 text-xs text-cyan-300 font-mono">
+            https://cyber-arcade.net/configurations/add
+          </div>
+          <button class="back-button ml-2">
+            <svg viewBox="0 0 24 24" class="back-icon" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="browser-content p-6">
+        <h2 class="text-2xl font-bold text-center pixel-title mb-6">ADD CONFIGURATION</h2>
+
+        <div *ngIf="successMessage" class="success-message mt-4">
+          <div class="success-icon">✓</div>
+          <div class="success-text">{{ successMessage }}</div>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message mt-4">
+          <div class="error-icon">!</div>
+          <div class="error-text">{{ errorMessage }}</div>
+        </div>
+
+        <form [formGroup]="configurationForm" (ngSubmit)="submitForm()" class="space-y-4">
+          <div class="form-group">
+            <label class="form-label">Name:</label>
+            <input type="text" formControlName="name" placeholder="Enter configuration name" class="form-input" />
+            <div *ngIf="configurationForm.get('name')?.invalid && configurationForm.get('name')?.touched" class="error-text">
+              Name is required (max 100 characters).
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">CPU:</label>
+            <input type="text" formControlName="cpu" placeholder="Enter CPU model (Intel or AMD)" class="form-input" />
+            <div *ngIf="configurationForm.get('cpu')?.invalid && configurationForm.get('cpu')?.touched" class="error-text">
+              CPU must start with "Intel" or "AMD".
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">GPU:</label>
+            <input type="text" formControlName="gpu" placeholder="Enter GPU model (NVIDIA, AMD, or Intel)" class="form-input" />
+            <div *ngIf="configurationForm.get('gpu')?.invalid && configurationForm.get('gpu')?.touched" class="error-text">
+              GPU must start with "NVIDIA", "AMD", or "Intel".
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">RAM:</label>
+            <input type="text" formControlName="ram" placeholder="Enter RAM size (e.g., 16GB)" class="form-input" />
+            <div *ngIf="configurationForm.get('ram')?.invalid && configurationForm.get('ram')?.touched" class="error-text">
+              RAM must be 4GB, 8GB, 16GB, 32GB, 64GB, or 128GB.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Storage:</label>
+            <input type="text" formControlName="storage" placeholder="Enter Storage size (e.g., 512GB)" class="form-input" />
+            <div *ngIf="configurationForm.get('storage')?.invalid && configurationForm.get('storage')?.touched" class="error-text">
+              Storage must be 128GB, 256GB, 512GB, 1TB, 2TB, 4TB, or 8TB.
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Operating System -->
+            <div class="form-group">
+              <label class="form-label">Operating System:</label>
+              <select formControlName="os" class="form-select">
+                <option *ngFor="let os of osOptions" [value]="os">{{ os }}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Status:</label>
+              <select formControlName="status" class="form-select">
+                <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+              </select>
+            </div>
+          </div>
+
+
+          <button type="submit" [disabled]="configurationForm.invalid" class="submit-btn">
+            <span class="btn-text">add</span>
+            <div  class="btn-loader"></div>
+          </button>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
