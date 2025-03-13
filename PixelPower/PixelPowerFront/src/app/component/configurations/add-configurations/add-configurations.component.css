@@ -1,0 +1,351 @@
+/* Container styling */
+.configuration-container {
+  position: relative;
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+  width: 90%;
+  max-width: 800px;
+  height: auto;
+}
+
+/* Pixelated effect for background */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.pixelated-bg {
+  /*background-image: url("");*/
+  background-size: cover;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Browser container styling */
+.browser-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Browser navigation bar */
+.browser-nav {
+  padding: 10px;
+  background: rgba(20, 10, 40, 0.9);
+  border-bottom: 2px solid #3f51b5;
+}
+
+.browser-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.browser-address-bar {
+  border: 1px solid #3f51b5;
+}
+
+.back-button {
+  width: 24px;
+  height: 24px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid #3f51b5;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #00bcd4;
+}
+
+.back-button:hover {
+  background-color: rgba(63, 81, 181, 0.3);
+}
+
+.back-icon {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* Browser content area */
+.browser-content {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Pixelated form styling */
+.pixelated-form {
+  background: rgb(33, 17, 51);
+  border: 4px solid #3f51b5;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.7), 0 0 40px rgba(147, 51, 234, 0.35), inset 0 0 15px
+  rgba(147, 51, 234, 0.21);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  clip-path: polygon(0% 4%, 4% 0%, 96% 0%, 100% 4%, 100% 96%, 96% 100%, 4% 100%, 0% 96%);
+}
+
+/* Holographic overlay effect */
+.pixelated-form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.1) 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: hologramShift 8s linear infinite;
+}
+
+/* Pixelated text styling */
+.pixel-text {
+  font-family: monospace;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.9);
+  color: #ffc107;
+  font-size: medium;
+}
+
+
+
+/* Form styling */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  font-family: monospace;
+  color: #ffc107;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  letter-spacing: 1px;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #3f51b5;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-family: monospace;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: #00bcd4;
+  box-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+}
+
+.form-input::placeholder {
+  color: #9e9e9e;
+}
+
+.error-text {
+  color: #f44336;
+  font-family: monospace;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* Submit button */
+.submit-btn {
+  position: relative;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #3f51b5;
+  color: #00bcd4;
+  padding: 0.75rem 1rem;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background-color: rgba(63, 81, 181, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-text {
+  position: relative;
+  z-index: 2;
+}
+
+.btn-loader {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(0, 188, 212, 0.3);
+  border-top-color: #00bcd4;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Success message */
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: rgba(76, 175, 80, 0.2);
+  border: 2px solid #4caf50;
+  border-radius: 4px;
+  padding: 1rem;
+  animation: successPulse 2s infinite;
+}
+
+.success-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.success-text {
+  color: #4caf50;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+/* Error message */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: rgba(244, 67, 54, 0.2);
+  border: 2px solid #f44336;
+  border-radius: 4px;
+  padding: 1rem;
+  animation: errorPulse 2s infinite;
+}
+
+.error-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #f44336;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.error-text {
+  color: #f44336;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+/* Animations */
+@keyframes hologramShift {
+  0% {
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 100% 100%;
+    opacity: 0.3;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+@keyframes successPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
+  }
+}
+
+@keyframes errorPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(244, 67, 54, 0.8);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .pixel-title {
+    font-size: 1.5rem;
+  }
+
+  .configuration-container {
+    width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  .browser-address-bar {
+    font-size: 0.7rem;
+  }
+
+  .form-input,
+  .form-select {
+    padding: 0.5rem;
+  }
+}
+

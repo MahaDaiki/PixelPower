@@ -1,4 +1,45 @@
 @import "tailwindcss";
 
 
+body{
+  font-family: "Pixelify Sans", sans-serif;
+}
+p{
+  font-family: "Pixelify Sans", sans-serif;
+}
+span{
+  font-family: "Jersey 25", sans-serif;
+  letter-spacing: 1px;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
 
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3f51b5;
+  border-radius: 4px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00bcd4;
+  box-shadow: 0 0 8px rgba(0, 188, 212, 0.8);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.pixel-title {
+  font-family: "Jersey 25", sans-serif;
+  letter-spacing: 5px;
+  text-shadow: 0 0 5px rgba(147, 51, 234, 0.8), 0 0 10px rgba(147, 51, 234, 0.5);
+  color: #00bcd4;
+  font-size: 2rem;
+}

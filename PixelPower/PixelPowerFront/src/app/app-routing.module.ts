@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./component/auth/auth.module').then(m => m.AuthModule) },
   { path: 'games', loadChildren: () => import('./component/games/games.module').then(m => m.GamesModule) },
   { path: 'profile', loadChildren: () => import('./component/users/users.module').then(m => m.UsersModule) },
+  { path: 'config', loadChildren: () => import('./component/configurations/configurations.module').then(m => m.ConfigurationsModule) },
   { path: '', component: HomePageComponent },
 ];
 

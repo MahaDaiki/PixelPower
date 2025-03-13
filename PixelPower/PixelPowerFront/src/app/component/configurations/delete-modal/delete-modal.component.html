@@ -1,0 +1,44 @@
+<div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+  <div class="modal-container pixelated-form" style="max-width: 450px;" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="pixel-text">CONFIRM DELETE</h3>
+      <button class="close-modal" (click)="closeModal()">×</button>
+    </div>
+    <div class="modal-content">
+      <div class="warning-message">
+        <div class="warning-icon">!</div>
+        <div class="warning-text">
+          Are you sure you want to delete this configuration?
+          <br><br>
+          <span class="text-red-400">This action cannot be undone.</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between mt-6">
+        <button class="cancel-btn" (click)="closeModal()">
+          <span class="flex items-center gap-1">
+            <svg class="pixelated-icon w-4 h-4" viewBox="0 0 24 24" fill="none">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="#00bcd4" />
+            </svg>
+            CANCEL
+          </span>
+        </button>
+        <button class="confirm-delete-btn" (click)="deleteConfiguration()" [disabled]="loading">
+          <span class="flex items-center gap-1">
+            <svg class="pixelated-icon w-4 h-4" viewBox="0 0 24 24" fill="none">
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12z" fill="#f44336" />
+              <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" fill="#f44336" />
+            </svg>
+            {{ loading ? 'DELETING...' : 'DELETE' }}
+          </span>
+        </button>
+      </div>
+
+      <div *ngIf="error" class="error-message mt-4">
+        <div class="error-icon">!</div>
+        <div class="error-text">{{ error }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
