@@ -1,0 +1,85 @@
+<div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+  <div class="modal-container pixelated-form" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3 class="pixel-text">EDIT CONFIGURATION</h3>
+      <button class="close-modal" (click)="closeModal()">×</button>
+    </div>
+    <div class="modal-content">
+      <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="updateConfiguration()" class="space-y-4">
+        <div class="form-group">
+          <label class="form-label">Name:</label>
+          <input type="text" formControlName="name" placeholder="Enter configuration name" class="form-input" />
+          <div *ngIf="editForm.get('name')?.invalid && editForm.get('name')?.touched" class="error-text">
+            Name is required (max 100 characters).
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">CPU:</label>
+          <input type="text" formControlName="cpu" placeholder="Enter CPU model (Intel or AMD)" class="form-input" />
+          <div *ngIf="editForm.get('cpu')?.invalid && editForm.get('cpu')?.touched" class="error-text">
+            CPU is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">GPU:</label>
+          <input type="text" formControlName="gpu" placeholder="Enter GPU model (NVIDIA, AMD, or Intel)" class="form-input" />
+          <div *ngIf="editForm.get('gpu')?.invalid && editForm.get('gpu')?.touched" class="error-text">
+            GPU is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">RAM:</label>
+          <input type="text" formControlName="ram" placeholder="Enter RAM size (e.g., 16GB)" class="form-input" />
+          <div *ngIf="editForm.get('ram')?.invalid && editForm.get('ram')?.touched" class="error-text">
+            RAM is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Storage:</label>
+          <input type="text" formControlName="storage" placeholder="Enter Storage size (e.g., 512GB)" class="form-input" />
+          <div *ngIf="editForm.get('storage')?.invalid && editForm.get('storage')?.touched" class="error-text">
+            Storage is required.
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="form-group">
+          <label class="form-label">Operating System:</label>
+          <select formControlName="os" class="form-select">
+            <option value="WINDOWS">WINDOWS</option>
+            <option value="MACOS">MACOS</option>
+            <option value="LINUX">LINUX</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Status:</label>
+          <select formControlName="status" class="form-select">
+            <option value="PRIMARY">PRIMARY</option>
+            <option value="SECONDARY">SECONDARY</option>
+          </select>
+        </div>
+        </div>
+
+        <button type="submit" [disabled]="editForm.invalid || loading" class="submit-btn">
+          <span class="flex items-center gap-1 justify-center">
+            <svg class="pixelated-icon w-4 h-4" viewBox="0 0 24 24" fill="none">
+              <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" fill="#00bcd4" />
+            </svg>
+            {{ loading ? 'UPDATING...' : 'UPDATE CONFIGURATION' }}
+          </span>
+        </button>
+      </form>
+
+      <div *ngIf="error" class="error-message mt-4">
+        <div class="error-icon">!</div>
+        <div class="error-text">{{ error }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
