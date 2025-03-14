@@ -7,7 +7,10 @@ import {
   loadGames,
   loadGamesFailure,
   loadGamesSuccess,
-  loadGameSuccess
+  loadGameSuccess,
+  searchGames,
+  searchGamesSuccess,
+  searchGamesFailure
 } from '../store/games/games.actions';
 import {selectGameById, selectGameError, selectGameLoading, selectGames} from '../store/games/games.selectors';
 import {Store} from '@ngrx/store';
@@ -72,6 +75,26 @@ export class GamesService {
   getErrorSelector(): Observable<string | null> {
     return this.store.select(selectGameError);
   }
+
+  searchGames(name: string): Observable<any[]> {
+    this.store.dispatch(searchGames({ name }));
+    const url = `${this.apiUrl}/search?name=${encodeURIComponent(name)}`;
+    console.log('Searching games with name:', name);
+
+    return this.http.get<any[]>(url).pipe(
+      tap(games => {
+        console.log('Search results:', games);
+        this.store.dispatch(searchGamesSuccess({ games }));
+      }),
+      catchError(error => {
+        console.error('Search API Error:', error);
+        this.store.dispatch(searchGamesFailure({ error: error.message || 'Unknown error' }));
+        return of([]);
+      })
+    );
+  }
+
+
 
 
 

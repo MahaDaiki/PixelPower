@@ -22,25 +22,25 @@
       <!-- Content header -->
       <div class="browser-content p-6">
         <h2 class="font-bold text-center pixel-title mb-6">GAME LIBRARY</h2>
-<!--        <div class="search-container mb-6">-->
-<!--          <div class="input-with-icon">-->
-<!--            <input-->
-<!--              type="text"-->
-<!--              placeholder="Search games..."-->
-<!--              class="p-2 pl-10 w-full border rounded-lg focus:outline-none focus:ring-2 pixelated-input"-->
-<!--              [ngModel]="searchTerm"-->
-<!--              (ngModelChange)="searchGames($event)"-->
-<!--            />-->
-<!--            <div class="input-icon">-->
-<!--              <svg viewBox="0 0 24 24" class="icon-svg">-->
-<!--                <circle cx="11" cy="11" r="8"></circle>-->
-<!--                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>-->
-<!--              </svg>-->
-<!--            </div>-->
-<!--            <button *ngIf="searchTerm" class="clear-search-button" (click)="clearSearch()">×</button>-->
-<!--          </div>-->
-<!--        </div>-->
-        <!-- Loading indicator -->
+        <div class="search-container mb-6">
+          <div class="input-with-icon">
+            <input
+              type="text"
+              placeholder="Search games..."
+              class="p-2 pl-10 w-full border rounded-lg focus:outline-none focus:ring-2 pixelated-input"
+              [ngModel]="searchTerm"
+              (ngModelChange)="searchGames($event)"
+            />
+            <div class="input-icon">
+              <svg viewBox="0 0 24 24" class="icon-svg">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <button *ngIf="searchTerm" class="clear-search-button" (click)="clearSearch()">×</button>
+          </div>
+        </div>
+
         <div *ngIf="loading$ | async" class="loading-container">
           <div class="loading-text pixel-text">Loading games...</div>
           <div class="loading-bar">
@@ -54,8 +54,26 @@
           <div class="error-message">{{ error }}</div>
         </div>
 
+        <div *ngIf="searchTerm && (searchResults$ | async) as searchResults">
+          <div *ngIf="searchResults.length > 0; else noResults">
+            <div *ngFor="let game of searchResults; let i = index" class="game-item m-2">
+              <div class="game-title-container">
+                <span class="game-index">{{ i + 1 }}</span>
+                <h3 class="game-title pixel-text">{{ game.name }}</h3>
+                <a [href]="'/games/' + game.appid" class="view-details-button">VIEW DETAILS</a>
+              </div>
+            </div>
+          </div>
+          <!-- No results found -->
+          <ng-template #noResults>
+            <p class="pixel-text text-center">No games found</p>
+          </ng-template>
+        </div>
+
+
+
         <!-- Game list -->
-        <div *ngIf="games$ | async as games" class="game-list">
+        <div *ngIf="!searchTerm && (games$ | async) as games" class="game-list">
           <!-- Empty state -->
           <div *ngIf="games.length === 0 && !(loading$ | async)" class="empty-state">
             <p class="pixel-text text-center">No games found</p>
@@ -76,10 +94,7 @@
             </div>
 
           </div>
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination-container mt-6 flex justify-center">
+          <div class="pagination-container mt-6 flex justify-center">
           <button class="pagination-button" [disabled]="page <= 1" (click)="previousPage()">
             &lt;
           </button>
@@ -88,6 +103,10 @@
             &gt;
           </button>
         </div>
+        </div>
+
+        <!-- Pagination -->
+
       </div>
     </div>
   </div>

@@ -14,4 +14,6 @@ export const selectGames = createSelector(selectGameState, (state) => state.game
 export const selectGameLoading = createSelector(selectGameState, (state) => state.loading);
 export const selectGameError = createSelector(selectGameState, (state) => state.error);
 
+export const selectSearchResults = createSelector(selectGameState, (state) => state.searchResults);
+export const selectIsSearching = createSelector(selectGameState, (state) => !!state.searchQuery);
 
