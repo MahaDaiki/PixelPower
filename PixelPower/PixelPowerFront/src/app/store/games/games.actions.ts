@@ -8,3 +8,7 @@ export const loadGamesFailure = createAction('[Game] Load Games Failure', props<
 export const loadGame = createAction('[Game] Load Game', props<{ id: number }>());
 export const loadGameSuccess = createAction('[Game] Load Game Success', props<{ game: any }>());
 export const loadGameFailure = createAction('[Game] Load Game Failure', props<{ error: string }>());
+
+export const searchGames = createAction('[Game] Search Games', props<{ name: string }>());
+export const searchGamesSuccess = createAction('[Game] Search Games Success', props<{ games: any[] }>());
+export const searchGamesFailure = createAction('[Game] Search Games Failure', props<{ error: string }>());

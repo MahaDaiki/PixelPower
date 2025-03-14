@@ -45,4 +45,11 @@ public class SteamController {
         GameRequirementsResponseDTO responseDTO = gameRequirementService.parseRequirements(appId, userId);
         return ResponseEntity.ok(responseDTO);
     }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<List<GameDTO>> searchGames(@RequestParam String name) {
+        List<GameDTO> results = steamService.searchGamesByName(name);
+        return ResponseEntity.ok(results);
+    }
 }

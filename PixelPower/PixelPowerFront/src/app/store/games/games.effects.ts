@@ -7,7 +7,7 @@ import {
   loadGamesFailure,
   loadGameSuccess,
   loadGameFailure,
-  loadGame
+  loadGame, searchGames, searchGamesFailure, searchGamesSuccess
 } from './games.actions';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import {of, switchMap} from 'rxjs';
@@ -42,5 +42,17 @@ export class GameEffects {
         })
       ),
     { dispatch: false }
+  );
+
+  searchGames$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(searchGames),
+      switchMap((action) =>
+        this.gameService.searchGames(action.name).pipe(
+          map((games) => searchGamesSuccess({ games })),
+          catchError((error) => of(searchGamesFailure({ error: error.message })))
+        )
+      )
+    )
   );
 }

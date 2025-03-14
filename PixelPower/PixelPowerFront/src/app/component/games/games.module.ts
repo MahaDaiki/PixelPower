@@ -7,6 +7,7 @@ import {StoreModule} from '@ngrx/store';
 import {gameReducer} from '../../store/games/games.reducer';
 import {GamesService} from '../../service/games.service';
 import { GameDetailsComponent } from './game-details/game-details.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { GameDetailsComponent } from './game-details/game-details.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     GamesRoutingModule,
     StoreModule.forFeature('game', gameReducer),
   ],

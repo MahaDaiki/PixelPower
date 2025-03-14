@@ -75,7 +75,6 @@ public class SteamServiceImpl implements SteamServiceInt {
     public Integer getAppIdByGameName(String gameName) {
         List<GameDTO> allGames = getGamesWithNames(0, Integer.MAX_VALUE);
 
-        // First, check for an exact match
         Optional<GameDTO> exactMatch = allGames.stream()
                 .filter(game -> game.getName().equalsIgnoreCase(gameName))
                 .findFirst();
@@ -84,29 +83,31 @@ public class SteamServiceImpl implements SteamServiceInt {
             return exactMatch.get().getAppid();
         }
 
-        // If no exact match, try to find the closest match (containsIgnoreCase)
         List<GameDTO> closeMatches = allGames.stream()
                 .filter(game -> game.getName().toLowerCase().contains(gameName.toLowerCase()))
                 .collect(Collectors.toList());
 
         if (!closeMatches.isEmpty()) {
-            return closeMatches.get(0).getAppid(); // Return the first closest match
+            return closeMatches.get(0).getAppid();
         }
 
         throw new GameNotFoundException("Game not found: " + gameName);
     }
 
+
+
     @Override
-    public List<GameDTO> searchGamesByName(String query, int page, int size) {
+    public  List<GameDTO> searchGamesByName(String query) {
         List<GameDTO> allGames = getGamesWithNames(0, Integer.MAX_VALUE);
 
         List<GameDTO> matchingGames = allGames.stream()
                 .filter(game -> game.getName().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
 
-        int fromIndex = Math.max(0, page * size);
-        int toIndex = Math.min(fromIndex + size, matchingGames.size());
+        if (matchingGames.isEmpty()) {
+            throw new GameNotFoundException("Game not found: " + query);
+        }
 
-        return fromIndex >= matchingGames.size() ? List.of() : matchingGames.subList(fromIndex, toIndex);
+        return matchingGames;
     }
 }
