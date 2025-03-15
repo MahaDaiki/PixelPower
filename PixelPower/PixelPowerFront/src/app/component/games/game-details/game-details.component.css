@@ -9,11 +9,25 @@
   min-height: 800px;
 }
 
-/* Pixelated effect for background */
-.pixelated {
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
+.check-compatibility-link {
+  background-color: rgba(63, 81, 181, 0.2);
+  padding: 10px 15px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.9);
+  color: #ffc107;
+  font-family: "Pixelify Sans",sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  /*padding: 2px ;*/
+  text-align: center;
+  width: 70%;
+  border-radius: 4px;
+  border: 2px solid #9333ea;
+  box-shadow: 0 0 10px rgba(147, 51, 234, 0.7);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  transform: translateX(10px);
+  white-space: nowrap;
+  letter-spacing: 2px;
 }
 
 /* Browser container styling */
@@ -89,44 +103,6 @@
   clip-path: polygon(0% 4%, 4% 0%, 96% 0%, 100% 4%, 100% 96%, 96% 100%, 4% 100%, 0% 96%);
 }
 
-/* Holographic overlay effect */
-.pixelated-form::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0) 20%,
-    rgba(255, 255, 255, 0.1) 40%,
-    rgba(255, 255, 255, 0) 60%,
-    rgba(255, 255, 255, 0.1) 80%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-  animation: hologramShift 8s linear infinite;
-}
-
-/* Pixelated text styling */
-.pixel-text {
-  font-family: monospace;
-  letter-spacing: 3px;
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.9);
-  color: #ffc107;
-  font-size: medium;
-}
-
-.pixel-title {
-  font-family: monospace;
-  letter-spacing: 5px;
-  text-shadow: 0 0 5px rgba(147, 51, 234, 0.8), 0 0 10px rgba(147, 51, 234, 0.5);
-  color: #00bcd4;
-  font-size: 2rem;
-}
 
 /* Loading styling */
 .loading-container {

@@ -25,10 +25,10 @@ export class EditModalComponent {
   ) {
     this.editForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
-      cpu: ['', [Validators.required]],
-      gpu: ['', [Validators.required]],
-      ram: ['', [Validators.required]],
-      storage: ['', [Validators.required]],
+      cpu: ['', [Validators.required, Validators.pattern(/^(Intel|AMD)\s+[a-zA-Z0-9\s\-\+]+$/)]],
+      gpu: ['', [Validators.required, Validators.pattern(/^(NVIDIA|AMD|Intel)\s+[a-zA-Z0-9\s\-\+]+$/)]],
+      ram: ['', [Validators.required, Validators.pattern(/^(4|8|16|32|64|128)GB$/)]],
+      storage: ['', [Validators.required, Validators.pattern(/^(128|256|512|1024|2048)GB$|^(1|2|4|8)TB$/)]],
       os: ['', [Validators.required]],
       status: ['', [Validators.required]],
     });

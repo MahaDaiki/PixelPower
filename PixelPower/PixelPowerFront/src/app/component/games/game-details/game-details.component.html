@@ -115,7 +115,6 @@
                 </div>
               </div>
 
-              <!-- Developer info -->
               <div class="info-card">
                 <div class="card-header">
                   <h3 class="card-title pixel-text">Developers</h3>
@@ -125,7 +124,6 @@
                 </div>
               </div>
 
-              <!-- Publisher info -->
               <div class="info-card">
                 <div class="card-header">
                   <h3 class="card-title pixel-text">Publishers</h3>
@@ -135,7 +133,7 @@
                 </div>
               </div>
 
-              <!-- Platform info -->
+
               <div class="info-card mb-4">
                 <div class="card-header">
                   <h3 class="card-title pixel-text">Platforms</h3>
@@ -181,7 +179,7 @@
           </span>
                   </h3>
                 </div>
-                <div class="card-content">
+                <div class="card-content p-4">
                   <div class="requirements-tabs">
                     <button
                       class="tab-button"
@@ -207,7 +205,9 @@
                     <div class="requirements-content" [innerHTML]="getPlatformRequirements(game)?.recommended"></div>
                   </div>
                 </div>
-              </div>
+
+            </div>
+
 
               <!-- Categories -->
               <div class="info-card">
@@ -220,11 +220,15 @@
                   </div>
                 </div>
               </div>
+              <a [href]="'/compare/' + (game$ | async)?.steam_appid " class="card-title  check-compatibility-link">
+                Check Game Compatibility
+              </a>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 
   <!-- Screenshot modal -->

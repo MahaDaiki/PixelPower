@@ -17,12 +17,11 @@ import java.util.List;
 public class GameComparisonController {
     private final GameComparisonServiceInt gameComparisonService;
 
-    @GetMapping("/compare/{appId}/{userId}")
+    @GetMapping("/compare/{appId}")
     public ResponseEntity<GameComparisonResponseDTO> compareGameWithUserConfig(
-            @PathVariable("appId") int appId,
-            @PathVariable("userId") Long userId) {
+            @PathVariable("appId") int appId) {
 
-        GameComparisonResponseDTO comparisonResult = gameComparisonService.compareGameWithUserConfig(appId, userId);
+        GameComparisonResponseDTO comparisonResult = gameComparisonService.compareGameWithUserConfig(appId);
         return ResponseEntity.ok(comparisonResult);
     }
 

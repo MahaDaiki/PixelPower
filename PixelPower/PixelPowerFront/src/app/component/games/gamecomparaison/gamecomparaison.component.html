@@ -1,0 +1,174 @@
+<div class="min-h-screen flex items-center justify-center relative ">
+
+  <div class="pixelated-bg absolute inset-0 w-full h-full z-[-1]">
+    <img src="bgadd.gif" alt="Background Image" class="pixelated absolute inset-0 w-full h-full object-cover z-[-1]" />
+  </div>
+
+
+  <div class="game-comparison-container w-full  mx-auto my-8">
+    <!-- Browser-like container -->
+    <div class="browser-container pixelated-form form-animate rounded-lg shadow-lg">
+      <!-- Browser navigation bar -->
+      <div class="browser-nav">
+        <div class="browser-controls flex items-center gap-2 mb-2">
+          <div class="browser-dot bg-red-500"></div>
+          <div class="browser-dot bg-yellow-500"></div>
+          <div class="browser-dot bg-green-500"></div>
+          <div class="browser-address-bar flex-1 ml-2 px-2 py-1 rounded bg-black bg-opacity-50 text-xs text-cyan-300 font-mono">
+            https://PixelPower/compatibility-check/{{ gameData?.gameName || 'unknown' }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="browser-content p-6">
+        <h2 class="text-2xl font-bold text-center pixel-title mb-6">GAME COMPATIBILITY CHECK</h2>
+
+        <!-- Simple Loading Indicator -->
+        <div *ngIf="isLoading" class="loader-container">
+          <div class="loading-text pixel-text text-center mb-2">SCANNING COMPATIBILITY DATA...</div>
+          <div class="loading-bar">
+            <div class="loading-progress"></div>
+          </div>
+        </div>
+
+        <!-- Game Compatibility Results -->
+        <div *ngIf="!isLoading" class="game-results">
+          <!-- Game Header -->
+          <div class="game-header mb-6 bg-black/50 border-2 border-blue-500 rounded-lg p-4 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20"></div>
+            <div class="relative z-10">
+              <h3 class="text-xl font-bold text-cyan-300 font-mono text-center">{{ gameData?.gameName }}</h3>
+
+              <!-- Overall Compatibility Badge -->
+              <div class="flex justify-center mt-3">
+                <div class="compatibility-badge px-4 py-2 rounded-lg font-mono text-sm font-bold"
+                     [ngClass]="gameData?.compatible ? 'bg-green-900/50 border-2 border-green-500 text-green-400' : 'bg-red-900/50 border-2 border-red-500 text-red-400'">
+                  {{ gameData?.compatible ? 'COMPATIBLE' : 'NOT COMPATIBLE' }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Compatibility Details -->
+          <div class="compatibility-details grid grid-cols-2 gap-4 mb-6">
+            <div class="component-card bg-black/50 border-2 rounded-lg p-3 relative overflow-hidden"
+                 [ngClass]="gameData?.cpuCompatible ? 'border-green-500' : 'border-red-500'">
+              <div class="absolute top-0 left-0 w-full h-1"
+                   [ngClass]="gameData?.cpuCompatible ? 'bg-green-500' : 'bg-red-500'"></div>
+              <div class="flex items-center gap-2">
+                <svg class="pixelated-icon w-6 h-6" viewBox="0 0 24 24" fill="none">
+                  <rect x="2" y="4" width="20" height="16" fill="#3f51b5" />
+                  <rect x="4" y="6" width="16" height="12" fill="#000" />
+                  <path d="M6 8h4v2H6zM6 12h4v2H6zM12 8h6v2h-6zM12 12h6v2h-6z" fill="#00bcd4" />
+                </svg>
+                <div>
+                  <div class="text-gray-400 text-xs font-mono">CPU</div>
+                  <div class="text-cyan-300 font-mono font-bold">{{ gameData?.cpuCompatible ? 'COMPATIBLE' : 'NOT COMPATIBLE' }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="component-card bg-black/50 border-2 rounded-lg p-3 relative overflow-hidden"
+                 [ngClass]="gameData?.gpuCompatible ? 'border-green-500' : 'border-red-500'">
+              <div class="absolute top-0 left-0 w-full h-1"
+                   [ngClass]="gameData?.gpuCompatible ? 'bg-green-500' : 'bg-red-500'"></div>
+              <div class="flex items-center gap-2">
+                <svg class="pixelated-icon w-6 h-6" viewBox="0 0 24 24" fill="none">
+                  <rect x="2" y="6" width="20" height="12" fill="#3f51b5" />
+                  <rect x="4" y="8" width="16" height="8" fill="#000" />
+                  <path d="M6 10h2v4H6zM10 10h2v4h-2zM14 10h4v4h-4z" fill="#00bcd4" />
+                </svg>
+                <div>
+                  <div class="text-gray-400 text-xs font-mono">GPU</div>
+                  <div class="text-cyan-300 font-mono font-bold">{{ gameData?.gpuCompatible ? 'COMPATIBLE' : 'NOT COMPATIBLE' }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="component-card bg-black/50 border-2 rounded-lg p-3 relative overflow-hidden"
+                 [ngClass]="gameData?.ramCompatible ? 'border-green-500' : 'border-red-500'">
+              <div class="absolute top-0 left-0 w-full h-1"
+                   [ngClass]="gameData?.ramCompatible ? 'bg-green-500' : 'bg-red-500'"></div>
+              <div class="flex items-center gap-2">
+                <svg class="pixelated-icon w-6 h-6" viewBox="0 0 24 24" fill="none">
+                  <rect x="4" y="4" width="16" height="16" fill="#3f51b5" />
+                  <rect x="6" y="6" width="12" height="12" fill="#000" />
+                  <path d="M8 8h2v2H8zM8 12h2v2H8zM12 8h2v2h-2zM12 12h2v2h-2z" fill="#00bcd4" />
+                </svg>
+                <div>
+                  <div class="text-gray-400 text-xs font-mono">RAM</div>
+                  <div class="text-cyan-300 font-mono font-bold">{{ gameData?.ramCompatible ? 'COMPATIBLE' : 'NOT COMPATIBLE' }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="component-card bg-black/50 border-2 rounded-lg p-3 relative overflow-hidden"
+                 [ngClass]="gameData?.storageCompatible ? 'border-green-500' : 'border-red-500'">
+              <div class="absolute top-0 left-0 w-full h-1"
+                   [ngClass]="gameData?.storageCompatible ? 'bg-green-500' : 'bg-red-500'"></div>
+              <div class="flex items-center gap-2">
+                <svg class="pixelated-icon w-6 h-6" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" fill="#3f51b5" />
+                  <circle cx="12" cy="12" r="4" fill="#000" />
+                  <circle cx="12" cy="12" r="2" fill="#00bcd4" />
+                  <path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="#00bcd4" stroke-width="2" />
+                </svg>
+                <div>
+                  <div class="text-gray-400 text-xs font-mono">STORAGE</div>
+                  <div class="text-cyan-300 font-mono font-bold">{{ gameData?.storageCompatible ? 'COMPATIBLE' : 'NOT COMPATIBLE' }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FPS Estimates -->
+          <div class="fps-section">
+            <h4 class="text-lg font-bold text-yellow-400 font-mono mb-3 border-b border-blue-500 pb-2">ESTIMATED FPS</h4>
+            <div class="fps-grid grid grid-cols-3 gap-4">
+              <div class="fps-card bg-black/50 border-2 border-blue-500 rounded-lg p-4 text-center">
+                <div class="text-gray-400 text-xs font-mono mb-1">LOW SETTINGS</div>
+                <div class="text-3xl font-bold text-cyan-300 font-mono">{{ gameData?.estimatedFpsLow }}</div>
+                <div class="text-xs text-gray-400 font-mono mt-1">FPS</div>
+                <div class="fps-bar mt-2 bg-gray-800 h-2 rounded-full overflow-hidden">
+                  <div class="h-full bg-blue-500" ></div>
+                </div>
+              </div>
+
+              <div class="fps-card bg-black/50 border-2 border-blue-500 rounded-lg p-4 text-center">
+                <div class="text-gray-400 text-xs font-mono mb-1">MEDIUM SETTINGS</div>
+                <div class="text-3xl font-bold text-cyan-300 font-mono">{{ gameData?.estimatedFpsMedium }}</div>
+                <div class="text-xs text-gray-400 font-mono mt-1">FPS</div>
+                <div class="fps-bar mt-2 bg-gray-800 h-2 rounded-full overflow-hidden">
+                  <div class="h-full bg-blue-500" ></div>
+                </div>
+              </div>
+
+              <div class="fps-card bg-black/50 border-2 border-blue-500 rounded-lg p-4 text-center">
+                <div class="text-gray-400 text-xs font-mono mb-1">HIGH SETTINGS</div>
+                <div class="text-3xl font-bold text-cyan-300 font-mono">{{ gameData?.estimatedFpsHigh }}</div>
+                <div class="text-xs text-gray-400 font-mono mt-1">FPS</div>
+                <div class="fps-bar mt-2 bg-gray-800 h-2 rounded-full overflow-hidden">
+                  <div class="h-full bg-blue-500" ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Back Button -->
+          <div class="flex justify-center mt-6">
+            <button class="back-btn bg-black/50 border-2 border-blue-500 text-cyan-300 px-4 py-2 rounded font-mono text-sm hover:bg-blue-900/30 transition-all duration-300 hover:scale-105">
+              <span class="flex items-center gap-2">
+                <svg class="pixelated-icon w-4 h-4" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#00bcd4" />
+                </svg>
+                BACK TO CONFIGURATIONS
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

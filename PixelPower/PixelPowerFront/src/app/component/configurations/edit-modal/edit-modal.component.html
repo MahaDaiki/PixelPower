@@ -4,6 +4,10 @@
       <h3 class="pixel-text">EDIT CONFIGURATION</h3>
       <button class="close-modal" (click)="closeModal()">×</button>
     </div>
+    <div *ngIf="error" class="error-message mt-4">
+      <div class="error-icon">!</div>
+      <div class="error-text">{{ error }}</div>
+    </div>
     <div class="modal-content">
       <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="updateConfiguration()" class="space-y-4">
         <div class="form-group">
@@ -18,7 +22,7 @@
           <label class="form-label">CPU:</label>
           <input type="text" formControlName="cpu" placeholder="Enter CPU model (Intel or AMD)" class="form-input" />
           <div *ngIf="editForm.get('cpu')?.invalid && editForm.get('cpu')?.touched" class="error-text">
-            CPU is required.
+            CPU is required and must match the pattern (Intel or AMD).
           </div>
         </div>
 
@@ -26,7 +30,7 @@
           <label class="form-label">GPU:</label>
           <input type="text" formControlName="gpu" placeholder="Enter GPU model (NVIDIA, AMD, or Intel)" class="form-input" />
           <div *ngIf="editForm.get('gpu')?.invalid && editForm.get('gpu')?.touched" class="error-text">
-            GPU is required.
+            GPU is required and must match the pattern (NVIDIA, AMD, Intel).
           </div>
         </div>
 
@@ -34,7 +38,7 @@
           <label class="form-label">RAM:</label>
           <input type="text" formControlName="ram" placeholder="Enter RAM size (e.g., 16GB)" class="form-input" />
           <div *ngIf="editForm.get('ram')?.invalid && editForm.get('ram')?.touched" class="error-text">
-            RAM is required.
+            RAM is required and must match the pattern (e.g., 16GB).
           </div>
         </div>
 
@@ -42,7 +46,7 @@
           <label class="form-label">Storage:</label>
           <input type="text" formControlName="storage" placeholder="Enter Storage size (e.g., 512GB)" class="form-input" />
           <div *ngIf="editForm.get('storage')?.invalid && editForm.get('storage')?.touched" class="error-text">
-            Storage is required.
+            Storage is required and must match the pattern (e.g., 512GB or 1TB).
           </div>
         </div>
 
@@ -75,10 +79,7 @@
         </button>
       </form>
 
-      <div *ngIf="error" class="error-message mt-4">
-        <div class="error-icon">!</div>
-        <div class="error-text">{{ error }}</div>
-      </div>
+
     </div>
   </div>
 </div>

@@ -150,14 +150,6 @@
   text-shadow: 0 0 5px #00BCD4;
 }
 
-/* Error styling */
-.error {
-  font-family: "Jersey 10", monospace;
-  letter-spacing: 3px;
-  font-size: small;
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
-  color: #e60000;
-}
 
 /* Pixelated input styling */
 .pixelated-input {
