@@ -4,6 +4,8 @@ import com.api.PixelPower.dto.response.GameComparisonResponseDTO;
 import com.api.PixelPower.dto.response.ConfigurationResponseDTO;
 import com.api.PixelPower.dto.response.GameRequirementsResponseDTO;
 import com.api.PixelPower.entity.GameComparison;
+import com.api.PixelPower.entity.User;
+import com.api.PixelPower.exception.ResourceNotFoundException;
 import com.api.PixelPower.mapper.GameComparisonMapper;
 import com.api.PixelPower.repository.GameComparisonRepository;
 import com.api.PixelPower.repository.UserRepository;
@@ -36,38 +38,50 @@ public class GameComparisonServiceImpl implements GameComparisonServiceInt {
 
 
     @Override
-    public GameComparisonResponseDTO compareGameWithUserConfig(int appId, Long userId) {
+    public GameComparisonResponseDTO compareGameWithUserConfig(int appId) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Long userId = user.getId();
+
         List<ConfigurationResponseDTO> userConfigs = configurationService.getConfigurationsByAuthenticatedUser();
         if (userConfigs.isEmpty()) throw new RuntimeException("Aucune configuration utilisateur trouvée !");
         ConfigurationResponseDTO userConfig = userConfigs.get(0);
 
-        // Get game requirements
         GameRequirementsResponseDTO gameRequirements = gameRequirementService.parseRequirements(appId, userId);
 
-        // Calculate CPU and GPU scores for user configuration
         int userCpuScore = benchmarkCalculator.calculateCpuScore(userConfig.getCpu());
         int userGpuScore = benchmarkCalculator.calculateGpuScore(userConfig.getGpu());
 
-        // Get game requirements for CPU and GPU scores
-        int minCpuScore = gameRequirements.getMinCpu().equals("N/A") ? 0 : benchmarkCalculator.calculateCpuScore(gameRequirements.getMinCpu());
-        int recCpuScore = gameRequirements.getMaxCpu().equals("N/A") ? minCpuScore * 2 : benchmarkCalculator.calculateCpuScore(gameRequirements.getMaxCpu());
-        int minGpuScore = gameRequirements.getMinGpu().equals("N/A") ? 0 : benchmarkCalculator.calculateGpuScore(gameRequirements.getMinGpu());
-        int recGpuScore = gameRequirements.getMaxGpu().equals("N/A") ? minGpuScore * 2 : benchmarkCalculator.calculateGpuScore(gameRequirements.getMaxGpu());
+        int minCpuScore = (gameRequirements == null || gameRequirements.getMinCpu() == null || gameRequirements.getMinCpu().equals("N/A"))
+                ? 0
+                : benchmarkCalculator.calculateCpuScore(gameRequirements.getMinCpu());
 
-        // IMPORTANT CHANGE: For compatibility, we only care if user hardware meets minimum requirements
+        int minGpuScore = (gameRequirements == null || gameRequirements.getMinGpu() == null || gameRequirements.getMinGpu().equals("N/A"))
+                ? 0
+                : benchmarkCalculator.calculateGpuScore(gameRequirements.getMinGpu());
+
         boolean cpuCompatible = userCpuScore >= minCpuScore;
         boolean gpuCompatible = userGpuScore >= minGpuScore;
 
 
-        boolean ramCompatible = extractNumber(userConfig.getRam()) >= extractNumber(gameRequirements.getRam());
-        boolean storageCompatible = extractNumber(userConfig.getStorage()) >= extractNumber(gameRequirements.getStorage());
+        boolean ramCompatible = extractNumber(userConfig.getRam()) >=
+                (gameRequirements == null || gameRequirements.getRam() == null || gameRequirements.getRam().equals("N/A")
+                        ? 1
+                        : extractNumber(gameRequirements.getRam()));
+
+        boolean storageCompatible = extractNumber(userConfig.getStorage()) >=
+                (gameRequirements == null || gameRequirements.getStorage() == null || gameRequirements.getStorage().equals("N/A")
+                        ? 1
+                        : extractNumber(gameRequirements.getStorage()));
 
 
+        boolean compatible = cpuCompatible && gpuCompatible && ramCompatible;
 
-        // Final compatibility check
-        boolean compatible = cpuCompatible && gpuCompatible && ramCompatible && storageCompatible;
 
-        // Calculate estimated FPS for different quality levels
         String fpsLow = calculateEstimatedFps(userGpuScore, userCpuScore, "low");
         String fpsMedium = calculateEstimatedFps(userGpuScore, userCpuScore, "medium");
         String fpsHigh = calculateEstimatedFps(userGpuScore, userCpuScore, "high");
@@ -94,15 +108,15 @@ public class GameComparisonServiceImpl implements GameComparisonServiceInt {
 
     public String calculateEstimatedFps(int gpuScore, int cpuScore, String quality) {
 
-        double gameDifficultyFactor = Math.max(180, gpuScore / 80.0);
+        double gameDifficultyFactor = Math.max(20, gpuScore / 80.0);
 
 
-        double weightedPerformance = (gpuScore * 0.7 + cpuScore * 0.3) / gameDifficultyFactor;
+        double weightedPerformance = (gpuScore * 0.75 + cpuScore * 0.25) / gameDifficultyFactor;
 
 
         double qualityMultiplier = switch (quality.toLowerCase()) {
-            case "low" -> 1.8;
-            case "medium" -> 1.2;
+            case "low" -> 2.0;
+            case "medium" -> 1.3;
             case "high" -> 0.8;
             default -> 1.0;
         };
@@ -111,7 +125,7 @@ public class GameComparisonServiceImpl implements GameComparisonServiceInt {
         int estimatedFps = (int) Math.round(weightedPerformance * qualityMultiplier);
 
 
-        estimatedFps = Math.max(15, Math.min(estimatedFps, 240));
+        estimatedFps = Math.max(15, Math.min(estimatedFps, 300));
 
         return estimatedFps + " FPS";
     }

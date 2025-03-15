@@ -67,7 +67,7 @@ public class GameComparison {
     @JoinColumn(name = "configuration_id", nullable = false)
     private Configuration configuration;
 
-    @OneToMany(mappedBy = "gameComparison", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "gameComparison", cascade = {CascadeType.ALL, CascadeType.MERGE}, orphanRemoval = true)
     private List<UpgradeSuggestion> upgradeSuggestions = new ArrayList<>();
 
     @PrePersist

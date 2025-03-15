@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {GamesService} from '../../../service/games.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-game-details',
@@ -22,7 +22,7 @@ export class GameDetailsComponent {
 
   @Input() gameId?: number;
 
-  constructor(private gamesService: GamesService, private route: ActivatedRoute) {
+  constructor(private gamesService: GamesService, private route: ActivatedRoute, private router: Router) {
     this.loading$ = this.gamesService.getLoadingSelector();
     this.error$ = this.gamesService.getErrorSelector();
   }
@@ -73,19 +73,15 @@ export class GameDetailsComponent {
     this.activeVideo = null;
   }
 
-  // Add this method to handle platform selection
   selectPlatform(platform: "pc" | "mac" | "linux"): void {
     this.selectedPlatform = platform
-    // Reset to minimum tab when switching platforms
     this.selectedTab = "minimum"
   }
 
-  // Update the showTab method to work with platform-specific requirements
   showTab(tab: "minimum" | "recommended"): void {
     this.selectedTab = tab
   }
 
-  // Add a helper method to get the current platform requirements
   getPlatformRequirements(game: any): any {
     if (!game) return null
 
@@ -101,7 +97,6 @@ export class GameDetailsComponent {
     }
   }
 
-  // Add a helper method to check if a platform has requirements
   hasPlatformRequirements(game: any, platform: "pc" | "mac" | "linux"): boolean {
     if (!game) return false
 
@@ -111,5 +106,9 @@ export class GameDetailsComponent {
     return requirements && (requirements.minimum || requirements.recommended)
   }
 
+
+  goToComparison(appId: number) {
+    this.router.navigate(['/game-comparison', appId]);
+  }
 
 }

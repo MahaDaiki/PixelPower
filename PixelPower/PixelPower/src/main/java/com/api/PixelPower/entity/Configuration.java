@@ -71,7 +71,7 @@ public class Configuration {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "configuration", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "configuration", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<GameComparison> gameComparisons = new ArrayList<>();
 
 
