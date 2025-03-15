@@ -186,3 +186,13 @@ span{
   font-size: 2rem;
 }
 
+
+.error {
+  font-family: "Jersey 10", monospace;
+  letter-spacing: 3px;
+  font-size: medium;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 1);
+  color: #e60000;
+}
+
+

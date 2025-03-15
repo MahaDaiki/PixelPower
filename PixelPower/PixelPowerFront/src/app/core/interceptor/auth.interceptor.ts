@@ -1,12 +1,20 @@
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpInterceptorFn, HttpRequest} from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpInterceptorFn,
+  HttpRequest
+} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {map, Observable, switchMap, take} from 'rxjs';
+import {catchError, map, Observable, switchMap, take, throwError} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {selectAuthToken} from '../../store/auth/auth.selectors';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private store: Store) {}
+  constructor(private store: Store,  private router: Router) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.store.select(selectAuthToken).pipe(
@@ -16,17 +24,24 @@ export class AuthInterceptor implements HttpInterceptor {
           token = localStorage.getItem('auth_token');
         }
 
-        console.log('Auth Token:', token);
+        let request = req;
         if (token) {
-          const clonedRequest = req.clone({
+          request = req.clone({
             setHeaders: {
-              Authorization: `Bearer ${token}`,
-            },
+              Authorization: `Bearer ${token}`
+            }
           });
-          return next.handle(clonedRequest);
-        } else {
-          return next.handle(req);
         }
+
+        return next.handle(request).pipe(
+          catchError(error => {
+            if (error instanceof HttpErrorResponse && error.status === 401) {
+              localStorage.removeItem('auth_token');
+              this.router.navigate(['/login']);
+            }
+            return throwError(() => error);
+          })
+        );
       })
     );
   }

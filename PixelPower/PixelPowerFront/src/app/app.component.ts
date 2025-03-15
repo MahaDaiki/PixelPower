@@ -8,7 +8,7 @@ import { loadToken } from './store/auth/auth.actions';
   standalone: false,
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent   {
   title = 'PixelPowerFront';
 
   constructor(private store: Store) {}
