@@ -8,6 +8,7 @@ import { AddConfigurationsComponent } from './add-configurations/add-configurati
 import {ReactiveFormsModule} from '@angular/forms';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
 import { DeleteModalComponent } from './delete-modal/delete-modal.component';
+import {UpgradesuggestionService} from '../../service/upgradesuggestion.service';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { DeleteModalComponent } from './delete-modal/delete-modal.component';
     ReactiveFormsModule,
     ConfigurationsRoutingModule
   ],
-  providers: [ConfigurationsService],
+  providers: [ConfigurationsService, UpgradesuggestionService],
   exports: [DisplayConfigurationsComponent],
 })
 export class ConfigurationsModule { }

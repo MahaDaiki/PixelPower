@@ -8,15 +8,7 @@
   height: auto;
 }
 
-/* Pixelated effect for background */
-.pixelated {
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
 .pixelated-bg {
-  /*background-image: url("");*/
   background-size: cover;
   background-position: center;
   image-rendering: pixelated;

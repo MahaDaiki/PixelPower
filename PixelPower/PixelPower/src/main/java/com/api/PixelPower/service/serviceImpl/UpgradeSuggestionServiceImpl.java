@@ -1,6 +1,6 @@
 package com.api.PixelPower.service.serviceImpl;
 
-import com.api.PixelPower.dto.UpgradeSuggestionDTO;
+import com.api.PixelPower.dto.response.UpgradeSuggestionResponseDTO;
 import com.api.PixelPower.dto.response.GameRequirementsResponseDTO;
 import com.api.PixelPower.entity.GameComparison;
 import com.api.PixelPower.entity.UpgradeSuggestion;
@@ -28,28 +28,28 @@ public class UpgradeSuggestionServiceImpl implements UpgradeSuggestionServiceInt
     private final SteamServiceInt steamService;
 
     @Override
-    public List<UpgradeSuggestionDTO> getAllUpgradeSuggestions() {
+    public List<UpgradeSuggestionResponseDTO> getAllUpgradeSuggestions() {
         return upgradeSuggestionRepository.findAll().stream()
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<UpgradeSuggestionDTO> getUpgradeSuggestionsByComparisonId(Long comparisonId) {
+    public List<UpgradeSuggestionResponseDTO> getUpgradeSuggestionsByComparisonId(Long comparisonId) {
         return upgradeSuggestionRepository.findByGameComparisonId(comparisonId).stream()
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void generateUpgradeSuggestions(Long comparisonId) {
+    public List<UpgradeSuggestionResponseDTO> generateUpgradeSuggestions(Long comparisonId) {
         GameComparison comparison = gameComparisonRepository.findById(comparisonId)
                 .orElseThrow(() -> new RuntimeException("GameComparison not found"));
 
 
 
         if (comparison.getCompatible()) {
-            return;
+            return new ArrayList<>();
         }
 
         Integer appId = steamService.getAppIdByGameName(comparison.getGameName());
@@ -96,6 +96,7 @@ public class UpgradeSuggestionServiceImpl implements UpgradeSuggestionServiceInt
             );
         }
 
+
         if (!upgradeSuggestions.isEmpty()) {
             System.out.println("Saving upgrade suggestions: " + upgradeSuggestions.size());
             upgradeSuggestionRepository.saveAll(upgradeSuggestions);
@@ -109,5 +110,13 @@ public class UpgradeSuggestionServiceImpl implements UpgradeSuggestionServiceInt
             System.out.println("RAM Compatibility: " + comparison.getRamCompatible());
 
         }
+        return upgradeSuggestions.stream()
+                .map(suggestion -> new UpgradeSuggestionResponseDTO(
+                        suggestion.getId(),
+                        suggestion.getLimitingComponent(),
+                        suggestion.getSuggestedUpgrade(),
+                        suggestion.getGameComparison().getId()
+                ))
+                .toList();
     }
 }
