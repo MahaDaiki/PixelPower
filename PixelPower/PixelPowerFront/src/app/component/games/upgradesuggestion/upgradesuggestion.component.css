@@ -1,0 +1,95 @@
+/* Pixelated panel styling */
+.pixelated-panel {
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.7), 0 0 40px rgba(147, 51, 234, 0.35), inset 0 0 15px
+  rgba(147, 51, 234, 0.21);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  position: relative;
+}
+
+.pixelated-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.1) 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: hologramShift 8s linear infinite;
+}
+
+.cyber-glow {
+  text-shadow: 0 0 5px rgba(0, 188, 212, 0.8);
+}
+
+.hover\:shadow-glow:hover {
+  box-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+}
+
+.loading-progress {
+  animation: loadingProgress 2s infinite;
+}
+
+.loading-pulse {
+  animation: pulse 1.5s infinite;
+}
+
+.error-pulse {
+  animation: errorPulse 2s infinite;
+}
+
+
+@keyframes hologramShift {
+  0% {
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 100% 100%;
+    opacity: 0.3;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes loadingProgress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+@keyframes errorPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(244, 67, 54, 0.8);
+  }
+}
+
