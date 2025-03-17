@@ -1,0 +1,92 @@
+<div class="reviews-container info-section p-4 space-y-4">
+  <h2 class="section-title pixel-text">Reviews for {{ gameName }}</h2>
+
+  <!-- Review Form -->
+  <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="space-y-4 bg-black/30 border-2 border-[#3f51b5] rounded p-4 hover:border-[#00bcd4] transition-all duration-300">
+    <div class="hidden">
+      <input id="gameName" formControlName="gameName" [value]="gameName" hidden />
+    </div>
+
+    <div>
+      <label for="rating" class="block font-mono text-[#ffc107] mb-2 text-shadow">Rating (1-5)</label>
+      <input type="number" id="rating" formControlName="rating" hidden />
+      <div class="flex items-center gap-2">
+        <div *ngFor="let star of [1,2,3,4,5]"
+             (click)="reviewForm.patchValue({rating: star})"
+             class="cursor-pointer transition-transform hover:scale-110">
+          <svg viewBox="0 0 24 24" class="w-8 h-8 pixelated">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  [attr.fill]="star <= (reviewForm.get('rating')?.value || 0) ? '#ffc107' : '#3f51b5'" />
+          </svg>
+        </div>
+        <span class="ml-2 text-cyan-300 font-mono">{{ reviewForm.get('rating')?.value || 0 }}/5</span>
+      </div>
+    </div>
+
+    <div>
+      <label for="comment" class="block font-mono text-[#ffc107] mb-2 text-shadow">Comment</label>
+      <textarea id="comment" formControlName="comment"
+                class="w-full p-3 bg-black/50 border-2 border-[#3f51b5] rounded text-[#e0e0e0] font-mono focus:border-[#00bcd4] focus:outline-none transition-all duration-300"
+                maxlength="500"></textarea>
+      <div class="text-right text-xs text-gray-400 font-mono mt-1">
+        {{ (reviewForm.get('comment')?.value || '').length }}/500
+      </div>
+    </div>
+
+    <button type="submit"
+            [disabled]="!reviewForm.valid"
+            class="bg-black/50 border-2 border-[#3f51b5] text-[#00bcd4] font-mono font-bold py-2 px-4 rounded hover:bg-[#3f51b5]/20 hover:shadow-glow transition-all duration-300 relative overflow-hidden">
+      <span class="relative z-10">SUBMIT REVIEW</span>
+    </button>
+  </form>
+
+  <!-- Reviews Display -->
+  <div *ngFor="let review of reviews" class="bg-black/30 border-2 border-[#3f51b5] rounded p-4 hover:border-[#00bcd4] transition-all duration-300 mt-4">
+    <div class="flex items-center gap-3">
+      <!-- User Profile Picture -->
+      <img *ngIf="review.user?.profilePicture"
+           [src]="'/assets/uploads/' + review.user.profilePicture"
+           class="w-10 h-10 rounded-full border-2 border-[#3f51b5]"
+           alt="Profile Picture">
+      <div class="w-10 h-10 rounded-full flex items-center justify-center text-[#00bcd4] font-bold bg-[#3f51b5]/50"
+           *ngIf="!review.user?.profilePicture">
+        {{ review.user?.username?.charAt(0) || '?' }}
+      </div>
+
+      <!-- Username -->
+      <span class="font-semibold text-[#00bcd4] font-mono">{{ review.user?.username || 'Unknown User' }}:</span>
+      <p class=" text-[#e0e0e0] font-mono">{{ review.comment }}</p>
+    </div>
+    <div class="flex items-center justify-between mt-2">
+      <div class="flex">
+        <div *ngFor="let star of [1,2,3,4,5]">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 pixelated">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  [attr.fill]="star <= review.rating ? '#ffc107' : '#3f51b5'" />
+          </svg>
+        </div>
+      </div>
+      <span class="text-sm text-gray-400 font-mono">{{ review.createdAt | date:'yyyy-MM-dd' }}</span>
+    </div>
+
+
+
+    <!--    <div *ngIf="review.user.id === currentUser?.id" class="flex justify-end mt-2">-->
+    <!--      <button class="bg-black/50 border border-yellow-500 text-yellow-400 px-3 py-1 rounded font-mono text-xs hover:bg-yellow-900/30 transition-all duration-300 hover:scale-105 flex items-center gap-1">-->
+    <!--        <svg class="w-4 h-4 pixelated" viewBox="0 0 24 24" fill="none">-->
+    <!--          <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" fill="#ffc107" />-->
+    <!--          <path d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="#ffc107" />-->
+    <!--        </svg>-->
+    <!--        EDIT-->
+    <!--      </button>-->
+    <!--    </div>-->
+
+
+
+  </div>
+
+  <!-- No reviews message -->
+  <div *ngIf="reviews.length === 0" class="text-center py-6 bg-black/20 border border-dashed border-[#3f51b5] rounded">
+    <p class="text-[#9e9e9e] font-mono">No reviews yet. Be the first to review!</p>
+  </div>
+</div>
