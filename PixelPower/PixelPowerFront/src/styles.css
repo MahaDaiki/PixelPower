@@ -130,19 +130,7 @@ span{
     0 0 20px rgba(147, 51, 234, 0.7),
     0 0 40px rgba(147, 51, 234, 0.35),
     inset 0 0 15px rgba(147, 51, 234, 0.21);
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-  clip-path: polygon(
-    0% 4%,
-    4% 0%,
-    96% 0%,
-    100% 4%,
-    100% 96%,
-    96% 100%,
-    4% 100%,
-    0% 96%
-  );
+
 }
 
 /* Holographic overlay effect */
@@ -173,7 +161,7 @@ span{
   letter-spacing: 3px;
   text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.9);
   color: #FFC107;
-  font-size: medium;
+  font-size: 1.6rem;
 }
 
 .pixel-title {

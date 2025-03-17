@@ -13,6 +13,8 @@ export class GamecomparaisonComponent {
   gameData: any;
   isLoading = true;
   appId!: number;
+  showUpgradeSuggestions = false;
+  comparisonId!: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,12 +34,19 @@ export class GamecomparaisonComponent {
       next: (data) => {
         this.gameData = data;
         this.isLoading = false;
+        this.comparisonId = data.id;
+        console.log(data)
+        console.log('Assigned comparisonId:', this.comparisonId);
       },
       error: (err) => {
         console.error('Error fetching data', err);
         this.isLoading = false;
       }
     });
+  }
+
+  triggerUpgradeSuggestions(): void {
+    this.showUpgradeSuggestions = true;
   }
 
 

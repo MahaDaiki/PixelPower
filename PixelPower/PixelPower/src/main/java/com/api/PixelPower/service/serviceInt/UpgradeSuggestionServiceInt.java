@@ -1,11 +1,11 @@
 package com.api.PixelPower.service.serviceInt;
 
-import com.api.PixelPower.dto.UpgradeSuggestionDTO;
+import com.api.PixelPower.dto.response.UpgradeSuggestionResponseDTO;
 
 import java.util.List;
 
 public interface UpgradeSuggestionServiceInt {
-    List<UpgradeSuggestionDTO> getAllUpgradeSuggestions();
-    List<UpgradeSuggestionDTO> getUpgradeSuggestionsByComparisonId(Long comparisonId);
-    void generateUpgradeSuggestions(Long comparisonId);
+    List<UpgradeSuggestionResponseDTO> getAllUpgradeSuggestions();
+    List<UpgradeSuggestionResponseDTO> getUpgradeSuggestionsByComparisonId(Long comparisonId);
+    List<UpgradeSuggestionResponseDTO> generateUpgradeSuggestions(Long comparisonId);
 }

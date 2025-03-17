@@ -1,7 +1,7 @@
 <div class="min-h-screen flex items-center justify-center relative ">
   <!-- Fixed Background Image -->
   <div class="pixelated-bg absolute inset-0 w-full h-full z-[-1]">
-    <img src="Profile.gif" alt="Background Image" class="pixelated absolute inset-0 w-full h-full object-cover z-[-1]" />
+    <img src="Profile.gif" alt="Background Image" class="pixelated absolute transform scale-120 inset-0 w-full h-full object-cover fixed z-[-1]" />
   </div>
 
 
@@ -112,7 +112,6 @@
       <p *ngIf="passwordSuccessMessage && showPasswordForm" class="success-message">{{ passwordSuccessMessage }}</p>
 
       <div class="modal-content">
-        <!-- Profile Form -->
         <form *ngIf="!showPasswordForm" [formGroup]="profileForm" (ngSubmit)="updateProfile($event)">
           <div class="form-group">
             <label class="form-label">Username</label>

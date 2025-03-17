@@ -145,15 +145,44 @@
                 </div>
               </div>
             </div>
-            <button class="view-btn bg-black/50 border border-blue-500 text-cyan-300 px-3 py-1 rounded font-mono text-xs hover:bg-blue-900/30 transition-all duration-300 hover:scale-105">
+            <button class="view-btn bg-black/50 border border-blue-500 text-cyan-300 px-3 py-1 rounded font-mono text-xs hover:bg-blue-900/30 transition-all duration-300 hover:scale-105" (click)="displayUpgradesuggestion(comparison.id)">
               VIEW
             </button>
+
           </div>
         </div>
       </ng-container>
     </ng-container>
   </div>
 </div>
+<!-- Upgrade Suggestions Modal -->
+<div *ngIf="showUpgradeModal" class="modal-overlay" (click)="closeUpgradeModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="bg-black/50 p-3 border-b border-[#3f51b5] flex justify-between items-center">
+      <h3 class="text-[#00bcd4] font-mono text-lg tracking-wider">UPGRADE SUGGESTIONS</h3>
+      <button class="w-8 h-8 bg-black/50 border-2 border-[#3f51b5] rounded-full flex items-center justify-center text-[#00bcd4] hover:bg-[#3f51b5]/30 transition-all duration-300" (click)="closeUpgradeModal()">×</button>
+    </div>
+
+    <div class="p-4 max-h-[60vh] overflow-y-auto custom-scrollbar">
+      <div *ngIf="!upgradeSuggestions || upgradeSuggestions.length === 0" class="py-4 text-center">
+        <p class="text-green-400 font-mono text-sm">NO UPGRADE SUGGESTIONS AVAILABLE</p>
+      </div>
+
+      <div *ngIf="upgradeSuggestions && upgradeSuggestions.length > 0" class="space-y-3">
+        <div *ngFor="let suggestion of upgradeSuggestions" class="bg-black/30 border border-[#3f51b5] rounded p-3 hover:border-[#00bcd4] transition-all duration-300">
+          <div class="text-yellow-400 font-mono text-xs mb-1">LIMITING COMPONENT:</div>
+          <div class="text-[#e0e0e0] font-mono text-sm mb-2">{{ suggestion.limitingComponent }}</div>
+
+          <div class="text-cyan-400 font-mono text-xs mb-1">SUGGESTED UPGRADE:</div>
+          <div class="text-[#e0e0e0] font-mono text-sm">{{ suggestion.suggestedUpgrade }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 <app-edit-modal [showModal]="showEditModal" [configId]="configToEditId" (close)="closeEditModal()" (updated)="handleUpdated($event)"></app-edit-modal>
 <app-delete-modal [showModal]="showDeleteModal" [configId]="configToDeleteId" (close)="closeDeleteModal()" (deleted)="handleDeleted()"></app-delete-modal>
 

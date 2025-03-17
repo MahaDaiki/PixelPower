@@ -1,6 +1,5 @@
 package com.api.PixelPower.dto.response;
 
-import com.api.PixelPower.dto.UpgradeSuggestionDTO;
 import com.api.PixelPower.entity.ConfigStatus;
 import com.api.PixelPower.entity.OperatingSystem;
 import lombok.AllArgsConstructor;
@@ -23,5 +22,5 @@ public class ConfigurationResponseDTO {
     private ConfigStatus status;
     private Long userId;
     private List<GameComparisonResponseDTO> gameComparisons;
-    private List<UpgradeSuggestionDTO> upgradeSuggestions;
+    private List<UpgradeSuggestionResponseDTO> upgradeSuggestions;
 }

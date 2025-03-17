@@ -10,13 +10,15 @@ import { GameDetailsComponent } from './game-details/game-details.component';
 import {FormsModule} from '@angular/forms';
 import { GamecomparaisonComponent } from './gamecomparaison/gamecomparaison.component';
 import {GamecomparaisonService} from '../../service/gamecomparaison.service';
+import { UpgradesuggestionComponent } from './upgradesuggestion/upgradesuggestion.component';
 
 
 @NgModule({
   declarations: [
     GameListComponent,
     GameDetailsComponent,
-    GamecomparaisonComponent
+    GamecomparaisonComponent,
+    UpgradesuggestionComponent
   ],
   imports: [
     CommonModule,
