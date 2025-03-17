@@ -88,7 +88,14 @@
                     </div>
                     <div class="video-name pixel-text">{{ movie.name }}</div>
                   </div>
+
                 </div>
+
+              </div>
+              <!-- Reviews Section -->
+              <div class="info-section">
+                <h2 class="section-title pixel-text">Reviews</h2>
+                <app-reviews-display *ngIf="game$ | async as game" [gameName]="game.name"></app-reviews-display>
               </div>
             </div>
 
@@ -231,6 +238,7 @@
 
   </div>
 
+
   <!-- Screenshot modal -->
   <div *ngIf="activeScreenshot" class="screenshot-modal" (click)="closeScreenshot()">
     <div class="modal-content">
@@ -246,4 +254,7 @@
       <button class="close-modal">×</button>
     </div>
   </div>
+
+
+
 </div>

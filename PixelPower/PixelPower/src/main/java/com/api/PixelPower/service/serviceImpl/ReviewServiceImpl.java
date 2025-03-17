@@ -72,4 +72,12 @@ public class ReviewServiceImpl implements ReviewServiceInt {
                 .map(reviewMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ReviewResponseDTO> getReviewsByGameName(String gameName) {
+        List<Review> reviews = reviewRepository.findByGameName(gameName);
+        return reviews.stream()
+                .map(reviewMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
 }
