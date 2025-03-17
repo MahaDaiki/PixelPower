@@ -11,6 +11,7 @@ import {FormsModule} from '@angular/forms';
 import { GamecomparaisonComponent } from './gamecomparaison/gamecomparaison.component';
 import {GamecomparaisonService} from '../../service/gamecomparaison.service';
 import { UpgradesuggestionComponent } from './upgradesuggestion/upgradesuggestion.component';
+import {ReviewsModule} from '../reviews/reviews.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { UpgradesuggestionComponent } from './upgradesuggestion/upgradesuggestio
     FormsModule,
     GamesRoutingModule,
     StoreModule.forFeature('game', gameReducer),
+    ReviewsModule,
   ],
   providers: [GamesService, GamecomparaisonService],
 })

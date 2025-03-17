@@ -11,4 +11,5 @@ public interface ReviewServiceInt {
     List<ReviewResponseDTO> getAllReviews();
     ReviewResponseDTO getReviewById(Long id);
     List<ReviewResponseDTO> getReviewsByUserId(Long userId);
+    List<ReviewResponseDTO> getReviewsByGameName(String gameName);
 }
