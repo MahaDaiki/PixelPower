@@ -1,6 +1,7 @@
 import {Component, Input, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ReviewsService} from '../../../service/reviews.service';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-reviews-display',
@@ -13,8 +14,14 @@ export class ReviewsDisplayComponent {
 
   reviewForm: FormGroup;
   reviews: any[] = [];
+  currentUser: any;
 
-  constructor(private fb: FormBuilder, private reviewService: ReviewsService) {
+  editModalVisible: boolean = false;
+  deleteModalVisible: boolean = false;
+  selectedReviewId: number = 0;
+
+
+  constructor(private fb: FormBuilder, private reviewService: ReviewsService,private authService: AuthService) {
     this.reviewForm = this.fb.group({
       gameName: [this.gameName, Validators.required],
       rating: [null, [Validators.required, Validators.min(1), Validators.max(5)]],
@@ -23,11 +30,17 @@ export class ReviewsDisplayComponent {
   }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.getUser();
+    // console.log(this.currentUser.sub)
     if (this.gameName) {
       this.reviewForm.patchValue({
         gameName: this.gameName
       });
     }
+  }
+
+  canEditOrDelete(review: any): boolean {
+    return this.currentUser && review.user?.email === this.currentUser.sub;
 
   }
 
@@ -43,10 +56,12 @@ export class ReviewsDisplayComponent {
       const review = this.reviewForm.value;
       this.reviewService.createReview(review).subscribe(
         (response) => {
-          console.log('Review created:', response);
+          // console.log('Review created:', response);
+          this.reviewForm.reset();
           this.loadReviews();
         },
         (error) => {
+          alert("something is wrong")
           console.error('Error creating review:', error);
         }
       );
@@ -65,5 +80,32 @@ export class ReviewsDisplayComponent {
         }
       );
     }
+  }
+
+  openEditModal(reviewId: number): void {
+    this.selectedReviewId = reviewId;
+    this.editModalVisible = true;
+  }
+
+  closeEditModal(): void {
+    this.editModalVisible = false;
+  }
+
+
+  openDeleteModal(reviewId: number): void {
+    this.selectedReviewId = reviewId;
+    this.deleteModalVisible = true;
+  }
+
+  closeDeleteModal(): void {
+    this.deleteModalVisible = false;
+  }
+
+  onReviewUpdated(): void {
+    this.loadReviews();
+  }
+
+  onReviewDeleted(): void {
+    this.loadReviews();
   }
 }

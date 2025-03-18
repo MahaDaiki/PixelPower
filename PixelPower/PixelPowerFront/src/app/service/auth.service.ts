@@ -4,6 +4,7 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {loginFailure, loginSuccess, registerFailure, registerSuccess} from '../store/auth/auth.actions';
 import {Router} from '@angular/router';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import {Router} from '@angular/router';
 export class AuthService {
   private apiLoginUrl = 'http://localhost:8080/api/auth/login';
   private apiRegisterUrl = 'http://localhost:8080/api/auth/register';
+  private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient, private store: Store,   private router: Router) {}
 
@@ -68,6 +70,23 @@ export class AuthService {
     );
   }
 
+
+  getUser(): any {
+    const token = localStorage.getItem('auth_token');
+    if (!token) return null;
+
+    return this.jwtHelper.decodeToken(token);
+  }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('auth_token');
+    return token ? !this.jwtHelper.isTokenExpired(token) : false;
+  }
+
+  logout(): void {
+    localStorage.removeItem('auth_token');
+    this.router.navigate(['/login']);
+  }
 
 
 

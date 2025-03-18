@@ -37,18 +37,16 @@ public class AuthenticationController {
         String profilePicUrl = null;
         try {
             if (profilePicture != null && !profilePicture.isEmpty()) {
-                // Create directory if it doesn't exist
                 File uploadDir = new File("public/profile_pictures");
                 if (!uploadDir.exists()) {
                     uploadDir.mkdirs();
                 }
 
-                // Generate unique filename
+
                 String originalFileName = profilePicture.getOriginalFilename();
                 String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                 String newFileName = UUID.randomUUID().toString() + fileExtension;
 
-                // Save file
                 Path targetPath = Paths.get("resources/uploads/profile_pictures").resolve(newFileName);
                 Files.copy(profilePicture.getInputStream(), targetPath);
 
