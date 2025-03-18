@@ -1,29 +1,80 @@
-<nav class="navbar px-4 py-2 fixed top-0 left-0 right-0 z-10  shadow-lg">
+<nav class="navbar sticky   top-0 left-0 right-0 z-20 shadow-lg relative overflow-hidden">
+  <!-- Grid overlay -->
+  <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+
+  <div class="absolute inset-0 scanline pointer-events-none"></div>
+
   <div class="flex justify-between items-center">
-    <div class="flex items-center ">
-      <img src="logopixelp.png" alt="PixelPower Logo" class="w-15 h-15 " />
-    <div class="text-3xl  yellow">
-      <span class="text-[#FF4081]">Pixel</span>Power
-    </div>
+    <div class="flex items-center group">
+      <div class="relative logo-container">
+        <img src="logopixelp.png" alt="PixelPower Logo" class="w-15 h-15 relative z-10" />
+        <div class="logo-glow-circle"></div>
+      </div>
+      <div class="text-3xl yellow">
+        <span class="text-[#FF4081] animate-pulse-slow">Pixel</span>Power
+      </div>
     </div>
 
-    <!-- Links Section -->
+
     <div class="hidden lg:flex items-center space-x-6">
-      <a href="#" class="text-white transition-all">Games</a>
-      <a href="#" class="text-white transition-all">Login</a>
+      <a href="games/all" class="text-white transition-all nav-link-enhanced">Games</a>
+
+      <a *ngIf="!isAuthenticated()" href="auth/login" class="text-white transition-all nav-link-enhanced">
+        Login
+      </a>
+
+      <a *ngIf="isAuthenticated()" href="/profile" class="text-white transition-all nav-link-enhanced">
+        Profile
+      </a>
+
+      <button *ngIf="isAuthenticated()" (click)="logout()" class="text-white transition-all nav-link-enhanced">
+        <img width="32" height="32" src="arrowheads.png" alt="Logout"/>
+      </button>
     </div>
 
-    <!-- Mobile Hamburger Icon (for responsive design) -->
+
+
     <div class="lg:hidden">
-      <button (click)="toggleMenu()" class="text-white">
-        <img src="book2.gif" alt="Menu" class="w-10 h-10" />
+      <button (click)="toggleMenu()" class="text-white relative group">
+        <img src="book2.gif" alt="Menu" class="w-10 h-10 menu-button-glow" />
+        <div class="absolute -inset-1 bg-gradient-to-r from-[#FF4081]/20 to-[#FFC107]/20 rounded-full blur opacity-0 group-hover:opacity-100 transition duration-300"></div>
       </button>
     </div>
   </div>
-
-  <!-- Mobile Menu (toggle visibility) -->
-  <div class="lg:hidden mt-4" *ngIf="isMenuOpen">
-    <a href="#" class="block text-white py-2">Games</a>
-    <a href="#" class="block text-white py-2">Login</a>
-  </div>
 </nav>
+
+<div class="lg:hidden sidebar-container" [ngClass]="{'sidebar-open': isMenuOpen}">
+  <div class="sidebar-overlay" (click)="toggleMenu()"></div>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="text-3xl yellow">
+        <span class="text-[#FF4081] animate-pulse-slow">Pixel</span>Power
+      </div>
+      <button (click)="toggleMenu()" class="sidebar-close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#FFC107]">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Sidebar Links -->
+    <div class="sidebar-links">
+      <a href="games/all" class="sidebar-link">Games</a>
+
+      <a *ngIf="!isAuthenticated()" href="/login" class="sidebar-link">
+        Login
+      </a>
+
+      <a *ngIf="isAuthenticated()" href="/profile" class="sidebar-link">
+        Profile
+      </a>
+
+      <button *ngIf="isAuthenticated()" (click)="logout()" class="sidebar-link text-left">
+        Logout <img width="20" height="20" src="arrowheads.png" alt=""/>
+      </button>
+    </div>
+
+  </div>
+</div>
+

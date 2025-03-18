@@ -5,12 +5,14 @@
   overflow: hidden;
 }
 
+
+
 .image-container {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  position: fixed; /* Fix image so interactive areas stay in place */
+  position: fixed;
   top: 0;
   left: 0;
 }
@@ -28,12 +30,12 @@
   transition: all 0.3s ease;
 }
 
-/* Modified: Only the border appears on hover, tooltip is always visible */
+
 .interactive-area:hover .hover-effect {
   border: 2px solid rgb(255, 193, 7);
 }
 
-/* Nintendo Switch interactive area */
+
 .switch-area {
   bottom: 14.9%;
   right: 25%;
@@ -42,7 +44,7 @@
   z-index: 10;
 }
 
-/* Computer screen interactive area */
+
 .computer-area {
   top: 63%;
   left: 34%;

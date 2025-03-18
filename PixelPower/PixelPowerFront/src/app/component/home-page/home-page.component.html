@@ -1,10 +1,10 @@
 <!-- home.component.html -->
-<div class="wrapper" #container [@zoomAnimation]="isAnimating ? 'void' : null" [ngStyle]="getZoomStyle(targetElement)">
-  <!-- Full screen image container -->
+<div class="overflow-hidden wrapper" #container [@zoomAnimation]="isAnimating ? 'void' : null" [ngStyle]="getZoomStyle(targetElement)">
+
   <div class="image-container">
     <img src="hoome.gif" alt="Pixel Power Gaming Room" class="fullscreen-image">
 
-    <!-- Interactive areas directly on the image -->
+
     <div id="switch" class="interactive-area switch-area" (click)="navigateTo('switch', '/games/all')">
       <div class="hover-effect">
         <span class="tooltip">Games</span>
@@ -13,9 +13,11 @@
 
     <div id="computer" class="interactive-area computer-area" (click)="navigateTo('computer', '/auth/login')">
       <div class="hover-effect">
-        <span class="tooltip">Login</span>
+        <span *ngIf="!isAuthenticated()" class="tooltip">Login</span>
+        <span *ngIf="isAuthenticated()" class="tooltip">Profile</span>
       </div>
     </div>
+
   </div>
 </div>
 

@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-home-page',
@@ -24,7 +25,7 @@ export class HomePageComponent {
   isAnimating = false;
   targetElement = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   navigateTo(element: string, route: string): void {
     if (this.isAnimating) return;
@@ -38,7 +39,7 @@ export class HomePageComponent {
     }, 750);
   }
 
-  // Calculate zoom origin based on clicked element
+
   getZoomStyle(elementId: string): object {
     if (this.targetElement !== elementId) return {};
 
@@ -57,6 +58,10 @@ export class HomePageComponent {
     return {
       'transform-origin': `${originX}% ${originY}%`
     };
+  }
+
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
   }
 
 
