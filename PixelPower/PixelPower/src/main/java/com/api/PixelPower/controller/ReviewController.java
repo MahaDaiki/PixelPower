@@ -45,7 +45,7 @@ public class ReviewController {
         return reviewService.getReviewsByUserId(userId);
     }
 
-    @GetMapping("/reviews/game/{gameName}")
+    @GetMapping("/game/{gameName}")
     public List<ReviewResponseDTO> getReviewsByGameName(@PathVariable String gameName) {
         return reviewService.getReviewsByGameName(gameName);
     }

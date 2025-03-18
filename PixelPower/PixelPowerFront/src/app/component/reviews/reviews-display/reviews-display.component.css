@@ -1,132 +1,76 @@
-/* Form styling */
-.form-label {
-  display: block;
-  font-family: monospace;
-  color: #ffc107;
-  margin-bottom: 0.5rem;
-  letter-spacing: 1px;
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.9);
+/* Star Rating Animations */
+@keyframes starPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(255, 193, 7, 0.5));
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.8));
+  }
 }
 
-.form-input {
-  background-color: rgba(0, 0, 0, 0.5);
-  border: 2px solid #3f51b5;
-  color: #e0e0e0;
-  font-family: monospace;
-  transition: all 0.3s ease;
-}
-
-.form-input:focus {
-  border-color: #00bcd4;
-  box-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
-  outline: none;
-}
-
-.error-text {
-  color: #f44336;
-  font-family: monospace;
-  font-size: 0.75rem;
-}
-
-/* Star rating styling */
-.pixelated-star {
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-  transition: transform 0.2s ease;
-}
-
-.pixelated-star:hover {
-  transform: scale(1.2);
-}
-
-.pixelated-star.active {
-  filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.7));
-}
-
-.pixelated-star-small {
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-/* Loading animation */
-.loading-progress {
-  animation: loadingProgress 2s infinite;
-}
-
-@keyframes loadingProgress {
+@keyframes starHover {
   0% {
-    transform: translateX(-100%);
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-5deg) scale(1.15);
+  }
+  75% {
+    transform: rotate(5deg) scale(1.15);
   }
   100% {
-    transform: translateX(400%);
+    transform: rotate(0deg) scale(1);
   }
 }
 
-/* Button shimmer effect */
-@keyframes shimmer {
+@keyframes starClick {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
   100% {
-    transform: translateX(100%);
+    transform: scale(1.2);
   }
-}
-
-.animate-shimmer {
-  animation: shimmer 2s infinite;
-}
-
-/* Spinning stars animation */
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 4s linear infinite;
-}
-
-/* Shadow glow effect */
-.shadow-glow {
-  box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
-}
-
-/* Review item hover effect */
-.review-item {
-  position: relative;
-  overflow: hidden;
-}
-
-.review-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #00bcd4, transparent);
-  animation: scanLine 3s linear infinite;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.review-item:hover::before {
-  opacity: 1;
 }
 
 @keyframes scanLine {
   0% {
-    transform: translateX(-100%);
+    transform: translateY(-100%);
   }
   100% {
-    transform: translateX(100%);
+    transform: translateY(100%);
   }
 }
 
-/* Pixelated effect */
+@keyframes hologramShift {
+  0% {
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 100% 100%;
+    opacity: 0.3;
+  }
+}
+
+@keyframes buttonGlint {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+/* Pixelated styling */
 .pixelated {
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
@@ -135,6 +79,185 @@
 
 /* Text shadow for cyberpunk effect */
 .text-shadow {
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.9);
+  text-shadow: 0 0 5px rgba(255, 193, 7, 0.8), 0 0 10px rgba(255, 193, 7, 0.5);
+}
+
+/* Star container styling for the review form */
+.reviews-container .cursor-pointer {
+  position: relative;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 3px rgba(255, 193, 7, 0.3));
+}
+
+.reviews-container .cursor-pointer:hover {
+  animation: starHover 0.8s ease infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.8));
+}
+
+.reviews-container .cursor-pointer.clicked {
+  animation: starClick 0.3s ease forwards;
+}
+
+/* Active stars in the review form */
+.reviews-container .cursor-pointer svg path[fill="#ffc107"] {
+  animation: starPulse 2s infinite;
+}
+
+/* Star rating container with scan line effect */
+.reviews-container .flex.items-center.gap-2 {
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid #3f51b5;
+}
+
+.reviews-container .flex.items-center.gap-2::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #00bcd4, transparent);
+  animation: scanLine 2s linear infinite;
+  opacity: 0.7;
+}
+
+/* Stars in displayed reviews */
+.reviews-container .flex div svg {
+  transition: transform 0.3s ease;
+}
+
+.reviews-container .flex div svg path[fill="#ffc107"] {
+  animation: starPulse 3s infinite;
+}
+
+/* Review item hover effect */
+.reviews-container .bg-black\/30.border-2 {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.reviews-container .bg-black\/30.border-2:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+}
+
+/* Holographic effect for review items */
+.reviews-container .bg-black\/30.border-2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.05) 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: hologramShift 8s linear infinite;
+  opacity: 0.3;
+}
+
+.text{
+  font-family: "Jersey 10", monospace;
+  font-size: 1rem;
+}
+
+/* Button styling and animations */
+.reviews-container button {
+  position: relative;
+  overflow: hidden;
+}
+
+.reviews-container button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  animation: buttonGlint 6s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Character counter styling */
+.reviews-container .text-right.text-xs {
+  font-family: "Pixelify Sans", sans-serif;
+  transition: color 0.3s ease;
+}
+
+.reviews-container .text-right.text-xs.warning {
+  color: #ffc107;
+}
+
+.reviews-container .text-right.text-xs.danger {
+  color: #f44336;
+}
+
+/* Form textarea styling */
+.reviews-container textarea {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #3f51b5;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-family: "Jersey 10", monospace;
+  transition: all 0.3s ease;
+  resize: none;
+  position: relative;
+}
+
+.reviews-container textarea:focus {
+  border-color: #00bcd4;
+  box-shadow: 0 0 15px rgba(0, 188, 212, 0.3);
+  outline: none;
+}
+
+/* Profile picture glow effect */
+.reviews-container img.rounded-full,
+.reviews-container .w-10.h-10.rounded-full {
+  box-shadow: 0 0 10px rgba(63, 81, 181, 0.5);
+  transition: all 0.3s ease;
+}
+
+.reviews-container img.rounded-full:hover,
+.reviews-container .w-10.h-10.rounded-full:hover {
+  box-shadow: 0 0 15px rgba(0, 188, 212, 0.8);
+  transform: scale(1.05);
+}
+
+/* No reviews message styling */
+.reviews-container .text-center.py-6 {
+  position: relative;
+  overflow: hidden;
+}
+
+.reviews-container .text-center.py-6::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #3f51b5, transparent);
+  animation: scanLine 3s linear infinite;
+  opacity: 0.5;
 }
 

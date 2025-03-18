@@ -1,0 +1,324 @@
+/* Animation keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes hologramShift {
+  0% {
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 100% 100%;
+    opacity: 0.3;
+  }
+}
+
+@keyframes buttonGlint {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+@keyframes starPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(255, 193, 7, 0.5));
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.8));
+  }
+}
+
+@keyframes starHover {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-5deg) scale(1.15);
+  }
+  75% {
+    transform: rotate(5deg) scale(1.15);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes starClick {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes scanLine {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(0, 188, 212, 0.5), 0 0 10px rgba(0, 188, 212, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(0, 188, 212, 0.8), 0 0 20px rgba(0, 188, 212, 0.5);
+  }
+}
+
+/* Custom animations */
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.animate-modalSlideIn {
+  animation: modalSlideIn 0.3s ease forwards;
+}
+
+
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+
+.fixed.inset-0.bg-black\/70 {
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+
+.bg-black\/90 {
+  position: relative;
+  animation: modalSlideIn 0.3s ease;
+  background: rgb(33, 17, 51);
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.7), 0 0 40px rgba(147, 51, 234, 0.35), inset 0 0 15px rgba(147, 51, 234, 0.21);
+  clip-path: polygon(0% 4%, 4% 0%, 96% 0%, 100% 4%, 100% 96%, 96% 100%, 4% 100%, 0% 96%);
+}
+
+
+.bg-black\/90::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.1) 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: hologramShift 8s linear infinite;
+}
+
+
+
+
+.star-container {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.star-container svg {
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 3px rgba(255, 193, 7, 0.3));
+}
+
+.star-container:hover svg {
+  animation: starHover 0.8s ease infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.8));
+}
+
+.star-container.active svg {
+  animation: starPulse 2s infinite;
+}
+
+.star-container.clicked svg {
+  animation: starClick 0.3s ease forwards;
+}
+
+.star-rating-container {
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid #3f51b5;
+}
+
+.star-rating-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #00bcd4, transparent);
+  animation: scanLine 2s linear infinite;
+  opacity: 0.7;
+}
+
+
+textarea.form-input {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #3f51b5;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-family: monospace;
+  transition: all 0.3s ease;
+  resize: none;
+  position: relative;
+  overflow: hidden;
+}
+
+textarea.form-input:focus {
+  border-color: #00bcd4;
+  box-shadow: 0 0 15px rgba(0, 188, 212, 0.3);
+  outline: none;
+}
+
+/* Pixelated textarea */
+textarea.form-input::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+}
+
+
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  animation: buttonGlint 6s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+.hover\:bg-\[\#3f51b5\]\/20:hover {
+  background-color: rgba(63, 81, 181, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+}
+
+
+.hover\:shadow-glow:hover {
+  box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.char-counter {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #9e9e9e;
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+.char-counter.warning {
+  color: #ffc107;
+}
+
+.char-counter.danger {
+  color: #f44336;
+}
+
+.form-container {
+  position: relative;
+}
+
+.form-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(63, 81, 181, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(63, 81, 181, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: -1;
+}

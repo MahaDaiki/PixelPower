@@ -1,7 +1,7 @@
 <div class="min-h-screen flex items-center justify-center relative">
   <!-- Fixed Background Image -->
   <div class="pixelated-bg absolute inset-0 w-full h-full z-[-1]">
-    <img src="giphy.gif" alt="Background Image" class="pixelated absolute inset-0 w-full h-full object-cover z-[-1]" />
+    <img src="giphy.gif" alt="Background Image" class="pixelated absolute transform scale-140 inset-0 w-full h-full object-cover fixed z-[-1]" />
   </div>
 
   <div class="game-detail-container">
@@ -227,8 +227,8 @@
                   </div>
                 </div>
               </div>
-              <a [href]="'/compare/' + (game$ | async)?.steam_appid " class="card-title  check-compatibility-link">
-                Check Game Compatibility
+              <a [href]="'/compare/' + (game$ | async)?.steam_appid" class="check-compatibility-link relative z-10">
+                <span class="relative z-10">Check Game Compatibility</span>
               </a>
             </div>
           </div>

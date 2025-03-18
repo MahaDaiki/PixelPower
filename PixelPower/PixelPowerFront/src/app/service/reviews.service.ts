@@ -16,6 +16,24 @@ export class ReviewsService {
 
 
   getReviewsByGameName(gameName: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apireviewsUrl}/reviews/game/${gameName}`);
+    return this.http.get<any[]>(`${this.apireviewsUrl}/game/${gameName}`);
   }
+
+  getReviews(): Observable<any[]> {
+    return this.http.get<any[]>(this.apireviewsUrl);
+  }
+
+  getReviewById(reviewId: number): Observable<any> {
+    return this.http.get<any>(`${this.apireviewsUrl}/${reviewId}`);
+  }
+
+
+  updateReview(reviewId: number, updatedReview: any): Observable<any> {
+    return this.http.put<any>(`${this.apireviewsUrl}/${reviewId}`, updatedReview);
+  }
+
+  deleteReview(reviewId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apireviewsUrl}/${reviewId}`);
+  }
+
 }
