@@ -5,9 +5,7 @@
   </div>
 
   <div class="game-detail-container">
-    <!-- Browser-like container -->
     <div class="browser-container pixelated-form form-animate rounded-lg shadow-lg">
-      <!-- Browser navigation bar -->
       <div class="browser-nav">
         <div class="browser-controls flex items-center gap-2 mb-2">
           <div class="browser-dot bg-red-500"></div>
@@ -20,9 +18,7 @@
         </div>
       </div>
 
-      <!-- Content -->
       <div class="browser-content">
-        <!-- Loading indicator -->
         <div *ngIf="loading$ | async" class="loading-container">
           <div class="loading-text pixel-text">Loading game details...</div>
           <div class="loading-bar">
@@ -38,7 +34,6 @@
 
         <!-- Game details -->
         <div *ngIf="game$ | async as game" class="game-details">
-          <!-- Header section -->
           <div class="game-header">
             <div class="header-image-container">
               <img [src]="game.header_image" alt="{{ game.name }}" class="header-image">
@@ -53,11 +48,9 @@
             </div>
           </div>
 
-          <!-- Main content -->
           <div class="game-content">
             <!-- Left column -->
             <div class="game-info-column">
-              <!-- Description -->
               <div class="info-section">
                 <h2 class="section-title pixel-text">About the Game</h2>
                 <div class="section-content description-text" [innerHTML]="game.detailed_description"></div>

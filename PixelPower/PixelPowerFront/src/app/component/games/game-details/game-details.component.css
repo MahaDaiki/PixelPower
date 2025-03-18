@@ -114,7 +114,7 @@
   fill: none;
 }
 
-/* Browser content area */
+
 .browser-content {
   flex: 1;
   overflow-y: auto;

@@ -3,7 +3,18 @@
 
 body{
   font-family: "Pixelify Sans", sans-serif;
+  overflow-x: hidden;
+  cursor: url('../public/cursor1mini.png'), auto;
 }
+
+button:active , a:active{
+  cursor: url('../public/click1mini.png'), grab;
+}
+
+button:hover , a:hover{
+  cursor: url('../public/click1mini.png'), grab;
+}
+
 p{
   font-family: "Pixelify Sans", sans-serif;
 }
