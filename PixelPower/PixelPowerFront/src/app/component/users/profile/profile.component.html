@@ -1,14 +1,12 @@
 <div class="min-h-screen flex items-center justify-center relative ">
-  <!-- Fixed Background Image -->
+
   <div class="pixelated-bg absolute inset-0 w-full h-full z-[-1]">
     <img src="Profile.gif" alt="Background Image" class="pixelated absolute transform scale-120 inset-0 w-full h-full object-cover fixed z-[-1]" />
   </div>
 
 
   <div class="profile-container">
-    <!-- Browser-like container -->
     <div class="browser-container pixelated-form form-animate rounded-lg shadow-lg">
-      <!-- Browser navigation bar -->
       <div class="browser-nav">
         <div class="browser-controls flex items-center gap-2 mb-2">
           <div class="browser-dot bg-red-500"></div>
@@ -20,11 +18,10 @@
         </div>
       </div>
 
-      <!-- Content -->
       <div class="browser-content p-6">
         <h2 class="font-bold text-center pixel-title mb-6">USER PROFILE</h2>
 
-        <!-- Loading state -->
+
         <div *ngIf="!user && !error" class="loading-container">
           <div class="pixel-avatar loading-avatar">
             <div class="loading-scan"></div>
@@ -60,7 +57,9 @@
                   <span class="edit-icon">✏️</span>
                 </div>
               </div>
-              <div class="role-badge">{{ user.role }}</div>
+              <div  class="role-badge" *ngIf="user.role === 'ROLE_ADMIN'">
+                <a routerLink="/profile/admin">Admin</a>
+              </div>
             </div>
 
             <div class="user-info">

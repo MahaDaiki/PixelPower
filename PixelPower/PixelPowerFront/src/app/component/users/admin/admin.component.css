@@ -1,0 +1,429 @@
+
+.admin-section {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 2px solid #3f51b5;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #00bcd4, transparent);
+  animation: scanLine 4s linear infinite;
+}
+
+/* Table styling */
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: #e0e0e0;
+  font-family: monospace;
+}
+
+.admin-table th {
+  background-color: rgba(63, 81, 181, 0.3);
+  color: #00bcd4;
+  font-weight: bold;
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 2px solid #3f51b5;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.admin-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid rgba(63, 81, 181, 0.3);
+}
+
+.admin-table tr:hover {
+  background-color: rgba(63, 81, 181, 0.1);
+}
+
+/* Button styling */
+.btn-delete {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid #f44336;
+  color: #f44336;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-delete:hover {
+  background-color: rgba(244, 67, 54, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+}
+
+.btn-delete svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Modal styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.3s ease;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: rgba(63, 81, 181, 0.2);
+  border-bottom: 2px solid #3f51b5;
+  position: relative;
+  z-index: 2;
+}
+
+.close-modal {
+  width: 30px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #3f51b5;
+  border-radius: 50%;
+  color: #00bcd4;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.close-modal:hover {
+  background-color: rgba(63, 81, 181, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+}
+
+.modal-content {
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Warning message */
+.warning-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background-color: rgba(255, 152, 0, 0.2);
+  border: 2px solid #ff9800;
+  border-radius: 4px;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.warning-message::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, #ff9800, transparent);
+  animation: scanLine 2s linear infinite;
+}
+
+.warning-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #ff9800;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.warning-text {
+  color: #e0e0e0;
+  font-family: monospace;
+  line-height: 1.5;
+}
+
+/* Button styling */
+.cancel-btn {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #3f51b5;
+  color: #00bcd4;
+  padding: 8px 16px;
+  font-family: monospace;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cancel-btn:hover {
+  background-color: rgba(63, 81, 181, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+}
+
+.confirm-delete-btn {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #f44336;
+  color: #f44336;
+  padding: 8px 16px;
+  font-family: monospace;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.confirm-delete-btn:hover:not(:disabled) {
+  background-color: rgba(244, 67, 54, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+}
+
+.confirm-delete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Button glint effect */
+.cancel-btn::after,
+.confirm-delete-btn::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  animation: buttonGlint 6s linear infinite;
+  pointer-events: none;
+}
+
+.confirm-delete-btn::after {
+  animation-delay: 3s;
+}
+
+/* Error message */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: rgba(244, 67, 54, 0.2);
+  border: 2px solid #f44336;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 1rem;
+  animation: errorPulse 2s infinite;
+}
+
+.error-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #f44336;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.error-text {
+  color: #f44336;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+/* Animations */
+@keyframes hologramShift {
+  0% {
+    background-position: 0% 0%;
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 100% 100%;
+    opacity: 0.3;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes buttonGlint {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+@keyframes errorPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(244, 67, 54, 0.8);
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-table {
+    font-size: 0.85rem;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 8px;
+  }
+
+  .pixel-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-table {
+    font-size: 0.75rem;
+  }
+
+  .btn-delete {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .btn-delete svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .modal-container {
+    width: 95%;
+  }
+}
+
+/* Scan line effect */
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #00bcd4, transparent);
+  animation: scanLine 4s linear infinite;
+}
+
+/* Add these animation classes for Tailwind */
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease;
+}
+.animate-modalSlideIn {
+  animation: modalSlideIn 0.3s ease;
+}
+.animate-errorPulse {
+  animation: errorPulse 2s infinite;
+}
+.animate-scanLine {
+  animation: scanLine 2s linear infinite;
+}
+
+/* Button glint effect */
+.btn-glint {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glint::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  animation: buttonGlint 6s linear infinite;
+  pointer-events: none;
+}
+
+.btn-glint-delay::after {
+  animation-delay: 3s;
+}
+

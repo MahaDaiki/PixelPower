@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserServiceInt {
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
         );
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        String token = jwtUtil.generateToken(loginRequest.getEmail());
+        String token = jwtUtil.generateToken(loginRequest.getEmail(), userDetails.getRole());
 
         return new AuthTokenResponseDTO(token);
     }

@@ -1,5 +1,6 @@
 package com.api.PixelPower.security;
 
+import com.api.PixelPower.entity.Role;
 import com.api.PixelPower.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,10 +16,14 @@ import java.util.Collections;
 public class CustomUserDetails extends org.springframework.security.core.userdetails.User{
     private final Long userId;
     private final String email;
+    private final Role role;
 
     public CustomUserDetails(User user, Collection<? extends GrantedAuthority> authorities, String email) {
         super(user.getUsername(), user.getPassword(), authorities);
         this.userId = user.getId();
         this.email = email;
+        this.role = user.getRole();
     }
+
+
 }

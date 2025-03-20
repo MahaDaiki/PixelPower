@@ -88,6 +88,13 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  getUserRole(): string | null {
+    const user = this.getUser();
+    console.log(user)
+    return user ? user.role : null;
+  }
+
+
 
 
 }

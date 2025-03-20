@@ -9,6 +9,7 @@ export class UsersService {
   private apiProfileUrl = 'http://localhost:8080/api/users/me';
   private apiAvatarUrl = 'http://localhost:8080/api/users/me/profile-picture';
   private apiPasswordUrl = 'http://localhost:8080/api/users/me/password';
+  private apiUsersUrl = 'http://localhost:8080/api/users';
 
   constructor(private http: HttpClient) {}
 
@@ -26,6 +27,14 @@ export class UsersService {
 
   updatePassword(newPassword: string): Observable<any> {
     return this.http.put<any>(this.apiPasswordUrl, { newPassword });
+  }
+
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUsersUrl);
+  }
+
+  deleteUser(userId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUsersUrl}/${userId}`);
   }
 
 

@@ -9,11 +9,13 @@ import {StoreModule} from '@ngrx/store';
 import {ReactiveFormsModule} from '@angular/forms';
 import {GamesModule} from "../games/games.module";
 import {ConfigurationsModule} from "../configurations/configurations.module";
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
   declarations: [
-    ProfileComponent
+    ProfileComponent,
+    AdminComponent
   ],
   imports: [
     CommonModule,

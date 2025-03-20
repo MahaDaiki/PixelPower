@@ -4,17 +4,18 @@ import {AuthService} from '../../service/auth.service';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class NoAuthGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): boolean {
-    if (!this.authService.isAuthenticated()) {
+    const role = this.authService.getUserRole();
+    if (role === 'ROLE_ADMIN') {
       return true;
-    } else {
-      this.router.navigate(['users/profile']);
-      return false;
     }
+
+    this.router.navigate(['/not-authorized']);
+    return false;
   }
 }
