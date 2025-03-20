@@ -1,6 +1,7 @@
 package com.api.PixelPower.util;
 
 
+import com.api.PixelPower.entity.Role;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,9 +16,10 @@ public class JwtUtil {
 
     private final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    public String generateToken(String email) {
+    public String generateToken(String email, Role role) {
         return Jwts.builder()
                 .setSubject(email)
+                .claim("role", role.name())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(secretKey)
@@ -32,6 +34,7 @@ public class JwtUtil {
                 .getBody()
                 .getSubject();
     }
+
 
     public boolean validateToken(String token, String userEmail) {
         String extractedEmail = extractEmail(token);

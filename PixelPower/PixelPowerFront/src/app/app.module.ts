@@ -17,12 +17,16 @@ import {GamesModule} from './component/games/games.module';
 import {userReducer} from './store/users/users.reducer';
 import {UsersModule} from './component/users/users.module';
 import {ReactiveFormsModule} from '@angular/forms';
+import { NotAuthorizedComponent } from './component/shared/not-authorized/not-authorized.component';
+import { NotFoundComponent } from './component/shared/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
-    NavbarComponent
+    NavbarComponent,
+    NotAuthorizedComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

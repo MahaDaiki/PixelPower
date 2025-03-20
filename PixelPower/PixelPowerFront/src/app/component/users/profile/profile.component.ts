@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {UsersService} from '../../../service/users.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -52,10 +53,11 @@ export class ProfileComponent {
   constructor(
     private usersService: UsersService,
     private fb: FormBuilder,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
-    // Initialize forms
+    this.test()
     this.profileForm = this.fb.group({
       username: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
@@ -69,7 +71,7 @@ export class ProfileComponent {
       { validator: this.passwordsMatch },
     )
 
-    // Load user profile
+
     this.loading = true
     this.usersService.getProfile().subscribe({
       next: (data) => {
@@ -95,6 +97,17 @@ export class ProfileComponent {
         this.loading = false
       },
     })
+  }
+
+  test(): boolean {
+    const role = this.authService.getUserRole();
+    console.log("aloo" + role)
+    if (role === 'ROLE_ADMIN') {
+      return true;
+
+    }
+    return false
+
   }
 
   openPasswordForm(): void {

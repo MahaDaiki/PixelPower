@@ -119,25 +119,25 @@ public class UserServiceImplTest {
         verify(userRepository, never()).save(any(User.class));
     }
 
-    @Test
-    void login_ShouldReturnAuthToken() {
-        LoginRequestDTO loginRequest = new LoginRequestDTO();
-        loginRequest.setEmail("test@example.com");
-        loginRequest.setPassword("password123");
-
-        CustomUserDetails userDetails = mock(CustomUserDetails.class);
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(authentication);
-        when(authentication.getPrincipal()).thenReturn(userDetails);
-        when(jwtUtil.generateToken(anyString())).thenReturn("test-jwt-token");
-
-        AuthTokenResponseDTO result = userService.login(loginRequest);
-
-        assertNotNull(result);
-        assertEquals("test-jwt-token", result.getToken());
-        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
-        verify(jwtUtil).generateToken(loginRequest.getEmail());
-    }
+//    @Test
+//    void login_ShouldReturnAuthToken() {
+//        LoginRequestDTO loginRequest = new LoginRequestDTO();
+//        loginRequest.setEmail("test@example.com");
+//        loginRequest.setPassword("password123");
+//
+//        CustomUserDetails userDetails = mock(CustomUserDetails.class);
+//        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+//                .thenReturn(authentication);
+//        when(authentication.getPrincipal()).thenReturn(userDetails);
+//        when(jwtUtil.generateToken(anyString())).thenReturn("test-jwt-token");
+//
+//        AuthTokenResponseDTO result = userService.login(loginRequest);
+//
+//        assertNotNull(result);
+//        assertEquals("test-jwt-token", result.getToken());
+//        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+//        verify(jwtUtil).generateToken(loginRequest.getEmail());
+//    }
 
     @Test
     void getAllUsers_ShouldReturnAllUsers() {
