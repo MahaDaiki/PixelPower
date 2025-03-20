@@ -4,7 +4,6 @@
   </div>
 
   <div class="login-container">
-    <!-- Browser-like container -->
     <div class="browser-container pixelated-form form-animate rounded-lg shadow-lg">
       <div class="browser-nav">
         <div class="browser-controls flex items-center gap-2 mb-2">
@@ -80,7 +79,7 @@
               <input type="checkbox" id="remember" class="mr-2 pixelated-checkbox" />
               <label for="remember" class="pixel-text text-xs">Remember me</label>
             </div>
-            <a href="#" class="forgot-link pixel-text text-xs">Forgot password?</a>
+            <a href="/auth/password-reset" class="forgot-link pixel-text text-xs">Forgot password?</a>
           </div>
 
           <button type="submit" [disabled]="loginForm.invalid"

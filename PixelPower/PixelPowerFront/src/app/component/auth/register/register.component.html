@@ -4,9 +4,7 @@
   </div>
 
   <div class="register-container">
-    <!-- Browser-like container -->
     <div class="browser-container pixelated-form form-animate rounded-lg shadow-lg">
-      <!-- Browser navigation bar -->
       <div class="browser-nav">
         <div class="browser-controls flex items-center gap-2 mb-2">
           <div class="browser-dot bg-red-500"></div>
@@ -18,11 +16,9 @@
         </div>
       </div>
 
-      <!-- Form content -->
       <div class="browser-content p-6">
         <h2 class="font-bold text-center pixel-title mb-4">REGISTER</h2>
 
-        <!-- Profile Picture at the top -->
         <div class="profile-picture-container mb-6 flex justify-center">
           <div class="profile-upload">
             <div class="profile-preview" [class.has-image]="selectedFile">
@@ -40,9 +36,7 @@
             {{ error$ | async }}
           </div>
 
-          <!-- Two columns layout for inputs -->
           <div class="grid grid-cols-2 gap-4">
-            <!-- Username Field -->
             <div class="mb-4">
               <label for="username" class="block font-medium pixel-text text-sm">Username</label>
               <input id="username" type="text" formControlName="username"
@@ -52,7 +46,7 @@
               </div>
             </div>
 
-            <!-- Email Field -->
+
             <div class="mb-4">
               <label for="email" class="block font-medium pixel-text text-sm">Email</label>
               <input id="email" type="email" formControlName="email"
