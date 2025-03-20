@@ -19,6 +19,7 @@ import {UsersModule} from './component/users/users.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import { NotAuthorizedComponent } from './component/shared/not-authorized/not-authorized.component';
 import { NotFoundComponent } from './component/shared/not-found/not-found.component';
+import { FooterComponent } from './component/shared/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NotFoundComponent } from './component/shared/not-found/not-found.compon
     HomePageComponent,
     NavbarComponent,
     NotAuthorizedComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
