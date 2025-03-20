@@ -6,9 +6,7 @@
 
 
   <div class="game-comparison-container w-full  mx-auto my-8">
-    <!-- Browser-like container -->
     <div class="browser-container pixelated-form form-animate rounded-lg shadow-lg">
-      <!-- Browser navigation bar -->
       <div class="browser-nav">
         <div class="browser-controls flex items-center gap-2 mb-2">
           <div class="browser-dot bg-red-500"></div>
@@ -24,7 +22,6 @@
       <div class="browser-content p-6">
         <h2 class="text-2xl font-bold text-center pixel-title mb-6">GAME COMPATIBILITY CHECK</h2>
 
-        <!-- Simple Loading Indicator -->
         <div *ngIf="isLoading" class="loader-container">
           <div class="loading-text pixel-text text-center mb-2">SCANNING COMPATIBILITY DATA...</div>
           <div class="loading-bar">
@@ -34,7 +31,6 @@
 
         <!-- Game Compatibility Results -->
         <div *ngIf="!isLoading" class="game-results">
-          <!-- Game Header -->
           <div class="game-header mb-6 bg-black/50 border-2 border-blue-500 rounded-lg p-4 relative overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20"></div>
             <div class="relative z-10">
@@ -155,7 +151,6 @@
             </div>
           </div>
 
-          <!-- Back Button -->
           <div class="flex justify-center mt-6">
             <button (click)="triggerUpgradeSuggestions()" class="back-btn bg-black/50 border-2 border-blue-500 text-cyan-300 px-4 py-2 rounded font-mono text-sm hover:bg-blue-900/30 transition-all duration-300 hover:scale-105">
               <span class="flex items-center gap-2">

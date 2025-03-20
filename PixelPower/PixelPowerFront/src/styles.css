@@ -5,6 +5,8 @@ body{
   font-family: "Pixelify Sans", sans-serif;
   overflow-x: hidden;
   cursor: url('../public/cursor1mini.png'), auto;
+  margin: 0;
+  padding: 0;
 }
 
 button:active , a:active{

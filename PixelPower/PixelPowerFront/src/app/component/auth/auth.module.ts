@@ -8,12 +8,14 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {authReducer} from '../../store/auth/auth.reducer';
 import {StoreModule} from '@ngrx/store';
 import {AuthService} from '../../service/auth.service';
+import { PasswordComponent } from './password/password.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PasswordComponent
   ],
   imports: [
     CommonModule,
