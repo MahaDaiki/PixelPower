@@ -16,15 +16,10 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      - name: Test Backend
-        run: |
-          cd PixelPower/PixelPower
-          mvn test
-
       - name: Build Backend
         run: |
           cd PixelPower/PixelPower
-          mvn clean package
+          mvn clean package 
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
