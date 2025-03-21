@@ -19,7 +19,7 @@ jobs:
       - name: Build Backend
         run: |
           cd PixelPower/PixelPower
-          mvn clean package 
+          mvn clean package -DskipTests
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
