@@ -61,7 +61,9 @@ export class AuthService {
       (response) => {
         console.log('Registration successful:', response);
         this.store.dispatch(registerSuccess({ message: response.message }));
-        this.router.navigate(['auth/login']);
+        setTimeout(() => {
+          this.router.navigate(['/auth/login']);
+        }, 3000);
       },
       (error) => {
         console.error('Registration failed:', error);

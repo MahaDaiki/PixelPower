@@ -45,7 +45,7 @@
     <div class="flex items-center gap-3">
       <!-- User Profile Picture -->
       <img *ngIf="review.user?.profilePicture"
-           [src]="'/assets/uploads/' + review.user.profilePicture"
+           [src]="'http://localhost:8080'  + review.user.profilePicture"
            class="w-10 h-10 rounded-full border-2 border-[#3f51b5]"
            alt="Profile Picture">
       <div class="w-10 h-10 rounded-full flex items-center justify-center text-[#00bcd4] font-bold bg-[#3f51b5]/50"

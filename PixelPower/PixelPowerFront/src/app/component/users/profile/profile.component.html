@@ -50,7 +50,7 @@
           <div class="profile-header">
             <div class="avatar-container">
               <div class="pixel-avatar" (click)="openAvatarModal()">
-                <img [src]="'http://localhost:8080/uploads/profile_pictures/' + user.profilePicture" alt="Profile Picture" class="avatar-image">
+                <img [src]="'http://localhost:8080' + user.profilePicture" alt="Profile Picture" class="avatar-image">
                 <div class="avatar-frame"></div>
                 <div class="avatar-glow"></div>
                 <div class="avatar-edit-overlay">

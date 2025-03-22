@@ -81,10 +81,24 @@ public class GameComparisonServiceImpl implements GameComparisonServiceInt {
 
         boolean compatible = cpuCompatible && gpuCompatible && ramCompatible;
 
+        double cpuRatio = (double)userCpuScore / minCpuScore;
+        double gpuRatio = (double)userGpuScore / minGpuScore;
 
-        String fpsLow = calculateEstimatedFps(userGpuScore, userCpuScore, "low");
-        String fpsMedium = calculateEstimatedFps(userGpuScore, userCpuScore, "medium");
-        String fpsHigh = calculateEstimatedFps(userGpuScore, userCpuScore, "high");
+        double performanceFactor;
+        if (cpuRatio < 1.0 || gpuRatio < 1.0) {
+            double minRatio = Math.min(cpuRatio, gpuRatio);
+            performanceFactor = Math.pow(minRatio, 2);
+        } else {
+            performanceFactor = 1.0;
+        }
+
+
+        int effectiveGpuScore = (int)(userGpuScore * performanceFactor);
+        int effectiveCpuScore = (int)(userCpuScore * performanceFactor);
+
+        String fpsLow = calculateEstimatedFps(effectiveGpuScore, effectiveCpuScore, "low");
+        String fpsMedium = calculateEstimatedFps(effectiveGpuScore, effectiveCpuScore, "medium");
+        String fpsHigh = calculateEstimatedFps(effectiveGpuScore, effectiveCpuScore, "high");
 
         GameComparison gameComparison = GameComparison.builder()
                 .gameName(gameRequirements.getGameName())
@@ -107,23 +121,21 @@ public class GameComparisonServiceImpl implements GameComparisonServiceInt {
     @Override
 
     public String calculateEstimatedFps(int gpuScore, int cpuScore, String quality) {
+        gpuScore = Math.max(1, gpuScore);
+        cpuScore = Math.max(1, cpuScore);
 
-        double gameDifficultyFactor = Math.max(20, gpuScore / 80.0);
+        double performanceScore = gpuScore * 0.75 + cpuScore * 0.25;
 
-
-        double weightedPerformance = (gpuScore * 0.75 + cpuScore * 0.25) / gameDifficultyFactor;
-
+        double scaledPerformance = Math.log10(performanceScore) * 55;
 
         double qualityMultiplier = switch (quality.toLowerCase()) {
-            case "low" -> 2.0;
-            case "medium" -> 1.3;
-            case "high" -> 0.8;
+            case "low" -> 1.5;
+            case "medium" -> 1.0;
+            case "high" -> 0.7;
             default -> 1.0;
         };
 
-
-        int estimatedFps = (int) Math.round(weightedPerformance * qualityMultiplier);
-
+        int estimatedFps = (int) Math.round(scaledPerformance * qualityMultiplier);
 
         estimatedFps = Math.max(15, Math.min(estimatedFps, 300));
 

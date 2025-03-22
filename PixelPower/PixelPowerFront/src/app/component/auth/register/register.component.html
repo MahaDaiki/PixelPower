@@ -58,7 +58,7 @@
           </div>
 
           <div class="grid grid-cols-2 gap-4">
-            <!-- Password Field -->
+
             <div class="mb-4">
               <label for="password" class="block text-sm font-medium pixel-text">Password</label>
               <input id="password" type="password" formControlName="password"
@@ -68,9 +68,9 @@
               </div>
             </div>
 
-            <!-- Confirm Password Field -->
+
             <div class="mb-4">
-              <label for="confirmPassword" class="block text-sm font-medium pixel-text">Confirm</label>
+              <label for="confirmPassword" class="block text-sm font-medium pixel-text">Confirm Password</label>
               <input id="confirmPassword" type="password" formControlName="confirmPassword"
                      class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 pixelated-input" />
               <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched" class="error text-xs mt-1">

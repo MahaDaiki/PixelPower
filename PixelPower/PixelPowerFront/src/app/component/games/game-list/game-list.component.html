@@ -48,11 +48,11 @@
           </div>
         </div>
 
-        <!-- Error message -->
-        <div *ngIf="error$ | async as error" class="error-container">
-          <div class="error-icon">!</div>
-          <div class="error-message">{{ error }}</div>
-        </div>
+<!--        &lt;!&ndash; Error message &ndash;&gt;-->
+<!--        <div *ngIf="error$ | async as error" class="error-container">-->
+<!--          <div class="error-icon">!</div>-->
+<!--          <div class="error-message">{{ error }}</div>-->
+<!--        </div>-->
 
         <div *ngIf="searchTerm && (searchResults$ | async) as searchResults">
           <div *ngIf="searchResults.length > 0; else noResults">
@@ -64,7 +64,7 @@
               </div>
             </div>
           </div>
-          <!-- No results found -->
+
           <ng-template #noResults>
             <p class="pixel-text text-center">No games found</p>
           </ng-template>
@@ -74,12 +74,9 @@
 
         <!-- Game list -->
         <div *ngIf="!searchTerm && (games$ | async) as games" class="game-list">
-          <!-- Empty state -->
           <div *ngIf="games.length === 0 && !(loading$ | async)" class="empty-state">
             <p class="pixel-text text-center">No games found</p>
           </div>
-
-          <!-- Game items -->
           <div *ngFor="let game of games; let i = index"
                class="game-item"
                [style.animation-delay]="i * 0.05 + 's'">

@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/register", "/api/auth/login", "/api/password/*", "/api/games").permitAll()
                         .requestMatchers("/api/games/{id}","/api/games/requierement/{id}", "/api/games/search", "/api/reviews/game/{gameName}" ).permitAll()
+                        .requestMatchers("/profile_pictures/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider)

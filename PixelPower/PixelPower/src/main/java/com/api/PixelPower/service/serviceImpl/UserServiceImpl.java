@@ -140,7 +140,8 @@ public class UserServiceImpl implements UserServiceInt {
 
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            user.setProfilePicture(fileName);
+            String filePath = "/profile_pictures/" + fileName;
+            user.setProfilePicture(filePath);
             user = userRepository.save(user);
 
             return userMapper.toResponseDTO(user);
