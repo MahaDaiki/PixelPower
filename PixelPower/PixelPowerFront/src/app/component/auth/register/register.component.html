@@ -39,9 +39,18 @@
           <div class="grid grid-cols-2 gap-4">
             <div class="mb-4">
               <label for="username" class="block font-medium pixel-text text-sm">Username</label>
+              <div class="input-with-icon">
               <input id="username" type="text" formControlName="username"
                      class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 pixelated-input" />
-              <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error text-xs mt-1">
+                <div class="input-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+                    <circle cx="12" cy="6" r="4"></circle>
+                    <path d="M4 20v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"></path>
+                  </svg>
+
+                </div>
+              </div>
+                <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error text-xs mt-1">
                 Min. 3 characters
               </div>
             </div>
@@ -49,8 +58,16 @@
 
             <div class="mb-4">
               <label for="email" class="block font-medium pixel-text text-sm">Email</label>
+              <div class="input-with-icon">
               <input id="email" type="email" formControlName="email"
                      class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 pixelated-input" />
+              <div class="input-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+            </div>
               <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error text-xs mt-1">
                 Valid email required
               </div>
@@ -61,8 +78,16 @@
 
             <div class="mb-4">
               <label for="password" class="block text-sm font-medium pixel-text">Password</label>
+              <div class="input-with-icon">
               <input id="password" type="password" formControlName="password"
                      class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 pixelated-input" />
+                <div class="input-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </div>
+              </div>
               <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error text-xs mt-1">
                 Min. 6 characters
               </div>
@@ -71,8 +96,16 @@
 
             <div class="mb-4">
               <label for="confirmPassword" class="block text-sm font-medium pixel-text">Confirm Password</label>
+              <div class="input-with-icon">
               <input id="confirmPassword" type="password" formControlName="confirmPassword"
                      class="mt-1 p-2 w-full border rounded-lg focus:outline-none focus:ring-2 pixelated-input" />
+                <div class="input-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </div>
+              </div>
               <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched" class="error text-xs mt-1">
                 Passwords don't match
               </div>

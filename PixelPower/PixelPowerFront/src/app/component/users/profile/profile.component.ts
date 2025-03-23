@@ -16,36 +16,33 @@ export class ProfileComponent {
   error: any
   loading = false
 
-  // Error messages
   errorMessage: string | null = null
   avatarErrorMessage: string | null = null
 
-  // Success messages
   successMessage: string | null = null
   avatarSuccessMessage: string | null = null
   passwordSuccessMessage: string | null = null
 
-  // Modal controls
   showProfileModal = false
   showAvatarModal = false
   showPasswordForm = false
 
-  // Forms
+
   profileForm!: FormGroup
   passwordForm!: FormGroup
 
   // Avatar selection
   availableAvatars = [
     "profile_pictures/test4.jpg",
-    // "profile_pictures/avatar2.png",
-    // "profile_pictures/avatar3.png",
-    // "profile_pictures/avatar4.png",
-    // "profile_pictures/avatar5.png",
-    // "profile_pictures/avatar6.png",
-    // "profile_pictures/avatar7.png",
-    // "profile_pictures/avatar8.png",
-    "profile_pictures/pict.gif",
-    // "profile_pictures/default.png",
+    "profile_pictures/beeee.png",
+    "profile_pictures/clownis.jpg",
+    "profile_pictures/hmm.jpg",
+    "profile_pictures/kjxcloveree.jpg",
+    "profile_pictures/MEE.jpg",
+    "profile_pictures/mushi.jpeg",
+    "profile_pictures/salam.png",
+    "profile_pictures/wowiw.jpg",
+    "profile_pictures/testssss.jpg",
   ]
   selectedAvatar: string | null = null
   uploadedFile: File | null = null

@@ -3,8 +3,8 @@
   <div class="section-header pixel-text flex justify-between items-center">
     <span>MY CONFIGURATION</span>
     <a href="config/add" class="add-link text-cyan-300 hover:text-cyan-400 text-sm font-mono flex items-center gap-1 transition-all duration-300 hover:scale-105">
-      <span class="inline-block w-5 h-5 bg-black/50 border border-cyan-500 rounded-full flex items-center justify-center">+</span>
-      <span>Add New</span>
+      <img src="icons8-plus.gif" alt="Add" class="inline-block w-5 h-5 bg-black/50 border border-cyan-500 rounded-full flex items-center justify-center">
+
     </a>
   </div>
   <div class="config-grid">
@@ -64,7 +64,6 @@
     <ng-container *ngFor="let config of configurations">
 
       <ng-container *ngIf="config.gameComparisons && config.gameComparisons.length > 0">
-        <!-- Configuration header -->
         <div class="config-header mb-3 px-3 py-2 bg-blue-900/30 border-l-4 border-blue-500 rounded">
           <span class="text-cyan-300 font-mono">Configuration: {{ config.name }}</span>
           <span class="ml-2 px-2 py-0.5 text-xs rounded-full"
