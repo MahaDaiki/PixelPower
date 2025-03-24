@@ -32,7 +32,6 @@ public class ImageController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
 
-
             String contentType = Files.probeContentType(filePath);
             if (contentType == null) {
                 contentType = "application/octet-stream";

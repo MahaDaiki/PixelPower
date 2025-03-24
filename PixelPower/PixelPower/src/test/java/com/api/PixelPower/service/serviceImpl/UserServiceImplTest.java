@@ -93,16 +93,14 @@ public class UserServiceImplTest {
 
     @Test
     void register_ShouldCreateNewUser() {
-        // Given
+
         when(userRepository.existsByEmail(anyString())).thenReturn(false);
         when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
         when(userMapper.toResponseDTO(any(User.class))).thenReturn(testUserResponseDTO);
 
-        // When
         UserResponseDTO result = userService.register(testUserDTO);
 
-        // Then
         assertNotNull(result);
         assertEquals(testUserResponseDTO.getId(), result.getId());
         assertEquals(testUserResponseDTO.getUsername(), result.getUsername());
@@ -111,33 +109,38 @@ public class UserServiceImplTest {
 
     @Test
     void register_WhenEmailExists_ShouldThrowException() {
-        // Given
+
         when(userRepository.existsByEmail(anyString())).thenReturn(true);
 
-        // When & Then
+
         assertThrows(EmailAlreadyExistsException.class, () -> userService.register(testUserDTO));
         verify(userRepository, never()).save(any(User.class));
     }
 
-//    @Test
-//    void login_ShouldReturnAuthToken() {
-//        LoginRequestDTO loginRequest = new LoginRequestDTO();
-//        loginRequest.setEmail("test@example.com");
-//        loginRequest.setPassword("password123");
-//
-//        CustomUserDetails userDetails = mock(CustomUserDetails.class);
-//        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-//                .thenReturn(authentication);
-//        when(authentication.getPrincipal()).thenReturn(userDetails);
-//        when(jwtUtil.generateToken(anyString())).thenReturn("test-jwt-token");
-//
-//        AuthTokenResponseDTO result = userService.login(loginRequest);
-//
-//        assertNotNull(result);
-//        assertEquals("test-jwt-token", result.getToken());
-//        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
-//        verify(jwtUtil).generateToken(loginRequest.getEmail());
-//    }
+    @Test
+    void login_ShouldReturnAuthToken() {
+
+        LoginRequestDTO loginRequest = new LoginRequestDTO();
+        loginRequest.setEmail("test@example.com");
+        loginRequest.setPassword("password123");
+
+        CustomUserDetails userDetails = mock(CustomUserDetails.class);
+        when(userDetails.getRole()).thenReturn(Role.valueOf("ROLE_USER"));
+
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(authentication);
+        when(authentication.getPrincipal()).thenReturn(userDetails);
+        when(jwtUtil.generateToken(loginRequest.getEmail(), Role.valueOf("ROLE_USER")))
+                .thenReturn("test-jwt-token");
+
+
+        AuthTokenResponseDTO result = userService.login(loginRequest);
+
+        assertNotNull(result);
+        assertEquals("test-jwt-token", result.getToken());
+        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verify(jwtUtil).generateToken(loginRequest.getEmail(), Role.valueOf("ROLE_USER")); // Fix: Verify correct method call
+    }
 
     @Test
     void getAllUsers_ShouldReturnAllUsers() {
