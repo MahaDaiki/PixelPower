@@ -51,7 +51,7 @@
             <label class="form-label">CPU:</label>
             <input type="text" formControlName="cpu" placeholder="Enter CPU model (Intel or AMD)" class="form-input" />
             <div *ngIf="configurationForm.get('cpu')?.invalid && configurationForm.get('cpu')?.touched" class="error-text">
-              CPU must start with "Intel" or "AMD".
+              CPU must start with "Intel" or "AMD", (e.g., 'Intel Core i7-10700K').
             </div>
           </div>
 

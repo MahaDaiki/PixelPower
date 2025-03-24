@@ -87,18 +87,29 @@ public class GameComparisonServiceImpl implements GameComparisonServiceInt {
         double performanceFactor;
         if (cpuRatio < 1.0 || gpuRatio < 1.0) {
             double minRatio = Math.min(cpuRatio, gpuRatio);
-            performanceFactor = Math.pow(minRatio, 2);
+            performanceFactor = Math.pow(minRatio, 3);
         } else {
             performanceFactor = 1.0;
         }
 
 
+
+
         int effectiveGpuScore = (int)(userGpuScore * performanceFactor);
         int effectiveCpuScore = (int)(userCpuScore * performanceFactor);
-
-        String fpsLow = calculateEstimatedFps(effectiveGpuScore, effectiveCpuScore, "low");
-        String fpsMedium = calculateEstimatedFps(effectiveGpuScore, effectiveCpuScore, "medium");
-        String fpsHigh = calculateEstimatedFps(effectiveGpuScore, effectiveCpuScore, "high");
+        String fpsLow;
+        String fpsMedium;
+        String fpsHigh;
+        if (!compatible) {
+            fpsLow = "0 FPS";
+            fpsMedium = "0 FPS";
+            fpsHigh = "0 FPS";
+        }
+        else{
+           fpsLow = calculateEstimatedFps(effectiveGpuScore, effectiveCpuScore, "low");
+           fpsMedium = calculateEstimatedFps(effectiveGpuScore, effectiveCpuScore, "medium");
+           fpsHigh = calculateEstimatedFps(effectiveGpuScore, effectiveCpuScore, "high");
+        }
 
         GameComparison gameComparison = GameComparison.builder()
                 .gameName(gameRequirements.getGameName())
@@ -124,14 +135,14 @@ public class GameComparisonServiceImpl implements GameComparisonServiceInt {
         gpuScore = Math.max(1, gpuScore);
         cpuScore = Math.max(1, cpuScore);
 
-        double performanceScore = gpuScore * 0.75 + cpuScore * 0.25;
+        double performanceScore = gpuScore * 0.8 + cpuScore * 0.2;
 
-        double scaledPerformance = Math.log10(performanceScore) * 55;
+        double scaledPerformance = Math.log10(performanceScore) * 45;
 
         double qualityMultiplier = switch (quality.toLowerCase()) {
-            case "low" -> 1.5;
+            case "low" -> 1.8;
             case "medium" -> 1.0;
-            case "high" -> 0.7;
+            case "high" -> 0.5;
             default -> 1.0;
         };
 
